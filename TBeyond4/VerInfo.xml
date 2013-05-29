@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<!--==================================================================
+======================================================== TBEYOND SSE =
+= Distrubuted under Creative Commons Attribution-Noncommercial-Share 
+= Alike 3.0 License 
+=                                            e-mail: npocmu@gmail.com 
+=                           http://userscripts.org/scripts/show/98310 
+======================================================================
+= FILE:        VerInfo.xml
+= CREATED:     Tue, 22 Feb 2011 16:24:06 +0300
+= AUTHORS:     npocmu
+= COPYRIGHT:   (c) npocmu 2011-2013
+= PURPOSE:     
+===================================================================-->
+<Entity id="urn:limit:ProgID:TBeyond4" uid="3D270E37-039A-442D-ADD2-C1A9B9063168" language="M4" xsi:schemaLocation="urn:limit:schema:identification /banka/XML/Schema/Identification.xsd" xml:lang="ru" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="urn:limit:schema:identification">
+   <Identity>
+      <Name>Travian4 Beyond - SSE</Name>
+      <FullName>Travian4 Beyond - SSE</FullName>
+      <Description>A lot of interface enhancements and tools for Travian 4.X.</Description>
+      <Author>npocmu</Author>
+      <Copyright>Copyright (C) npocmu 2011. All rights reserved</Copyright>
+      <Revision digits="4"></Revision>
+      <VerInfo ver_major="0"> 
+         <VerInfo ver_minor="0">
+            <Description>A lot of interface enhancements and tools for Travian 4.X. This is VERY RESTRICTED version. Porting is just began.</Description>
+            <VerInfo revision="1" started="2011-02-22T15:33:16" released="2011-03-04T17:24:21"></VerInfo>
+            <VerInfo revision="2" started="2011-03-04T17:24:21" released="2011-03-11T13:27:40"></VerInfo>
+            <VerInfo revision="3" started="2011-03-11T13:27:40" released="2011-03-14T17:46:02"></VerInfo>
+            <VerInfo revision="4" started="2011-03-14T17:46:02" released="2011-03-15T09:27:50"></VerInfo>
+            <VerInfo revision="5" started="2011-03-15T09:27:50" released="2011-03-16T18:45:11"></VerInfo>
+            <VerInfo revision="6" started="2011-03-16T18:45:11" released="2011-03-22T15:51:42"></VerInfo>
+            <VerInfo revision="7" started="2011-03-22T15:51:54" released="2011-04-01T13:18:03"></VerInfo>
+            <VerInfo revision="8" started="2011-04-01T17:15:31" released="2011-04-01T19:25:56"></VerInfo>
+            <VerInfo revision="9" started="2011-04-01T19:26:20" released="2011-04-14T16:00:03"></VerInfo>
+            <VerInfo revision="10" started="2011-04-15T09:34:01" released="2011-05-10T12:02:22"></VerInfo>
+            <VerInfo revision="11" started="2011-05-10T15:26:50" released="2011-05-27T16:23:21"></VerInfo>
+            <VerInfo revision="12" started="2011-06-16T16:26:27" released="2011-06-17T18:07:16"></VerInfo>
+            <VerInfo revision="13" started="2011-06-20T11:08:45" released="2011-07-01T16:07:02"></VerInfo>
+         </VerInfo>
+         <VerInfo ver_minor="1">
+           <VerInfo revision="14" started="2011-07-13T09:37:33" released="2011-12-23T15:17:23">
+              <Description>A lot of interface enhancements and tools for Travian 4.X. *** CHRISTMAS EDITION ***</Description>
+           </VerInfo>
+         </VerInfo>
+         <Description>A lot of interface enhancements and tools for Travian 4.X.</Description>
+         <Copyright>Copyright (C) npocmu 2011-2013. All rights reserved</Copyright>
+         <VerInfo ver_minor="2">
+            <VerInfo revision="15" started="2011-12-29T08:17:13" released="2012-01-12T09:33:07"></VerInfo>
+         </VerInfo>
+         <VerInfo ver_minor="3">
+            <VerInfo revision="16" started="2012-01-12T09:33:07" released="2012-01-27T15:13:19"></VerInfo>
+            <VerInfo revision="17" started="2012-01-30T09:16:06" released="2012-02-04T17:32:17"></VerInfo>
+            <VerInfo revision="18" started="2012-02-05T13:15:53" released="2012-02-06T18:29:12"></VerInfo>
+         </VerInfo>
+         <VerInfo ver_minor="4">
+            <VerInfo revision="19" started="2012-02-07T16:35:47" released="2012-03-26T17:12:13"></VerInfo>
+         </VerInfo>
+         <VerInfo ver_minor="5">
+            <VerInfo revision="20" started="2012-03-26T18:39:58" released="2012-04-04T12:19:50"></VerInfo>
+            <VerInfo revision="21" started="2012-04-04T12:19:50" released="2012-04-06T16:19:50"></VerInfo>
+            <VerInfo revision="22" started="2012-04-06T16:28:40" released="2012-04-13T16:32:51"></VerInfo>
+            <VerInfo revision="23" started="2012-05-04T10:07:28" released="2012-07-20T12:42:10"></VerInfo>
+            <VerInfo revision="24" started="2012-08-07T10:39:23" released="2012-08-10T15:52:04"></VerInfo>
+            <VerInfo revision="25" started="2012-09-06T09:03:12" released="2012-09-07T16:00:32"></VerInfo>
+            <VerInfo revision="26" started="2012-09-17T17:33:00" released="2012-10-01T09:13:43"></VerInfo>
+         </VerInfo>
+         <VerInfo ver_minor="6">
+            <VerInfo revision="27" started="2012-10-01T09:13:55" released="2012-10-08T15:33:44"></VerInfo>
+         </VerInfo>
+         <VerInfo ver_minor="7">
+            <VerInfo revision="28" started="2012-10-10T13:59:15" released="2012-10-26T13:00:34"></VerInfo>
+         </VerInfo>
+         <VerInfo ver_minor="8">
+            <VerInfo revision="29" started="2012-10-29T10:11:26" released="2012-11-06T12:12:34"></VerInfo>
+         </VerInfo>
+         <VerInfo ver_minor="9">
+            <VerInfo revision="30" started="2012-11-12T09:54:11" released="2012-11-30T15:32:50"></VerInfo>
+            <VerInfo revision="31" started="2012-12-05T08:54:52" released="2012-12-20T09:30:22"></VerInfo>
+            <VerInfo revision="32" started="2012-12-20T09:30:45" released="2012-12-20T10:23:35"></VerInfo>
+         </VerInfo>
+         <VerInfo ver_minor="10">
+            <VerInfo revision="33" started="2013-01-05T12:57:43" released="2013-03-13T17:36:51"></VerInfo>
+            <VerInfo revision="34" started="2013-03-13T17:37:31" released="2013-03-25T16:49:40"></VerInfo>
+            <VerInfo revision="35" started="2013-03-29T10:41:51" released="2013-04-05T18:43:57"></VerInfo>
+         </VerInfo>
+         <VerInfo ver_minor="11">
+            <VerInfo revision="36" started="2013-04-08T12:57:48" released="2013-04-29T08:51:29"></VerInfo>
+         </VerInfo>
+      </VerInfo> 
+   </Identity>
+</Entity>
+
+<!--========================= END OF FILE =========================-->

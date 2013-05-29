@@ -1,0 +1,15 @@
+
+//////////////////////////////////////////////////////////////////////
+// OBSOLETE, use $div instead
+function $d(iHTML, att)
+{
+   return $e("div", att, iHTML);
+}
+
+//////////////////////////////////////////////////////////////////////
+// OBSOLETE: Migrate to ajaxLoadDocument
+function ajaxNDV2(aR)
+{
+   return $d(aR.responseText);
+}
+
