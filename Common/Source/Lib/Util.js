@@ -9,7 +9,7 @@ function parseInt10(str,defv)
 //////////////////////////////////////////////////////////////////////
 function parseSeparatedInt10(str,defv) 
 { 
-   str = str.replace(/[ .,]/g, '');
+   str = str.replace(/[\s,.'"]/g, '');
    return parseInt10(str,defv);
 }
 
@@ -286,12 +286,18 @@ function trimWhitespaces(s)
 }
 
 /////////////////////////////////////////////////////////////////////
+function removeInvisibleChars(str) 
+{
+   return str.replace(/[\u200E\u200F\u202A\u202B\u202C\u202D\u202E]/g,'');
+}
+
+/////////////////////////////////////////////////////////////////////
 function decodeHTMLEntities(str) 
 {
    if ( !decodeHTMLEntities.element ) { decodeHTMLEntities.element = document.createElement('div'); }
 
    decodeHTMLEntities.element.innerHTML = str;
-   str = decodeHTMLEntities.element.innerHTML.replace(/[\u200E\u200F\u202A\u202B\u202C\u202D\u202E]/g,'');
+   str = removeInvisibleChars(decodeHTMLEntities.element.innerHTML);
    decodeHTMLEntities.element.textContent = '';
 
    return str;
