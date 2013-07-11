@@ -12,11 +12,11 @@ function getResourcesResCap(resourcesInfo, aDoc, ttServer)
          resIppH = aNode.textContent.split("/");
 
          //available resource units
-         resourcesInfo.Res[ri] = parseInt10(resIppH[0]);
+         resourcesInfo.Res[ri] = parseSeparatedInt10(resIppH[0]);
          //capacity of warehouse/granary
          if ( resIppH.length > 1 ) // T4.0?
          {
-            resourcesInfo.Cap[ri] = parseInt10(resIppH[1]);
+            resourcesInfo.Cap[ri] = parseSeparatedInt10(resIppH[1]);
          }
          ++validCount;
       }
