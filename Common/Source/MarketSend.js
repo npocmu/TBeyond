@@ -4,7 +4,7 @@ function parseMerchantsCount(container)
 {
    if ( container )
    {
-      if ( container.textContent.search(/\s*([^:]+):?\s+(\d+)\s*\/\s*(\d+)/) !== -1 )
+      if ( removeInvisibleChars(container.textContent).search(/\s*([^:]+):?\s+(\d+)\s*\/\s*(\d+)/) !== -1 )
       {
          T.saveLocaleString("MERCHANTS",RegExp.$1);
          TB3O.MerchantsInfo.mAvail = parseInt10(RegExp.$2);
@@ -489,12 +489,13 @@ function uiModifyMarketSend()
    {
       __ENTER__
       var ttServer = toTimeStamp(getServerTimeNow());
-      var mAvailNode = $g("merchantsAvailable");
-      TB3O.MerchantsInfo.mAvail = parseInt10(mAvailNode.textContent,0);
+      processMarketSend.moC = searchMerchantsCountContainer();
+      parseMerchantsCount(processMarketSend.moC);
       initMerchantsStat();
       fireChangeEvent($g("tb_usetraders")); // force recalculation for max transport
       mu = getMerchantsUnderway(TB3O.ActiveVillageId, document, ttServer, false);
       getResourcesResCap(TB3O.ActiveVillageInfo.r, document, ttServer);
+__DUMP__(TB3O.ActiveVillageInfo.r)
       saveVillagesInfo(TB3O.VillagesInfo);
       TB3O.ResInfoTotals = getResInfoTotals();
       uiModifyMerchantsUnderway();
