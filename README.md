@@ -46,7 +46,7 @@ Type: `Boolean`
 Default value: `true`
 
 Enable/disable --prefix-builtins option in m4.
-If option enabled then m4 internally modify all builtin macro names so they all start with the prefix ‘m4_’
+If option enabled then m4 internally modify all builtin macro names so they all start with the prefix `m4_`
 For more information see m4 manual.
 
 #### options.include
