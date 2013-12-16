@@ -27,22 +27,23 @@ exports.m4 = {
     // setup here if necessary
     done();
   },
+
   default_options: function(test) {
     test.expect(1);
-
-    var actual = grunt.file.read('tmp/default_options');
-    var expected = grunt.file.read('test/expected/default_options');
-    test.equal(actual, expected, 'should describe what the default behavior is.');
-
+    var actual = grunt.file.read('test/tmp/output.css');
+    var expected = grunt.file.read('test/expected/output.css');
+    test.equal(actual, expected);
     test.done();
   },
   custom_options: function(test) {
-    test.expect(1);
+    test.expect(2);
+    var actual = grunt.file.read('test/tmp/somejs.js');
+    var expected = grunt.file.read('test/expected/somejs.js');
+    test.equal(actual, expected);
 
-    var actual = grunt.file.read('tmp/custom_options');
-    var expected = grunt.file.read('test/expected/custom_options');
-    test.equal(actual, expected, 'should describe what the custom option(s) behavior is.');
-
+    actual = grunt.file.read('test/tmp/test.json');
+    expected = grunt.file.read('test/expected/test.json');
+    test.equal(actual, expected);
     test.done();
   },
 };

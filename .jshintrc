@@ -1,13 +1,16 @@
 {
   "curly": true,
   "eqeqeq": true,
+  "esnext": true,
+  "forin": false,
+  "freeze": true,
   "immed": true,
   "latedef": true,
   "newcap": true,
-  "noarg": true,
+  "nonew": true,
+  "quotmark": true,
   "sub": true,
   "undef": true,
-  "boss": true,
-  "eqnull": true,
+  "unused": true,
   "node": true
-}
+} 

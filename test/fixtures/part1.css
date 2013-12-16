@@ -1,0 +1,8 @@
+m4_define(`DEBUG')
+m4_ifdef(`DEBUG',
+`
+div { background:red; }
+',
+`
+div { background:white; }
+')

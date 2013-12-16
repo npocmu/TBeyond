@@ -1,0 +1,3 @@
+m4_define(MYCOLOR,`rgb(200,100,150)')
+
+a:hover { color:MYCOLOR; }
