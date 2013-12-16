@@ -36,10 +36,8 @@ module.exports = function (grunt)
       {
          default_options:
          {
-            files:
-            {
-               "test/tmp/output.css": ["test/fixtures/part1.css", "test/fixtures/part2.css"],
-            },
+            src: ["test/fixtures/part1.css", "test/fixtures/part2.css"],
+            dest: "test/tmp/output.css",
          },
          custom_options:
          {

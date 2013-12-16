@@ -19,6 +19,10 @@ grunt.loadNpmTasks('grunt-m4');
 
 ## The "m4" task
 
+_Run this task with the `grunt m4` command._
+
+Task targets, files and options may be specified according to the grunt [Configuring tasks](http://gruntjs.com/configuring-tasks) guide.
+
 ### Overview
 In your project's Gruntfile, add a section named `m4` to the data object passed into `grunt.initConfig()`.
 
@@ -37,53 +41,68 @@ grunt.initConfig({
 
 ### Options
 
-#### options.separator
-Type: `String`
-Default value: `',  '`
+#### options.prefix_builtins
+Type: `Boolean`
+Default value: `true`
 
-A string value that is used to do something with whatever.
+Enable/disable --prefix-builtins option in m4.
+If option enabled then m4 internally modify all builtin macro names so they all start with the prefix ‘m4_’
+For more information see m4 manual.
 
-#### options.punctuation
-Type: `String`
-Default value: `'.'`
+#### options.include
+Type: `String` or `Array`
+Default value: `'include'`
 
-A string value that is used to do something else with whatever else.
+Make m4 search directory for included files that are not found in the current working directory.
+
+#### options.define
+Type: `Object`
+Default value: `{}`
+
+Add names into the symbol table.
 
 ### Usage Examples
 
-#### Default Options
-In this example, the default options are used to do something with whatever. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result would be `Testing, 1 2 3.`
+#### Basic usage
+In this example, we just preprocess one file `source.js.m4` into `source.js`
 
 ```js
 grunt.initConfig({
   m4: {
-    options: {},
-    files: {
-      'dest/default_options': ['src/testing', 'src/123'],
+    files:
+    {
+       src: 'source.js.m4',
+       dest: 'source.js'
     },
   },
 });
 ```
 
-#### Custom Options
-In this example, custom options are used to do something else with whatever else. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result in this case would be `Testing: 1 2 3 !!!`
+#### Average usage
+In this example, we preprocess all files `source/*.js.m4` and rewrite them as
+`source/*.js`. When prepocessing then m4 will be search files for include in folders `includes` and `more_includes`.
+Also defines some macros `DEBUG`, `PI` and `SOME_CONSTANT` widely available in all sources.
 
 ```js
 grunt.initConfig({
   m4: {
     options: {
-      separator: ': ',
-      punctuation: ' !!!',
+      include: ['includes','more_includes'],
+      define: { DEBUG:'', PI:'Math.PI', SOME_CONSTANT:2 }
     },
-    files: {
-      'dest/default_options': ['src/testing', 'src/123'],
-    },
+    files:
+    [{
+       expand : true,
+       cwd: "source/",
+       src: "**/*.js.m4",
+       dest: "source/",
+       rename: function(dst, src) { return dst + src.replace(/(\.[^.\/]*)?$/, ""); },
+    }],
   },
 });
 ```
 
 ## Contributing
-In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
 ## Release History
-_(Nothing yet)_
+ * 2013-12-16 v0.1.0 First release
