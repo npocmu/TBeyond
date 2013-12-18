@@ -1,7 +1,7 @@
 {
   "name": "grunt-m4",
   "description": "Grunt plugin for preprocess any files using m4 macro processor",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "homepage": "https://github.com/litmit/grunt-m4",
   "author": {
     "name": "limit",

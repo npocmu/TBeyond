@@ -58,8 +58,6 @@ module.exports = function (grunt)
    grunt.registerMultiTask("m4", "Grunt plugin for preprocess any files using m4 macro processor", 
       function ()
       {
-         var done = this.async();
-
          // Merge task-specific and/or target-specific options with these defaults.
          var options = this.options(
          {
@@ -92,31 +90,36 @@ module.exports = function (grunt)
             }
          }
 
-         grunt.log.notverbose.write("Preprocessing...");
-         // Iterate over all specified file groups.
-         this.files.forEach(
-            function (f)
-            {
-               if ( !f.src.length ) 
-               {
-                  grunt.warn("Source files not defined yet.");
-               }
-               f.src.filter(
-                  function (filepath)
-                  {
-                     // Warn on and remove invalid source files (if nonull was set).
-                     if (!grunt.file.exists(filepath))
-                     {
-                        grunt.log.warn("Source file '" + filepath + "' not found.");
-                        return false;
-                     }
-                     else
-                     {
-                        return true;
-                     }
-                  });
+         if ( this.files.length )
+         {
+            var done = this.async();
 
-               m4(args,f.src,f.dest,done);
-            });
+            grunt.log.notverbose.write("Preprocessing...");
+            // Iterate over all specified file groups.
+            this.files.forEach(
+               function (f)
+               {
+                  if ( !f.src.length ) 
+                  {
+                     grunt.warn("Source files not defined yet.");
+                  }
+                  f.src.filter(
+                     function (filepath)
+                     {
+                        // Warn on and remove invalid source files (if nonull was set).
+                        if (!grunt.file.exists(filepath))
+                        {
+                           grunt.log.warn("Source file '" + filepath + "' not found.");
+                           return false;
+                        }
+                        else
+                        {
+                           return true;
+                        }
+                     });
+
+                  m4(args,f.src,f.dest,done);
+               });
+         }
       });
 };
