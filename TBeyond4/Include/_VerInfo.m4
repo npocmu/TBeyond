@@ -6,7 +6,7 @@ m4_dnl                                       e-mail: npocmu@gmail.com
 m4_dnl                      http://userscripts.org/scripts/show/98310 
 m4_dnl ***************************************************************
 m4_dnl  FILE:        Include/_VerInfo.m4
-m4_dnl  CREATED:     Thu, 11 Jul 2013 20:42:53 +0300
+m4_dnl  CREATED:     Mon, 10 Feb 2014 16:19:39 +0300
 m4_dnl  AUTHORS:     npocmu
 m4_dnl  COPYRIGHT:   (c) npocmu 2013
 m4_dnl  PURPOSE:     Automatically generated version information.
@@ -21,7 +21,7 @@ m4_define({{VES_COMMENT}},    {{A lot of interface enhancements and tools for Tr
 m4_define({{VES_COPYRIGHT}},  {{Copyright (C) npocmu 2011-2013. All rights reserved}})m4_dnl
 m4_define({{VER_MAJOR}},      0)m4_dnl
 m4_define({{VER_MINOR}},      11)m4_dnl
-m4_define({{VER_REVISION}},   37)m4_dnl
-m4_define({{VES_REVISION}},   0037)m4_dnl
+m4_define({{VER_REVISION}},   38)m4_dnl
+m4_define({{VES_REVISION}},   0038)m4_dnl
 m4_define({{VER_UID}},        3D270E37-039A-442D-ADD2-C1A9B9063168)m4_dnl
 m4_dnl ************************* END OF FILE *************************
