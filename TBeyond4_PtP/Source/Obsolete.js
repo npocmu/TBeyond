@@ -1,0 +1,9 @@
+
+//////////////////////////////////////////////////////////////////////
+// OBSOLETE, use $div instead
+function $d(iHTML, att)
+{
+   return $e("div", att, iHTML);
+}
+
+
