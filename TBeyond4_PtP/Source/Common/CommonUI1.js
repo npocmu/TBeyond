@@ -344,8 +344,10 @@ function uiModifyContracts()
    var i;
    var resourcesInfo = TB3O.ActiveVillageInfo.r;
 
-   // select all contracts except contracts for units training
-   var contracts = $xf("//div[@id='" + ID_CONTENT + "']//*[not(self::div and contains(@class,'details'))]/div[contains(@class,'showCosts')]", 'l');
+   // select all contracts except: 
+   //   - contracts for units training (has parent div.details)
+   //   - trade route descriptions (in table#trading_routes)
+   var contracts = $xf("//div[@id='" + ID_CONTENT + "']//*[not(self::div and contains(@class,'details'))]/div[contains(@class,'showCosts')][not(ancestor::table[@id='trading_routes'])]", 'l');
    __ASSERT__(contracts.snapshotLength, "Can't find any contracts")
 
    for ( i = 0; i < contracts.snapshotLength; i++ )
