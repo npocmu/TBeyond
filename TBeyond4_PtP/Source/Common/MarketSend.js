@@ -20,20 +20,6 @@ function parseMerchantsCount(container)
 }
 
 //////////////////////////////////////////////////////////////////////
-function uiCreateRatioCell(ratio)
-{
-   var rC = $td([["class", ratio < 1.00 ? "ratio_l": ratio > 1.00 ? "ratio_g" : "ratio_e"]], ratio.toFixed(2));
-   return rC;
-}
-
-//////////////////////////////////////////////////////////////////////
-function getRatioCell(aRow,iSell,iBuy)
-{
-   var ratio = parseInt10(aRow.cells[iSell].textContent) / parseInt10(aRow.cells[iBuy].textContent);
-   return uiCreateRatioCell(ratio);
-}
-
-//////////////////////////////////////////////////////////////////////
 function setMerchantsCell(tM, colM)
 {
    var cM = __TEST__($g("tb_merc_summary"));
@@ -581,7 +567,7 @@ __DUMP__(TB3O.ActiveVillageInfo.r)
       var repCount = getMerchantRepeatCount();
       return uiCreateTroopsMerchantsDistTable(null, null, xy2id(x,y),
                                              {show_merchant:true, show_coords:true, show_arrival_time:true,
-                                              merchant_repeat:repCount});
+                                              show_merchant_return:true, merchant_repeat:repCount});
    }
 
    //-----------------------------------------------------------------
@@ -987,7 +973,6 @@ __DUMP__(TB3O.ActiveVillageInfo.r)
       // we can add duplicate link only for transports from own villages
       function uiAddDuplicateLink(aTb, merchantUnderwayInfo, bReturning)
       {
-         __ENTER__
          if ( merchantUnderwayInfo.own_id == TB3O.UserID )
          {
             var parentNode = aTb.rows[0].cells[1].lastChild;
@@ -1004,7 +989,6 @@ __DUMP__(TB3O.ActiveVillageInfo.r)
             insertAfter(parentNode, 
                $lnk([attrInject$, ['title',T("DUP_TRADERS_TT")], ['href',href]], I("dup")));
          }
-         __EXIT__
       }
 
       //--------------------------------------------------------------

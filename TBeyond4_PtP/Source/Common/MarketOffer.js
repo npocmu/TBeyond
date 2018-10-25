@@ -192,6 +192,14 @@ function uiModifyMarketOffer()
       }
 
       //----------------------------------------------------------
+      function uiCreateRatioCell(ratio)
+      {
+         var rC = $td([["class", ratio < 1.00 ? "ratio_l": ratio > 1.00 ? "ratio_g" : "ratio_e"]], ratio.toFixed(2));
+         return rC;
+      }
+
+
+      //----------------------------------------------------------
       __ENTER__
       var aTb = null;
 
