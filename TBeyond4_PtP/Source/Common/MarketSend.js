@@ -958,7 +958,7 @@ __DUMP__(TB3O.ActiveVillageInfo.r)
       //--------------------------------------------------------------
       function uiAddTotalResources(aTb, merchantUnderwayInfo)
       {
-         var resNode = aTb.rows[2].cells[1].lastChild;
+         var resNode = aTb.rows[2].cells[1].lastElementChild;
          var cls = resNode.className;
          if ( cls ) { cls += " "; }
          cls += 'tbInject';
