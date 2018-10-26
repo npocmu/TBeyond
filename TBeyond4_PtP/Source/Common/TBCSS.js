@@ -300,7 +300,8 @@ IF_TB3({{
    'table#tb_arrm_progress td.tbEvent.tbOver, table#tb_arrm_progress td.tbEvent.tbUnder {text-align:center; background-color:' + TB3O.DFc[1] + ';}' +
    'table#tb_arrm_progress td.tbFillPerc {max-width:30px; padding:2px;}' +
    'table#tb_arrm_progress td.tbCapReached {color:red;' + blink_style + '}' +
-   'table#tb_arrm_progress td.tb3cresbar {padding:0px; min-width:100px;height:18px;}' +
+   'table#tb_arrm_progress td.tbResourceMeter {padding:0px; min-width:100px;height:18px;}' +
+   'table#tb_arrm_progress td.tbResourceMeter .tbMeterTextContainer {padding-top:2px}' +
    'table#tb_arrm_progress th.tbTitle {font-weight:bold; padding: 0px; background-color:#F5FFF0;}' +
 
    // training quick bar
@@ -478,6 +479,14 @@ table tbody tr.hover:hover th, table tbody tr.hover:hover td {
    '.tbUpDown.tbBuiltin {top:-9px;vertical-align:middle;}' +
    '.tbUpDown.tbBuiltin img {border-color:IIF_TB4(#CCCCCC,#71D000); border-width:1px; border-' + docDir[0] + '-style:solid;}' +
    '.tbUpDown.tbBuiltin img.tbiDown {top:8px !important; border-top-style:solid;}' +
+
+   '.tbMeter {width: 100%; height: 100%; display: inline-block; position: relative; }' +
+   '.tbMeterFill, tbMeterEmpty {display: inline-block; height: 100%;}' +
+   '.tbMeterFill {float: left;}' +
+   '.tbMeterEmpty {float: right;}' +
+   '.tbMeterForeground {position: absolute; width: 100%; height: 100%;}' +
+   '.tbMeterTextContainer {text-align:center; vertical-align:middle;}' +
+   '.tbMeterText {font-weight:bold; color: white; text-shadow: black 1px 1px 0, black -1px -1px 0, black -1px 1px 0, black 1px -1px 0;}' +
    	
    'div#tb_tooltip {position:absolute; display:none; padding:2px; z-index:9000; border:1px solid #00C000; background-color:#FFFFCC; -moz-border-radius:5px; border-radius:5px;}' +
 

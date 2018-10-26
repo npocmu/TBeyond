@@ -55,6 +55,7 @@ COPY Source\Main0.js + ^
      Source\Common\Controls\ModalWindow.js + ^
      Source\Common\Controls\UpDown.js + ^
      Source\Common\Controls\RollDown.js + ^
+     Source\Common\Controls\MeterBar.js + ^
      Source\Common\VillageInfo.js + Source\Common\Buildings.js + Source\Common\BuildingsInfo.js + ^
      Source\Common\Objects\TravianMenu.js + Source\TravianMenu.js + ^
      Source\Obsolete.js + Source\getResourcesInfo.js + Source\Common\Resources.js + ^

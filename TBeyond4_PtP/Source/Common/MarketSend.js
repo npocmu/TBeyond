@@ -772,7 +772,7 @@ __DUMP__(TB3O.ActiveVillageInfo.r)
                eventCell,
                $td(['class', 'tbTotal' + totalClass], strTotal),
                uiSetFillPercent($td(),resourcesInfo,ri),
-               $td(['class', 'tb3cresbar'],uiSetFillBar(uiCreateFillBar(),resourcesInfo,ri))
+               $td(['class', 'tbResourceMeter'],uiCreateResourceMeterBar(resourcesInfo, ri))
             ]);
          return aRow;
       }
