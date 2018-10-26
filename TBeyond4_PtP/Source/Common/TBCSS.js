@@ -3,6 +3,7 @@ function setTBStyles()
 {
    __ENTER__
    var acss = '';
+   var blink_style = 'animation: blink 1s steps(1) infinite;';
 
    //TBeyond specific style declarations
    acss +=
@@ -73,7 +74,7 @@ IF_TB3({{
    'table.rNt .tbCC *, table.rNt .tbCP * {vertical-align:middle;}' +
    'table.rNt .tbCC {color:red;}' +
    'table.rNt .tbCP {color:blue;}' +
-   'table.rNt .tbCapReached {color:red; text-decoration: blink;}' +
+   'table.rNt .tbCapReached {color:red;' + blink_style + '}' +
 
    '.tbInject table.rNt {width:IIF_TB4(40,30)%;}' +
 
@@ -272,9 +273,9 @@ IF_TB3({{
    'td.tbUnder {font-weight:bold; color:white;}' +
    'td.tbOver  {background-color:darkgreen;}' +
    'td.tbUnder {background-color:red;}' +
-   'table.tbIncomingMerc td.tbCapReached {color:red; text-decoration: blink;}' +
+   'table.tbIncomingMerc td.tbCapReached {color:red;' + blink_style + '}' +
 
-   // market send (cumulative arrivals table/arrivals progress table)
+   // market send - cumulative arrivals table/arrivals progress table)
    'table#tb_arrm_progress, ' +
    'table#tb_arrm  {border-collapse:collapse; border:1px solid silver; margin-bottom:15px;}' +
    'table#tb_arrm th, table#tb_arrm_progress th,' +
@@ -283,13 +284,14 @@ IF_TB3({{
    'table#tb_arrm td.cbgx {font-weight:bold;}' +
    'table#tb_arrm td.tbTotal {font-weight:bold; width:17%;}' +
    'table#tb_arrm .tbTimeout.tbOver.tbSoon,' +
-   'table#tb_arrm .tbTimeout.tbUnder.tbSoon {color:white; text-decoration: blink;}' +
+   'table#tb_arrm .tbTimeout.tbUnder.tbSoon {color:white;' + blink_style + '}' +
    'table#tb_arrm .tbTimeout.tbOver.tbDecrease,' +
    'table#tb_arrm .tbTimeout.tbUnder.tbDecrease {color:white;}' +
    'table#tb_arrm .tbTimeout.tbOver.tbCapReached,' +
    'table#tb_arrm .tbTimeout.tbUnder.tbCapReached {color:yellow;}' +
    'table#tb_arrm .tbRollDown {float:' + docDir[1] + ';margin-left:-13px;}' +
 
+   // market send  - arrivals resource progress table
    'table#tb_arrm_progress td {line-height:14px; font-size:8pt; padding:2px 4px; text-align:' + docDir[1] +';}' +
    'table#tb_arrm_progress td * {vertical-align:middle;}' +
    'table#tb_arrm_progress td.tbTravelT  {max-width:60px;}' +
@@ -297,7 +299,7 @@ IF_TB3({{
    'table#tb_arrm_progress td.tbEvent img.tbiMerc {margin:0px;}' +
    'table#tb_arrm_progress td.tbEvent.tbOver, table#tb_arrm_progress td.tbEvent.tbUnder {text-align:center; background-color:' + TB3O.DFc[1] + ';}' +
    'table#tb_arrm_progress td.tbFillPerc {max-width:30px; padding:2px;}' +
-   'table#tb_arrm_progress td.tbCapReached {color:red; text-decoration: blink;}' +
+   'table#tb_arrm_progress td.tbCapReached {color:red;' + blink_style + '}' +
    'table#tb_arrm_progress td.tb3cresbar {padding:0px; min-width:100px;height:18px;}' +
    'table#tb_arrm_progress th.tbTitle {font-weight:bold; padding: 0px; background-color:#F5FFF0;}' +
 
@@ -511,10 +513,10 @@ M4_ECHO_ON
    '.tbTimeout {color:darkgreen;}' +
    '.tbTimeout.tbDecrease {color:red;}' +
    '.tbTimeout.tbSoon     {color:red;}' +
-   '.tbTimeout.tbCapReached {color:red; text-decoration: blink;}' +
+   '.tbTimeout.tbCapReached {color:red;' + blink_style + '}' +
 
    '.tbFillPerc.tbSoon,' +
-   '.tbFillPerc.tbCapReached {text-decoration: blink;}' +
+   '.tbFillPerc.tbCapReached {animation:' + blink_style + '}' +
 
    '.tbSelected * {background-color:#ECECEC !important;}' +
 
@@ -535,7 +537,7 @@ M4_ECHO_ON
    '.tbNoRes {background-color:' + TBCN_COL_NORES + ' !important;}' + 
    '.tbNPCUpg{background-color:' + TBCN_COL_NPCUPGRADE + ' !important;}' + 
    '.tbNoCap {background-color:' + TBCN_COL_NOCAP + ' !important;}' +
-   (( TBO_SHOW_BLDBLINK === '1' ) ?  '.tbUpgNow {animation: blink 1s steps(1) infinite;}' : '') +
+   (( TBO_SHOW_BLDBLINK === '1' ) ?  '.tbUpgNow {' + blink_style + '}' : '') +
 
    '@keyframes blink { 50% { color: transparent; } }' + 
 
