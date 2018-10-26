@@ -3,8 +3,11 @@
 // work in FF 3.6
 function isDOMNode(node) 
 {
-   return typeof(node) === "object" && typeof(node.nodeType) === "number" && 
-          typeof(node.nodeName) === "string" && typeof(node.tagName) === "string";
+   return typeof(node) === "object" && typeof(node.nodeType) === "number" && typeof(node.nodeName) === "string" && 
+          (
+             (node.nodeType === 1 && typeof(node.tagName) === "string") ||
+             node.nodeType === 3
+          );
 };
 
 //////////////////////////////////////////////////////////////////////
