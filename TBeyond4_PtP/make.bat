@@ -81,7 +81,8 @@ COPY Source\Main0.js + ^
      Source\MarketSpecific.js + Source\Common\MarketCommon.js + Source\Common\MarketSend.js + Source\Common\MarketOffer.js + Source\Common\MarketRoutes.js + ^
      Source\PositionDetails.js + ^
      Source\RallyPointSpecific.js + Source\Common\RallyPointOverview.js + Source\Common\RallyPointSend.js + Source\Common\RallyPointDismiss.js + ^
-     Source\Common\Culture.js + Source\Common\TownHall.js + Source\Common\UpgradeBuilding.js + ^
+     Source\Common\Culture.js + Source\Common\TownHall.js + ^
+     Source\UpgradeBuildingSpecific.js + Source\Common\UpgradeBuilding.js + ^
      Source\TrainingSpecific.js + Source\Common\TrainingBuilding.js + ^
      Source\VillagesList.js + Source\SideBars.js + ^
      Source\Common\VillagesList2.js + ^
