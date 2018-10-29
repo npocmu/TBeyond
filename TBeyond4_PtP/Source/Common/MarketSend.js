@@ -235,6 +235,7 @@ function getMerchantsUnderwayGroup(MUInfo, villageInfo, aDoc, aGroupHeader, bInc
             var ownerId, recipientId;
 
             var bReturning = false;
+            var type;
 
             if ( !bIncoming )
             {
@@ -271,8 +272,22 @@ function getMerchantsUnderwayGroup(MUInfo, villageInfo, aDoc, aGroupHeader, bInc
                recipientId = TB3O.UserID;
             }
 
+            if ( bIncoming )
+            {
+               type = 'i';
+            }
+            else if ( bReturning )
+            {
+               type = 'r';
+            }
+            else 
+            {
+               type = 'o';
+            }
+
             var mui = new MerchantUnderwayInfo(ownerId, ownerName, recipientId, recipientName,
-                                               srcMapId, destMapId, ttArrival, Res, xn);
+                                               srcMapId, destMapId, ttArrival, Res, xn, type);
+            MUInfo[type].push(mui);
 
             if ( !bReadOnly ) 
             { 
@@ -281,18 +296,6 @@ function getMerchantsUnderwayGroup(MUInfo, villageInfo, aDoc, aGroupHeader, bInc
                MerchantsUnderwayDOMInfo.associate(mui,muDOMInfo);
             }
 
-            if ( bIncoming )
-            {
-               MUInfo.i.push(mui);
-            }
-            else if ( bReturning )
-            {
-               MUInfo.r.push(mui);
-            }
-            else 
-            {
-               MUInfo.o.push(mui);
-            }
          }
          __ASSERT__( ownerId && point && timeSpan && Res, "Can't parse merchant underway data")
       }
@@ -526,24 +529,26 @@ __DUMP__(TB3O.ActiveVillageInfo.r)
    {
       if ( mu )
       {
+         // if returned merchant has more than one sheduled routes then it would been affect to
+         // resource planning
+         var affectResourcesMerchants = mergeMerchantsUnderwayArrays(mu.i, mu.r.filter(function(muInfo) { return muInfo.xn > 1; }));
+         __DUMP__(affectResourcesMerchants);
+
          if ( TBO_SHOW_ADDINFO_INCOMING_MERC === '1' )
          {
             uiModifyUnderwayTables(mu.i, false);
             uiModifyUnderwayTables(mu.o, false);
             uiModifyUnderwayTables(mu.r, true);
+
+            uiModifyArrivalsTables(affectResourcesMerchants);
          }
 
-         if ( mu.i.length > 0 )
+         if ( affectResourcesMerchants.length > 0 )
          {
             var merchantGroup = $xf("//div[@id='build' and contains(@class,'gid17')]//h4");
 
-            if ( TBO_SHOW_ADDINFO_INCOMING_MERC === '1' )
-            {
-               uiModifyArrivalsTables(mu.i);
-            }
-
             //create table to sum the resources
-            var aTb = uiCreateCumulativeArrivalsTable(merchantGroup.textContent.replace(":", "").toLowerCase(), mu.i);
+            var aTb = uiCreateCumulativeArrivalsTable(merchantGroup.textContent.replace(":", "").toLowerCase(), affectResourcesMerchants);
             if ( aTb ) 
             {
                insertAfter(merchantGroup, aTb);
@@ -1029,31 +1034,44 @@ __DUMP__(TB3O.ActiveVillageInfo.r)
             var merchantUnderwayInfo = incomingMerchants[i];
             var aTb = $g(MerchantsUnderwayDOMInfo.getId(merchantUnderwayInfo));
 
-            addClass(aTb,"tbIncomingMerc");
-            aTb.appendChild(
-               $e("tbody",attrInject$,
-                  $r(null,[
-                     $td([['class', 'tbArrivalT']],[I("clock"),$span(" " + formatDateTime(dtNow,getDesiredTime(merchantUnderwayInfo.ttArrival),2))]),
-                     $td([['class', 'tbArrivalRes'],['colspan', '2']], 
-                        resTb = $t([['rules', 'cols']],
-                           resTbRow = $r()))
-                  ]))
-            );   
-
-            var state = getCumulativeResourcesInfo(resourcesInfo, merchantUnderwayInfo.ttArrival, merchantUnderwayInfo.Res);
-
-            var uthen = floorResources(cloneArray(resourcesInfo.Res)); 
-            var ri;
-            for ( ri = 0; ri < 4; ++ri )
+            if ( aTb )
             {
-               resTbRow.appendChild($td([['class', (resourcesInfo.Res[ri] >= resourcesInfo.Cap[ri] ? 'tbCapReached':null)]],
-                                        [I("r"+ (ri + 1)),$span(" " + String(uthen[ri]))]));
-            }
-            resTbRow.appendChild($td(null,[I("r0"),$span(" " + String(totalResources(uthen)))]));
+               addClass(aTb,"tbIncomingMerc");
+               aTb.appendChild(
+                  $e("tbody",attrInject$,
+                     $r(null,[
+                        $td([['class', 'tbArrivalT']],[I("clock"),$span(" " + formatDateTime(dtNow,getDesiredTime(merchantUnderwayInfo.ttArrival),2))]),
+                        $td([['class', 'tbArrivalRes'],['colspan', '2']], 
+                           resTb = $t([['rules', 'cols']],
+                              resTbRow = $r()))
+                     ]))
+               );   
 
-            var ruoRows = uiCreateUnderOverrunRows(state);
-            if ( ruoRows[0] ) { resTb.appendChild(ruoRows[0]); }
-            if ( ruoRows[1] ) { resTb.appendChild(ruoRows[1]); }
+               var res = merchantUnderwayInfo.Res;
+               if ( merchantUnderwayInfo.type === 'r' )
+               {
+                  res = cloneArray(res);
+                  res[0] = -res[0];
+                  res[1] = -res[1];
+                  res[2] = -res[2];
+                  res[3] = -res[3];
+               }
+
+               var state = getCumulativeResourcesInfo(resourcesInfo, merchantUnderwayInfo.ttArrival, res);
+
+               var uthen = floorResources(cloneArray(resourcesInfo.Res)); 
+               var ri;
+               for ( ri = 0; ri < 4; ++ri )
+               {
+                  resTbRow.appendChild($td([['class', (resourcesInfo.Res[ri] >= resourcesInfo.Cap[ri] ? 'tbCapReached':null)]],
+                                           [I("r"+ (ri + 1)),$span(" " + String(uthen[ri]))]));
+               }
+               resTbRow.appendChild($td(null,[I("r0"),$span(" " + String(totalResources(uthen)))]));
+
+               var ruoRows = uiCreateUnderOverrunRows(state);
+               if ( ruoRows[0] ) { resTb.appendChild(ruoRows[0]); }
+               if ( ruoRows[1] ) { resTb.appendChild(ruoRows[1]); }
+            }
          }
       }
       __EXIT__
