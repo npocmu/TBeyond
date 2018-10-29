@@ -207,13 +207,21 @@ function getMerchantsUnderwayGroup(MUInfo, villageInfo, aDoc, aGroupHeader, bInc
 
          var ttArrival = ttServer + (timeSpan * 1000);
 
-         var tdRes = aRows[2].cells[1].textContent;
+         var tdRes = removeInvisibleChars(aRows[2].cells[1].textContent);
          var xn = 1;
          var xPos = tdRes.indexOf("x");
+         if ( xPos === -1 ) 
+         { 
+            xPos = tdRes.indexOf("\u00D7"); // MULTIPLICATION SIGN
+         }
          if ( xPos !== -1 ) 
          { 
             xn = parseInt10(tdRes.substr(xPos-1,1));
-            if ( isNaN(xn) ) { xn = 1; }
+            if ( isNaN(xn) ) 
+            { 
+               xn = 1; 
+               __ERROR__("can't parse merchant repeat count")
+            }
 
             tdRes = tdRes.substring(xPos + 1); 
          }
