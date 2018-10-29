@@ -323,10 +323,11 @@ function doPage()
 
          case "rally_point_overview":
             if ( crtUrl.queryKey.filter > 0 ) { uiAddKeyboardNavigation(); }
-/*
+            /*
             tableTotalVillageTroopsV3();
             incomeAttackingFillter();
             */
+            uiModifyRallyPointOverview()
             break;
 
          case "rally_point_send":    uiModifyRallyPointSend();    break;

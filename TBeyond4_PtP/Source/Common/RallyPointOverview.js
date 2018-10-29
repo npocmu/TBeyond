@@ -45,3 +45,12 @@ function processRallyPointOverview()
 
    __EXIT__
 }
+
+//////////////////////////////////////////////////////////////////////
+function uiModifyRallyPointOverview()
+{
+   __ENTER__
+
+
+   __EXIT__
+}

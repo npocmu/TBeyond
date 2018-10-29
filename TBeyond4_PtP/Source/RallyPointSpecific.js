@@ -196,6 +196,8 @@ function getRallyPointInfo(villageId, aDoc, ttServer, bReadOnly)
          var v = button.value;
          filter = scanIntWithPrefix('filterCategory',v);
          if ( !isIntValid(filter) ) { filter = 0; }
+
+         __ASSERT__(filter,'unknown filter for rally point overview')
       }
       return filter;
    }
