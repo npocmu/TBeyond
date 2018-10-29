@@ -189,8 +189,6 @@ function getGeneralData()
 
       TB3O.iLayoutMinWidth = parseInt10(window.getComputedStyle($g(ID_MID),null).getPropertyValue("min-width"));
 
-      getLanguageAndPlusStatus();
-
       TB3O.UserID = getPlayerId(document);
       __DUMP__(TB3O.UserID)
       if ( !TB3O.UserID ) { break; }

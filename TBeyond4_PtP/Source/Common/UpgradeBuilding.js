@@ -33,19 +33,15 @@ function uiFillUpiPTable(aTb, upgradeInfo)
    uiFillUpgradeProgressTable(aTb, GID_SMITHY, upgradeInfo);
 }
 
-IF_TB3({{
-function uiFillUpaiPTable(aTb, upgradeInfo)
-{
-   uiFillUpgradeProgressTable(aTb, GID_BLACKSMITH, upgradeInfo);
-}
-}})
-
 //////////////////////////////////////////////////////////////////////
-// create the 'Upgrade in progress' table for a village
+// Create the 'Upgrade in progress' table for a village
+// Planned for Dorf3?
+/*
 function uiCreateUpiPTable(villageId)
 {
    return uiCreateVillageInfoTipTable(villageId,"upi",uiFillUpiPTable);
 }
+*/
 
 //////////////////////////////////////////////////////////////////////
 // Used for updates info from refresh callbacks
@@ -62,12 +58,6 @@ function getUpgradeInfo(gid, villageId, aDoc, ttServer)
       {
          villageInfo.upi = upgradeInfo;
       }
-      IF_TB3({{
-      if ( gid === GID_BLACKSMITH )
-      {
-         villageInfo.upai = upgradeInfo;
-      }
-      }})
    }
    __EXIT__
 
@@ -79,4 +69,3 @@ function processUpgradeBuilding(gid)
 {
    getUpgradeInfo(gid, TB3O.ActiveVillageId, document, toTimeStamp(TB3O.serverTime));
 }
-

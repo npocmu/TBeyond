@@ -13,36 +13,6 @@
 	function insertNPCHistoryLink() {var bname = getQueryParameters(urlNow, NPCbacklinkName); if (!bname) bname = "Go back"; var div = $g(ID_MID2); div.innerHTML += '<p>&nbsp;<a href="#" onclick="window.history.go(-2)"> &laquo; ' + bname + '</a></p>';};//insert the NPC assistant back link
 	function pauseScript(ms) {var ms1 = getRndTime(ms); var aDate = new Date(); var crtDate = new Date(); do {crtDate = new Date();} while (crtDate - aDate < ms1);};
 	
-	function getLanguageAndPlusStatus() {
-		var iP = $g("logo");
-		var ahref;
-		if (iP) {
-			if (iP.nodeName == "A") {
-				if (iP.firstChild && iP.firstChild.className == "logo_plus") TB3O.plAc = true;
-				ahref = iP.href;
-				TB3O.M35 = 2;
-			} else if (iP.nodeName == "IMG") {
-				if (iP.className && (iP.className == "plus" || iP.className == "logo_plus")) TB3O.plAc = true;
-				ahref = iP.parentNode.href;
-				TB3O.M35 = 1;
-			};
-			if (ahref) {
-				aLang = ahref.split(".");
-				TB3O.lng = aLang[aLang.length - 1].replace("/", "");
-			};
-			ahref = null;
-		} else {
-			//T3.1
-			iP = $xf("//img[contains(@src, 'plus.gif')]");
-			if (iP) {
-				iP.src.search(/\/img\/([^\/]+)\//);
-				TB3O.lng = RegExp.$1.substring(0,2);
-			};
-			if ($xf("//img[contains(@src, 'travian1.gif')]")) TB3O.plAc = true;
-		};
-		iP = null; ahref = null;
-	};
-
 	/**
 	 * Create the path of the image, taking into account a local GP
 	 * Params: ref Relative path of the image

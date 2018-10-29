@@ -216,19 +216,7 @@ function getDefaultDorf3Tab()
 {
    var defaultTab = TBO_DORF3_DEFAULT_TAB;
 
-   IIF_TB4({{
    if ( defaultTab > 6 ) { defaultTab = 1; }
-   }},
-   {{
-   if ( TB3O.plAc )
-   {
-      if ( defaultTab > 6 ) { defaultTab = 0; } // no any info
-   }
-   else
-   {
-      if ( defaultTab > 5 ) { defaultTab = 1; }
-   }
-   }})
 
    return defaultTab;
 }

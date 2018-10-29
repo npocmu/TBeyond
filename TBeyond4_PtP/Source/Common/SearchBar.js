@@ -55,28 +55,8 @@ function uiCreateSearchForm(sbc)
    var i2 = $e("input", [['type', 'text'], ['maxlength', '20'], ['size', '10'], ['value', '']]);
    var i3 = $e("input", [['type', 'submit'], ['name', 'submit'], ['value', '?']]);
 
-   IIF_TB4(
-   {{
-      i2.name = 'name';
-      i2.className = 'text name';
-   }},
-   {{
-   if ( TB3O.M35 == 2 )
-   {
-      i2.name = 'name';
-      i2.className = 'text name';
-   }
-   else if ( TB3O.M35 == 1 )
-   {
-      i2.name = 'name';
-      i2.className = "spieler fm";
-   }
-   else if ( !TB3O.T35 )
-   {
-      i2.name = 'spieler';
-      i2.className = 'fm f80';
-   }
-   }})
+   i2.name = 'name';
+   i2.className = 'text name';
 
    var s1 = $e("select", [['id', 'searchtype']]);
    addOption(s1,sbc,1);
