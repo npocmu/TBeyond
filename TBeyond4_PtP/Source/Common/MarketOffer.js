@@ -405,9 +405,8 @@ function uiModifyMarketOffer()
       //----------------------------------------------------------
       if ( formItems.optable )
       {
-         var cols = (TB3O.M35 === 2) ? '3' : '4';
          formItems.optable.appendChild($r(null,[
-            $td([['id', 'tb_merc_summary'],['colspan', cols],['rowspan', '4']]),
+            $td([['id', 'tb_merc_summary'],['colspan', formItems.optable_cols],['rowspan', '4']]),
             $td(['class', 'tbOption'], [
                $i([['id','tb_use_ratio'], ['type','checkbox'], ['value','1'], ['change', onClickUseRatio, false]]), 
                T('USEMTR') + " ",

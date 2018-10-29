@@ -224,6 +224,7 @@ function searchMarketOfferFormItems()
          }
          items.button = __TEST__($xf(".//button[@type='submit']",'f',f));
          items.optable = __TEST__($xf(".//*[@id='sell']/tbody",'f',f));
+         items.optable_cols = 3;
       }
    }
 
