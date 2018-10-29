@@ -24,11 +24,12 @@ Overview.prototype.getMerchantsInfo  = function(tabNo)
                vmInfo.link = vCells[mi].innerHTML;
 
                var merchants = vCells[mi].textContent.split("/");
-               vmInfo.mAvail = parseInt10(merchants[0]);
-               vmInfo.mTotal = parseInt10(merchants[1]);
+               vmInfo.mAvail = parseSeparatedInt10(merchants[0]);
+               vmInfo.mTotal = parseSeparatedInt10(merchants[1]);
                merchantsInfo[villageId] = vmInfo;
             }
          }
+         __DUMP__(merchantsInfo)
       }
    }
    return merchantsInfo;

@@ -56,6 +56,7 @@ Overview.prototype.getMerchantCol = function(tabNo)
       }
    }
 
+   __ASSERT__(mi,"can't find merchant info column")
    return mi;
 };
 
