@@ -15,8 +15,6 @@ MerchantUnderwayInfo
 
    own_n:     string    - user name for merchant owner
    rec_n:     string    - user name for merchant recepient
-
-   (*)id:     string    - DOM id for table with info about route (optional)
 }
 */
 function MerchantUnderwayInfo(ownerId, ownerName, recepientId, recepientName,
@@ -40,14 +38,16 @@ function MerchantUnderwayInfo(ownerId, ownerName, recepientId, recepientName,
 }
 
 /////////////////////////////////////////////////////////////////////
+/*
+  Persistable information about all merchant movements from marketplace 
+*/
 function MerchantsUnderwayInfo()
 {
-   this.i = []; // incoming merchants
-   this.o = []; // outgoing merchants
-   this.r = []; // returning merchants
+   this.i = []; // incoming merchants in order of ttArrival increase
+   this.o = []; // outgoing merchants in order of ttArrival increase
+   this.r = []; // returning merchants in order of ttArrival increase
 
    this.ttUpd = undefined; // date of information update (server timestamp when marketplace last visited)
 
    return this;
 }
-

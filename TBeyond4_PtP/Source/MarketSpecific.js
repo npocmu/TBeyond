@@ -82,12 +82,17 @@ function searchMerchantsDestinationContainer()
 }
 
 //////////////////////////////////////////////////////////////////////
+// Read and return information about all merchants underway
+// Return MerchantsUnderwayInfo object with parsed info or null if info can't be collected successfully.
+// If bReadOnly = false then assign id for all merchant tables and 
+//  store additional info about UI elements in MerchantsUnderwayDOMInfo
 function getMerchantsUnderway(villageId, aDoc, ttServer, bReadOnly)
 {
    __ENTER__
    var merchantsUnderwayInfo = new MerchantsUnderwayInfo();
-   if ( !bReadOnly ) { merchantsUnderwayInfo.nextid = 0; }
    var merchantGroups = $xf("//div[@id='build' and contains(@class,'gid17')]//h4", 'r');
+
+   if ( !bReadOnly ) { MerchantsUnderwayDOMInfo.reset(); }
 
    try
    {
@@ -171,7 +176,12 @@ function getMerchantsUnderway(villageId, aDoc, ttServer, bReadOnly)
             }
          }
       }
-      if ( merchantsUnderwayInfo ) { merchantsUnderwayInfo.ttUpd = ttServer; }
+
+      if ( merchantsUnderwayInfo ) 
+      { 
+         merchantsUnderwayInfo.ttUpd = ttServer; 
+         __DUMP__(merchantsUnderwayInfo)
+      }
    }
    catch(e)
    {

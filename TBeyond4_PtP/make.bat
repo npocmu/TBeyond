@@ -43,7 +43,7 @@ COPY Source\Main0.js + ^
      Source\Common\Cookies.js + Source\Common\CookiesV2.js + ^
      Source\Common\TBCommon.js + Source\Common\Common.js + ^
      Source\Common\Objects\ConstructionInfo.js + ^
-     Source\Common\Objects\MerchantsUnderwayInfo.js + ^
+     Source\Common\Objects\MerchantsUnderwayInfo.js + Source\Common\Objects\MerchantsUnderwayDOMInfo.js + ^
      Source\Common\Objects\TroopDetailsInfo.js + ^
      Source\Common\Objects\CulturePointsInfo.js + ^
      Source\Common\Objects\TownHallInfo.js + ^

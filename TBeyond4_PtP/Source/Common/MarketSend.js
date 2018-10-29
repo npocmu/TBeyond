@@ -276,8 +276,9 @@ function getMerchantsUnderwayGroup(MUInfo, villageInfo, aDoc, aGroupHeader, bInc
 
             if ( !bReadOnly ) 
             { 
-               if ( !aTb.hasAttribute("id") ) { aTb.id = "tb_mu_" + MUInfo.nextid++; }
-               mui.id = aTb.id; 
+               if ( !aTb.hasAttribute("id") ) { aTb.id = MerchantsUnderwayDOMInfo.generateId(); }
+               var muDOMInfo = new MerchantUnderwayDOMInfo(aTb.id);
+               MerchantsUnderwayDOMInfo.associate(mui,muDOMInfo);
             }
 
             if ( bIncoming )
@@ -323,7 +324,6 @@ function processMarketSend()
 
    processMarketSend.MU = getMerchantsUnderway(TB3O.ActiveVillageId, document, toTimeStamp(TB3O.serverTime), false);
    __ASSERT__(processMarketSend.MU,"Can't parse merchants underway info")
-   __DUMP__(processMarketSend.MU)
 
    //savePersistentVillageObject("MU", processMarketSend.MU);
 
@@ -1004,9 +1004,12 @@ __DUMP__(TB3O.ActiveVillageInfo.r)
       for ( i = 0; i < muiArray.length; ++i )
       {
          merchantUnderwayInfo = muiArray[i];
-         aTb = $g(merchantUnderwayInfo.id);
-         uiAddTotalResources(aTb, merchantUnderwayInfo);
-         uiAddDuplicateLink(aTb, merchantUnderwayInfo, bReturning);
+         aTb = $g(MerchantsUnderwayDOMInfo.getId(merchantUnderwayInfo));
+         if ( aTb )
+         {
+            uiAddTotalResources(aTb, merchantUnderwayInfo);
+            uiAddDuplicateLink(aTb, merchantUnderwayInfo, bReturning);
+         }
       }
       __EXIT__
    }
@@ -1024,7 +1027,7 @@ __DUMP__(TB3O.ActiveVillageInfo.r)
          {
             var resTb, resTbRow;
             var merchantUnderwayInfo = incomingMerchants[i];
-            var aTb = $g(merchantUnderwayInfo.id);
+            var aTb = $g(MerchantsUnderwayDOMInfo.getId(merchantUnderwayInfo));
 
             addClass(aTb,"tbIncomingMerc");
             aTb.appendChild(
