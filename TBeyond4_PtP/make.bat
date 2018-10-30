@@ -49,6 +49,7 @@ COPY Source\Main0.js + ^
      Source\Common\Objects\Persistent\TownHallInfo.js + ^
      Source\Common\Objects\Persistent\TrainingInfo.js + ^
      Source\Common\Objects\Persistent\UpgradeInfo.js + ^
+     Source\Common\Objects\Persistent\ResourcesInfo.js + ^
      Source\GeneralInfo.js + Source\Common\UserInfo.js + ^
      Source\Common\CommonUI1.js + Source\Common\CommonUI.js + ^
      Source\Common\Toolbar.js + Source\Common\Tooltip.js + ^

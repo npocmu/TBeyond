@@ -14,6 +14,7 @@ UnitsCountInfo       part of VillageInfo    <server>_<playerid>_VillagesInfo    
 CulturePointsInfo    part of VillageInfo    <server>_<playerid>_VillagesInfo    villageInfo.cpi
 TownHallInfo         part of VillageInfo    <server>_<playerid>_VillagesInfo    villageInfo.thi
 UpgradeInfo          part of VillageInfo    <server>_<playerid>_VillagesInfo    villageInfo.thi
+ResourcesInfo        part of VillageInfo    <server>_<playerid>_VillagesInfo    villageInfo.r
 VillageInfo          part of VillagesInfo   <server>_<playerid>_VillagesInfo    villagesInfo[village_id]
 TrainingInfo         TrainingInfoColl       <server>_<playerid>_<villageid>_TrI trainingInfoColl[building_gid]
 
