@@ -42,13 +42,13 @@ COPY Source\Main0.js + ^
      Source\Common\Lib\Persistence.js + ^
      Source\Common\Cookies.js + Source\Common\CookiesV2.js + ^
      Source\Common\TBCommon.js + Source\Common\Common.js + ^
-     Source\Common\Objects\ConstructionInfo.js + ^
-     Source\Common\Objects\MerchantsUnderwayInfo.js + Source\Common\Objects\MerchantsUnderwayDOMInfo.js + ^
-     Source\Common\Objects\TroopDetailsInfo.js + ^
-     Source\Common\Objects\CulturePointsInfo.js + ^
-     Source\Common\Objects\TownHallInfo.js + ^
-     Source\Common\Objects\TrainingInfo.js + ^
-     Source\Common\Objects\UpgradeInfo.js + ^
+     Source\Common\Objects\Persistent\ConstructionInfo.js + ^
+     Source\Common\Objects\Persistent\MerchantsUnderwayInfo.js + Source\Common\Objects\MerchantsUnderwayDOMInfo.js + ^
+     Source\Common\Objects\Persistent\TroopDetailsInfo.js + ^
+     Source\Common\Objects\Persistent\CulturePointsInfo.js + ^
+     Source\Common\Objects\Persistent\TownHallInfo.js + ^
+     Source\Common\Objects\Persistent\TrainingInfo.js + ^
+     Source\Common\Objects\Persistent\UpgradeInfo.js + ^
      Source\GeneralInfo.js + Source\Common\UserInfo.js + ^
      Source\Common\CommonUI1.js + Source\Common\CommonUI.js + ^
      Source\Common\Toolbar.js + Source\Common\Tooltip.js + ^
