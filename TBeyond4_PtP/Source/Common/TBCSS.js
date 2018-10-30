@@ -298,6 +298,9 @@ IF_TB3({{
    'table#tb_arrm_progress td.tbEvent img {margin:0px 4px;}' +
    'table#tb_arrm_progress td.tbEvent img.tbiMerc {margin:0px;}' +
    'table#tb_arrm_progress td.tbEvent.tbOver, table#tb_arrm_progress td.tbEvent.tbUnder {text-align:center; background-color:' + TB3O.DFc[1] + ';}' +
+   'table#tb_arrm_progress td.tbEvent.tbIncoming {text-align:' + docDir[1] +';}' +
+   'table#tb_arrm_progress td.tbEvent.tbOutcoming {text-align:' + docDir[0] +';}' +
+
    'table#tb_arrm_progress td.tbFillPerc {max-width:30px; padding:2px;}' +
    'table#tb_arrm_progress td.tbCapReached {color:red;' + blink_style + '}' +
    'table#tb_arrm_progress td.tbResourceMeter {padding:0px; min-width:100px;height:18px;}' +
@@ -552,7 +555,8 @@ M4_ECHO_ON
 
    //icons styles
    IF_TB3('img.r0 {width:18px; height:12px; background-image: url(' + image['r0'] + ');}' +)
-   'img.tbiIn {width:12px; height:12px; background-image: url(' + image['dist' + docDir[1].substr(0, 1)] + ');}' +
+   'img.tbiIn  {width:12px; height:12px; background-image: url(' + image['dist' + docDir[1].substr(0, 1)] + ');}' +
+   'img.tbiOut {width:12px; height:12px; background-image: url(' + image['dist' + docDir[0].substr(0, 1)] + ');}' +
    'img.tbiCP {width:18px; height:12px; background-image: url(' + image['cp'] + ');}' +
    'img.tbiHourglass {width:18px; height:12px; background-image: url(' + image['hourglass'] + ');}' +
    'img.tbiCentermap {width:16px; height:16px; background-image: url(' + image['centermap'] + ');}' +

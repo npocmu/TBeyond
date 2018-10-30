@@ -350,6 +350,24 @@ function getCumulativeResourcesInfo(resourcesInfo, ttAccumulate, resToAccumulate
    return state;
 }
 
+//////////////////////////////////////////////////////////////////////
+function getCumulativeResourcesInfoAfterEvent(resourcesInfo, resourcesEvent, prevState /*opt*/)
+{
+   var ri;
+   var resToAccumulate = resourcesEvent.Res;
+
+   if ( !resourcesEvent.bIncoming )
+   {
+      resToAccumulate = cloneArray(resToAccumulate);
+
+      for ( ri = 0; ri < 4; ++ri )
+      {
+         resToAccumulate[ri] = -resToAccumulate[ri];
+      }
+   }
+
+   return getCumulativeResourcesInfo(resourcesInfo, resourcesEvent.ttEnd, resToAccumulate, prevState);
+}
 
 //////////////////////////////////////////////////////////////////////
 function getResInfoTotals()

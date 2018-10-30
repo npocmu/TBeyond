@@ -529,10 +529,9 @@ __DUMP__(TB3O.ActiveVillageInfo.r)
    {
       if ( mu )
       {
-         // if returned merchant has more than one sheduled routes then it would been affect to
-         // resource planning
-         var affectResourcesMerchants = mergeMerchantsUnderwayArrays(mu.i, mu.r.filter(function(muInfo) { return muInfo.xn > 1; }));
-         __DUMP__(affectResourcesMerchants);
+         var resourcesEventsQueue = getMerchantsUnderwayResourcesEventsQueue(mu);
+         sortEventsQueueByTime(resourcesEventsQueue);
+         __DUMP__(resourcesEventsQueue);
 
          if ( TBO_SHOW_ADDINFO_INCOMING_MERC === '1' )
          {
@@ -540,15 +539,15 @@ __DUMP__(TB3O.ActiveVillageInfo.r)
             uiModifyUnderwayTables(mu.o, false);
             uiModifyUnderwayTables(mu.r, true);
 
-            uiModifyArrivalsTables(affectResourcesMerchants);
+            uiModifyArrivalsTables(resourcesEventsQueue);
          }
 
-         if ( affectResourcesMerchants.length > 0 )
+         if ( resourcesEventsQueue.length > 0 )
          {
             var merchantGroup = $xf("//div[@id='build' and contains(@class,'gid17')]//h4");
 
             //create table to sum the resources
-            var aTb = uiCreateCumulativeArrivalsTable(merchantGroup.textContent.replace(":", "").toLowerCase(), affectResourcesMerchants);
+            var aTb = uiCreateCumulativeArrivalsTable(merchantGroup.textContent.replace(":", "").toLowerCase(), resourcesEventsQueue);
             if ( aTb ) 
             {
                insertAfter(merchantGroup, aTb);
@@ -743,9 +742,10 @@ __DUMP__(TB3O.ActiveVillageInfo.r)
 
    //-----------------------------------------------------------------
    // create table for arrival progress about resource
-   function uiAddArrivalsProgressTable(rollDownCtrl, id, ri, incomingMerchants)
+   function uiAddArrivalsProgressTable(rollDownCtrl, id, ri, resourcesEventsQueue)
    {
       var imgIncoming = I("tbiIn");
+      var imgOutcoming = I("tbiOut");
       var imgMerchant = I("merchant");
 
       function onClose()
@@ -820,7 +820,7 @@ __DUMP__(TB3O.ActiveVillageInfo.r)
                       [
                          $e("thead",null,[
                             $r($th([['class', 'tbTitle'],['colspan','6']],[
-                                                   T("ARRP", T("RES" + (ri+1)), countIf(incomingMerchants,function(v) { return v.Res[ri] > 0; })),
+                                                   T("ARRP", T("RES" + (ri+1)), countIf(resourcesEventsQueue,function(v) { return v.Res[ri] !== 0; })),
                                                    $div(['class', 'closediv'],uiCreateTool("bClose",T('CLOSE'),onClose))])),
                             $r(null,[
                                $th(I("clock")),
@@ -834,22 +834,31 @@ __DUMP__(TB3O.ActiveVillageInfo.r)
 
          var i;
          var resourcesInfo = cloneResourcesInfo(TB3O.ActiveVillageInfo.r);
-         var merchantUnderwayInfo, state;
-         for ( i = 0; i < incomingMerchants.length; ++i )
+         var resourcesEvent, state;
+         for ( i = 0; i < resourcesEventsQueue.length; ++i )
          {
-            if ( incomingMerchants[i].Res[ri] > 0 )
+            if ( resourcesEventsQueue[i].Res[ri] !== 0 )
             {
-               merchantUnderwayInfo = incomingMerchants[i];
-               state = getCumulativeResourcesInfo(resourcesInfo, merchantUnderwayInfo.ttArrival, merchantUnderwayInfo.Res);
+               resourcesEvent = resourcesEventsQueue[i];
+               state = getCumulativeResourcesInfoAfterEvent(resourcesInfo, resourcesEvent);
                addChildren(aBody,uiCreateUnderOverrunProgressRow(resourcesInfo, ri, state.BA));
-               var eventCell = $td(['class', 'tbEvent'], [$span($ls(merchantUnderwayInfo.Res[ri])),imgIncoming.cloneNode(true),imgMerchant.cloneNode(true)]);
+               var eventCell = $td(['class', 'tbEvent ' + (( resourcesEvent.bIncoming ) ? 'tbIncoming':'tbOutcoming')]);
+               if ( resourcesEvent.bIncoming )
+               {
+                  addChildren(eventCell,[$span($ls(resourcesEvent.Res[ri])),imgIncoming.cloneNode(true),imgMerchant.cloneNode(true)])
+               }
+               else
+               {
+                  addChildren(eventCell,[imgMerchant.cloneNode(true),imgOutcoming.cloneNode(true),$span($ls(resourcesEvent.Res[ri]))])
+               }
+
                aBody.appendChild(uiCreateProgressRow(resourcesInfo, ri, eventCell, state.A));
             }
          }
 
-         if ( merchantUnderwayInfo )
+         if ( resourcesEvent )
          {
-            state = getCumulativeResourcesInfo(resourcesInfo, merchantUnderwayInfo.ttArrival, [0,0,0,0]);
+            state = getCumulativeResourcesInfo(resourcesInfo, resourcesEvent.ttEnd, [0,0,0,0]);
             aBody.appendChild(uiCreateUnderOverrunProgressRow(resourcesInfo, ri, state.AA));
          }
 
@@ -860,7 +869,8 @@ __DUMP__(TB3O.ActiveVillageInfo.r)
 
    //-----------------------------------------------------------------
    // create table to sum the resources
-   function uiCreateCumulativeArrivalsTable(title, incomingMerchants)
+   // resourcesEventsQueue must have at least one record
+   function uiCreateCumulativeArrivalsTable(title, resourcesEventsQueue)
    {
       //--------------------------------------------------------------
       function onChangeRollDownState(ri,e)
@@ -882,7 +892,7 @@ __DUMP__(TB3O.ActiveVillageInfo.r)
                }
             }
             dtNow = getDesiredTimeNow();
-            uiAddArrivalsProgressTable(rxProgress[ri], id, ri ,incomingMerchants);
+            uiAddArrivalsProgressTable(rxProgress[ri], id, ri, resourcesEventsQueue);
          }
          else 
          {
@@ -897,22 +907,23 @@ __DUMP__(TB3O.ActiveVillageInfo.r)
       var i;
       var totRes = [0, 0, 0, 0];
       var resourcesInfo = cloneResourcesInfo(TB3O.ActiveVillageInfo.r);
+      var eventsCount = resourcesEventsQueue.length;
       var state;
 
-      for ( i = 0; i < incomingMerchants.length; ++i )
+      for ( i = 0; i < eventsCount; ++i )
       {
-         var merchantUnderwayInfo = incomingMerchants[i];
-         accumulateResources(totRes, merchantUnderwayInfo.Res);
-         state = getCumulativeResourcesInfo(resourcesInfo, merchantUnderwayInfo.ttArrival, merchantUnderwayInfo.Res, state);
+         var resourcesEvent = resourcesEventsQueue[i];
+         accumulateResources(totRes, resourcesEvent.Res);
+         state = getCumulativeResourcesInfoAfterEvent(resourcesInfo, resourcesEvent, state);
       }
-      var ttLastArrival = incomingMerchants[i-1].ttArrival;
+      var ttLastArrival = resourcesEventsQueue[eventsCount-1].ttEnd;
 
       var armTable, armBody;
       armTable = $t([attrInject$, ['id','tb_arrm']],
                        armBody = $e("tbody",
                            $r(
                               $td([['class', 'cbgx'], ['colspan', '6']],
-                                  T('SUMMARY') + " - " + title + " (" + mu.i.length + ")"))));
+                                  T('SUMMARY') + " - " + title + " (" + eventsCount + ")"))));
 
       var tsCell = uiSetTimeSpanByDate($td(), dtNow, getDesiredTime(ttLastArrival), {format:1});
       var rRow = $r($th(I("hourglass")));
@@ -1020,7 +1031,7 @@ __DUMP__(TB3O.ActiveVillageInfo.r)
    }
 
    //-----------------------------------------------------------------
-   function uiModifyArrivalsTables(incomingMerchants)
+   function uiModifyArrivalsTables(resourcesEventsQueue)
    {
       __ENTER__
 
@@ -1028,36 +1039,28 @@ __DUMP__(TB3O.ActiveVillageInfo.r)
       {
          var resourcesInfo = cloneResourcesInfo(TB3O.ActiveVillageInfo.r);
          var i;
-         for ( i = 0; i < incomingMerchants.length; ++i )
+         for ( i = 0; i < resourcesEventsQueue.length; ++i )
          {
-            var resTb, resTbRow;
-            var merchantUnderwayInfo = incomingMerchants[i];
+            var resourcesEvent = resourcesEventsQueue[i];
+            var merchantUnderwayInfo = resourcesEvent.details;
+            var state = getCumulativeResourcesInfoAfterEvent(resourcesInfo, resourcesEvent);
+
             var aTb = $g(MerchantsUnderwayDOMInfo.getId(merchantUnderwayInfo));
 
             if ( aTb )
             {
+               var resTb, resTbRow;
+
                addClass(aTb,"tbIncomingMerc");
                aTb.appendChild(
                   $e("tbody",attrInject$,
                      $r(null,[
-                        $td([['class', 'tbArrivalT']],[I("clock"),$span(" " + formatDateTime(dtNow,getDesiredTime(merchantUnderwayInfo.ttArrival),2))]),
+                        $td([['class', 'tbArrivalT']],[I("clock"),$span(" " + formatDateTime(dtNow,getDesiredTime(resourcesEvent.ttEnd),1))]),
                         $td([['class', 'tbArrivalRes'],['colspan', '2']], 
                            resTb = $t([['rules', 'cols']],
                               resTbRow = $r()))
                      ]))
                );   
-
-               var res = merchantUnderwayInfo.Res;
-               if ( merchantUnderwayInfo.type === 'r' )
-               {
-                  res = cloneArray(res);
-                  res[0] = -res[0];
-                  res[1] = -res[1];
-                  res[2] = -res[2];
-                  res[3] = -res[3];
-               }
-
-               var state = getCumulativeResourcesInfo(resourcesInfo, merchantUnderwayInfo.ttArrival, res);
 
                var uthen = floorResources(cloneArray(resourcesInfo.Res)); 
                var ri;
