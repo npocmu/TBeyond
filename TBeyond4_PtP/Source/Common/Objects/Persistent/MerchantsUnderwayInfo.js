@@ -68,7 +68,7 @@ function MerchantsUnderwayInfo()
 function getMerchantsUnderwayResourcesEventsQueue(merchantsUnderwayInfo)
 {
    var resourcesEventsQueue = [];
-   var k, merchantUnderwayInfo, resourcesEvent;
+   var ttServer = toTimeStamp(TB3O.serverTime);
 
    function resolveRoutes(merchantUnderwayInfo, bIncoming, halfRoutesDone)
    {
@@ -83,19 +83,29 @@ function getMerchantsUnderwayResourcesEventsQueue(merchantsUnderwayInfo)
          {
             var xDist = qDist * (remain_route*2 - halfRoutesDone);
             var ttEnd = merchantUnderwayInfo.ttArrival + getMerchantTime(xDist, race) * 1000;
-            resourcesEvent = new ResourcesEvent(merchantUnderwayInfo.Res, bIncoming, ttEnd, merchantUnderwayInfo);
-            resourcesEventsQueue.push(resourcesEvent);
+            if ( ttEnd > ttServer )
+            {
+               var resourcesEvent = new ResourcesEvent(merchantUnderwayInfo.Res, bIncoming, ttEnd, merchantUnderwayInfo);
+               resourcesEventsQueue.push(resourcesEvent);
+            }
          }
       }
    }
+
+   var k, merchantUnderwayInfo, resourcesEvent;
 
    // copy incoming merchants to events and resolve sheduled routes only for own merchants
    // (its hard to detect race for other merchants and accurate calculate timestamps for events)
    for ( k = 0; k < merchantsUnderwayInfo.i.length; ++k )
    {
       merchantUnderwayInfo = merchantsUnderwayInfo.i[k];
-      resourcesEvent = new ResourcesEvent(merchantUnderwayInfo.Res, true, merchantUnderwayInfo.ttArrival, merchantUnderwayInfo);
-      resourcesEventsQueue.push(resourcesEvent);
+
+      if ( merchantUnderwayInfo.ttArrival > ttServer )
+      {
+         resourcesEvent = new ResourcesEvent(merchantUnderwayInfo.Res, true, merchantUnderwayInfo.ttArrival, merchantUnderwayInfo);
+         resourcesEventsQueue.push(resourcesEvent);
+      }
+
       if ( merchantUnderwayInfo.own_id == TB3O.UserID )
       {
          resolveRoutes(merchantUnderwayInfo, true, 0);
@@ -119,57 +129,3 @@ function getMerchantsUnderwayResourcesEventsQueue(merchantsUnderwayInfo)
 
    return resourcesEventsQueue;
 }
-
-
-/////////////////////////////////////////////////////////////////////
-// Merge together two arrays muArr1 and muArr2 with MerchantUnderwayInfo object
-// Return: merged array. Returned array will be sorted in order of ttArrival increase
-function mergeMerchantsUnderwayArrays(muArr1, muArr2)
-{
-   var i1 = 0, i2 = 0;
-   var len1 = muArr1.length, len2 = muArr2.length;
-   var ttArrival1,ttArrival2;
-   var muMergedArr = [];
-
-   do
-   {
-      ttArrival1 = (i1 < len1) ? muArr1[i1].ttArrival : Infinity;
-      ttArrival2 = (i2 < len2) ? muArr2[i2].ttArrival : Infinity;
-      // console.log(i1,ttArrival1,i2,ttArrival2);
-
-      if ( ttArrival1 < ttArrival2 )
-      {
-         muMergedArr.push(muArr1[i1++]);
-      }
-      else if ( ttArrival2 !== Infinity )
-      {
-         muMergedArr.push(muArr2[i2++]);
-      }
-
-   } while ( ttArrival1 !== Infinity || ttArrival2 !== Infinity )
-
-   return muMergedArr;
-}
-
-/*
-
-var a1 = []
-a1.push({ttArrival:100})
-
-var a2 = []
-a2.push({ttArrival:200})
-
-var a3 = []
-a3.push({ttArrival:100})
-a3.push({ttArrival:200})
-a3.push({ttArrival:300})
-
-console.log(mergeMerchantsUnderwayArrays([],[]))
-console.log(mergeMerchantsUnderwayArrays(a1,[]))
-console.log(mergeMerchantsUnderwayArrays([],a2))
-console.log(mergeMerchantsUnderwayArrays(a1,a2))
-console.log(mergeMerchantsUnderwayArrays(a2,a1))
-console.log('--------');
-console.log(mergeMerchantsUnderwayArrays(a3,a1))
-console.log(mergeMerchantsUnderwayArrays(a3,a2))
-*/
