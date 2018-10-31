@@ -85,16 +85,29 @@ function savePersistentVillageObject(aName, aValue, aKey /*opt*/, villageId /*op
 function PersistentVillageCache(aName)
 {
    this.n = aName;
-   this.o = {};
+   this.o = Object.create(null);
 }
 
 /////////////////////////////////////////////////////////////////////
-PersistentVillageCache.prototype.load = function (villageId)
+// Return information about village @villageId (or about current village if @villageId is absent)
+// from cache. If no info in cache then load it from persistent storage, save it in cache and return. 
+// If no info in persistent storage founded then return an empty object.
+PersistentVillageCache.prototype.load = function (villageId /*opt*/)
 {
-   var info = this.o[villageId]; 
-   if ( !info )
+   var info;
+
+   if ( villageId === undefined ) 
    {
-      __LOG__(8,"Cashe missing object tagged '" + this.n + "' for village " + villageId + " ('" + TB3O.VillagesInfo[villageId].name + "')")
+      villageId = TB3O.ActiveVillageId;
+   }
+
+   if ( hasOwnProperty(this.o, villageId) )
+   {
+      info = this.o[villageId]; 
+   }
+   else
+   {
+      __LOG__(8,"Cache miss an object tagged '" + this.n + "' for village " + villageId + " ('" + TB3O.VillagesInfo[villageId].name + "')")
       info = loadPersistentVillageObject(this.n, {}, villageId);
       this.o[villageId] = info;
    }
@@ -102,9 +115,36 @@ PersistentVillageCache.prototype.load = function (villageId)
 }
 
 /////////////////////////////////////////////////////////////////////
-PersistentVillageCache.prototype.flush = function (villageId)
+// Put information @info about village @villageId (or about current village if @villageId is absent)
+// into the cache. Note that `set` not save it in persistent storage automatically, you need to call `flush` later.
+PersistentVillageCache.prototype.set = function (info, villageId /*opt*/)
 {
-   savePersistentVillageObject(this.n, this.o[villageId], null, villageId);
+   if ( villageId === undefined ) 
+   {
+      villageId = TB3O.ActiveVillageId;
+   }
+
+   this.o[villageId] = info;
+
+   return info;
+}
+
+/////////////////////////////////////////////////////////////////////
+// Flush cache content about village @villageId (or about current village if @villageId is absent)
+// to persistent storage. If cache miss data about village then function do nothing
+PersistentVillageCache.prototype.flush = function (villageId /*opt*/)
+{
+   if ( villageId === undefined ) 
+   {
+      villageId = TB3O.ActiveVillageId;
+   }
+
+   if ( hasOwnProperty(this.o, villageId) )
+   {
+      var info = this.o[villageId]; 
+
+      savePersistentVillageObject(this.n, info, null, villageId);
+   }
 }
 
 

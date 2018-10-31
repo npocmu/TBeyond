@@ -416,6 +416,17 @@ function accumulateArray(a1, a2)
    return a1;
 }
 
+//////////////////////////////////////////////////////////////////////
+// More fault tolerance version of standart function.
+// Example:
+//    var o = Object.create(NULL)
+//        o.hasOwnProperty("zzz"); // not work!
+//        hasOwnProperty(o,"zzz"); // work perfectly
+function hasOwnProperty(obj,prop)
+{
+   return obj && Object.prototype.hasOwnProperty.call(obj,prop);
+}
+
 /////////////////////////////////////////////////////////////////////
 function cloneObject(obj)
 {
