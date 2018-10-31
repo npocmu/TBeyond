@@ -246,26 +246,3 @@ function getTrainingInfoView(trainingInfo)
 }})
 
 
-/////////////////////////////////////////////////////////////////////
-// load (if need) TrainingInfo collection for given villageId, and return it
-/*
-function casheTrainingInfoColl(villageId)
-{
-   if ( !TB3O.VillagesTrInfo ) { TB3O.VillagesTrInfo = {}; }
-
-   var trainingInfoColl = TB3O.VillagesTrInfo[villageId]; 
-   if ( !trainingInfoColl )
-   {
-      __LOG__(8,"Cashe missing object 'Training Info' for village " + villageId + " ('" + TB3O.VillagesInfo[villageId].name + "')")
-      trainingInfoColl = loadPersistentVillageObject("TrI", {}, villageId);
-      TB3O.VillagesTrInfo[villageId] = trainingInfoColl;
-   }
-   return trainingInfoColl;
-}
-
-/////////////////////////////////////////////////////////////////////
-function flushTrainingInfoColl(villageId)
-{
-   savePersistentVillageObject("TrI", TB3O.VillagesTrInfo[villageId], null, villageId);
-}
-*/
