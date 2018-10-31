@@ -30,9 +30,10 @@ function __isLikeToArray(o)
 //////////////////////////////////////////////////////////////////////
 // Add the children element(s) to the node
 //   call syntax:
-//   1)   addChildren(parent, "data")  - add text node to parent
-//   2)   addChildren(parent, node)    - add node to parent
+//   1)   addChildren(parent, "data")  - add text node to the parent
+//   2)   addChildren(parent, node)    - add node to the parent
 //   3)   addChildren(parent, [node, [node1,node2], "data"])
+//           - add node, node1, node2 and text node to the parent
 function addChildren(node, children)
 {
    if ( children )

@@ -845,11 +845,11 @@ __DUMP__(TB3O.ActiveVillageInfo.r)
                var eventCell = $td(['class', 'tbEvent ' + (( resourcesEvent.bIncoming ) ? 'tbIncoming':'tbOutcoming')]);
                if ( resourcesEvent.bIncoming )
                {
-                  addChildren(eventCell,[$span($ls(resourcesEvent.Res[ri])),imgIncoming.cloneNode(true),imgMerchant.cloneNode(true)])
+                  addChildren(eventCell,[imgMerchant.cloneNode(true),imgIncoming.cloneNode(true),$span($ls(resourcesEvent.Res[ri]))]);
                }
                else
                {
-                  addChildren(eventCell,[imgMerchant.cloneNode(true),imgOutcoming.cloneNode(true),$span($ls(resourcesEvent.Res[ri]))])
+                  addChildren(eventCell,[$span($ls(resourcesEvent.Res[ri])),imgOutcoming.cloneNode(true),imgMerchant.cloneNode(true)]);
                }
 
                aBody.appendChild(uiCreateProgressRow(resourcesInfo, ri, eventCell, state.A));
@@ -872,6 +872,9 @@ __DUMP__(TB3O.ActiveVillageInfo.r)
    // resourcesEventsQueue must have at least one record
    function uiCreateCumulativeArrivalsTable(title, resourcesEventsQueue)
    {
+      var imgIncoming = I("tbiIn");
+      var imgOutcoming = I("tbiOut");
+
       //--------------------------------------------------------------
       function onChangeRollDownState(ri,e)
       {
@@ -903,9 +906,30 @@ __DUMP__(TB3O.ActiveVillageInfo.r)
       }
 
       //--------------------------------------------------------------
+      function uiCreateTotalResourceCell(resIn, resOut)
+      {
+         var qCell = $td(['class', 'tbTotal']);
+         if ( resIn > 0 )
+         {
+            addChildren(qCell,[imgIncoming.cloneNode(true),$span(['class','tbIncoming'],$ls(resIn))]);
+            if ( resOut > 0 ) 
+            {
+               qCell.appendChild($e("br"));
+            }
+         }
+
+         if ( resOut )
+         {
+            addChildren(qCell,[$span(['class','tbOutcoming'],$ls(resOut)),imgOutcoming.cloneNode(true)])
+         }
+
+         return qCell;
+      }
+
+      //--------------------------------------------------------------
       __ENTER__
       var i;
-      var totRes = [0, 0, 0, 0];
+      var totResIncoming = [0, 0, 0, 0], totResOutcoming = [0, 0, 0, 0];
       var resourcesInfo = cloneResourcesInfo(TB3O.ActiveVillageInfo.r);
       var eventsCount = resourcesEventsQueue.length;
       var state;
@@ -913,7 +937,7 @@ __DUMP__(TB3O.ActiveVillageInfo.r)
       for ( i = 0; i < eventsCount; ++i )
       {
          var resourcesEvent = resourcesEventsQueue[i];
-         accumulateResources(totRes, resourcesEvent.Res);
+         accumulateResources( ( resourcesEvent.bIncoming ) ? totResIncoming:totResOutcoming, resourcesEvent.Res);
          state = getCumulativeResourcesInfoAfterEvent(resourcesInfo, resourcesEvent, state);
       }
       var ttLastArrival = resourcesEventsQueue[eventsCount-1].ttEnd;
@@ -938,21 +962,21 @@ __DUMP__(TB3O.ActiveVillageInfo.r)
          if ( xi < 4 )
          {
             rxProgress[xi] = null;
-            if ( totRes[xi] > 0 ) 
+            if ( totResIncoming[xi] > 0 || totResOutcoming[xi] > 0 ) 
             {
                rxProgress[xi] = uiCreateRollDownControl(false,T("ARRP_TT",T("RES" + (xi+1))));
                rxProgress[xi].addEventListener('change', bind2(onChangeRollDownState,[xi]), false);
             }
 
             rCell = $th(null, [I("r" + (xi+1)), rxProgress[xi]]);
-            qCell = $td([['class', 'tbTotal']],$ls(totRes[xi]));
+            qCell = uiCreateTotalResourceCell(totResIncoming[xi], totResOutcoming[xi]);
             var cls = ( state.AA.ttf[xi] <= ttLastArrival ) ? getUnderOverrunClass(state.AA.ev[xi]) : '';
             tCell = uiSetTimeoutByDate($td([['class', cls]]), dtNow, getDesiredTime(state.AA.ttf[xi]), resourcesInfo.EPpH[xi], {format:1});
          }
          else
          {
             rCell = $th(I("r0"));
-            qCell = $td([['class', 'tbTotal']],$ls(totalResources(totRes)));
+            qCell = uiCreateTotalResourceCell(totalResources(totResIncoming), totalResources(totResOutcoming));
             tCell = $td();
          }
          rRow.appendChild(rCell);
