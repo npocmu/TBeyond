@@ -286,7 +286,7 @@ function getMerchantsUnderwayGroup(MUInfo, villageInfo, aDoc, aGroupHeader, bInc
             }
 
             var mui = new MerchantUnderwayInfo(ownerId, ownerName, recipientId, recipientName,
-                                               srcMapId, destMapId, ttArrival, Res, xn, type);
+                                               srcMapId, destMapId, ttArrival, Res, xn);
             MUInfo[type].push(mui);
 
             if ( !bReadOnly ) 
@@ -325,10 +325,14 @@ function processMarketSend()
    processMarketSend.moC = searchMerchantsCountContainer();
    parseMerchantsCount(processMarketSend.moC);
 
-   processMarketSend.MU = getMerchantsUnderway(TB3O.ActiveVillageId, document, toTimeStamp(TB3O.serverTime), false);
-   __ASSERT__(processMarketSend.MU,"Can't parse merchants underway info")
+   var mu = getMerchantsUnderway(TB3O.ActiveVillageId, document, toTimeStamp(TB3O.serverTime), false);
+   __ASSERT__(mu,"Can't parse merchants underway info")
 
-   //savePersistentVillageObject("MU", processMarketSend.MU);
+   if ( mu )
+   {
+      TB3O.VillagesMUInfo.set(mu);
+      TB3O.VillagesMUInfo.flush();
+   }
 
    __EXIT__
 }
@@ -348,7 +352,7 @@ function uiModifyMarketSend()
    var resTb = searchMarketSendResTable();
    var sendResTable = new SendResTable(resTb,uiOptions);
 
-   var mu = processMarketSend.MU;
+   var mu = TB3O.VillagesMUInfo.load();
    var destinationPicker;
 
    //-------------------------------------------------------------
@@ -531,7 +535,7 @@ __DUMP__(TB3O.ActiveVillageInfo.r)
       {
          var resourcesEventsQueue = getMerchantsUnderwayResourcesEventsQueue(mu);
          sortEventsQueueByTime(resourcesEventsQueue);
-         __DUMP__(resourcesEventsQueue);
+         //__DUMP__(resourcesEventsQueue);
 
          if ( TBO_SHOW_ADDINFO_INCOMING_MERC === '1' )
          {
@@ -840,7 +844,7 @@ __DUMP__(TB3O.ActiveVillageInfo.r)
             if ( resourcesEventsQueue[i].Res[ri] !== 0 )
             {
                resourcesEvent = resourcesEventsQueue[i];
-               state = getCumulativeResourcesInfoAfterEvent(resourcesInfo, resourcesEvent);
+               state = getCumulativeResourcesInfoAfterEvent(resourcesInfo, resourcesEvent, state);
                addChildren(aBody,uiCreateUnderOverrunProgressRow(resourcesInfo, ri, state.BA));
                var eventCell = $td(['class', 'tbEvent ' + (( resourcesEvent.bIncoming ) ? 'tbIncoming':'tbOutcoming')]);
                if ( resourcesEvent.bIncoming )
@@ -1062,12 +1066,13 @@ __DUMP__(TB3O.ActiveVillageInfo.r)
       if ( TB3O.ActiveVillageInfo.r.dUpd !== undefined )
       {
          var resourcesInfo = cloneResourcesInfo(TB3O.ActiveVillageInfo.r);
-         var i;
+         var i, state;
+
          for ( i = 0; i < resourcesEventsQueue.length; ++i )
          {
             var resourcesEvent = resourcesEventsQueue[i];
             var merchantUnderwayInfo = resourcesEvent.details;
-            var state = getCumulativeResourcesInfoAfterEvent(resourcesInfo, resourcesEvent);
+            state = getCumulativeResourcesInfoAfterEvent(resourcesInfo, resourcesEvent, state);
 
             var aTb = $g(MerchantsUnderwayDOMInfo.getId(merchantUnderwayInfo));
 

@@ -289,6 +289,7 @@ IF_TB3({{
 */
    'table#tb_arrm td.tbTotal .tbiIn {margin-top:2px; margin-' + docDir[0] + ':5px; float:' + docDir[0] + ';}' +
    'table#tb_arrm td.tbTotal .tbiOut {margin-top:2px; margin-' + docDir[1] + ':5px; float:' + docDir[1] + ';}' +
+   // padding = image margin + image width
    'table#tb_arrm td.tbTotal .tbIncoming {padding-' + docDir[1] + ':17px;}' +
    'table#tb_arrm td.tbTotal .tbOutcoming {padding-' + docDir[0] + ':17px;}' +
    'table#tb_arrm .tbTimeout.tbOver.tbSoon,' +

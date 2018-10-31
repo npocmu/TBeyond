@@ -45,6 +45,7 @@
    TB3O.ActiveVillageInfo = undefined; // shortcut for TB3O.VillagesInfo[TB3O.ActiveVillageId]
 
    TB3O.VillagesTrInfo = new PersistentVillageCache("TrI"); // cache for training info
+   TB3O.VillagesMUInfo = new PersistentVillageCache("MUI"); // cache for merchants underway
    //TB3O.VillagesRPInfo = new PersistentVillageCache("RPI"); // cache for rally point info
 
    TB3O.UserID = '0';

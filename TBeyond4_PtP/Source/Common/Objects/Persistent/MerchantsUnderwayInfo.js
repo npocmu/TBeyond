@@ -15,14 +15,10 @@ MerchantUnderwayInfo
 
    own_n:     string    - user name for merchant owner
    rec_n:     string    - user name for merchant recepient
-
-   type:      char      - 'i' - incoming merchant
-                          'o' - outgoing merchant
-                          'r' - returning merchant
 }
 */
 function MerchantUnderwayInfo(ownerId, ownerName, recepientId, recepientName,
-                              srcMapId, destMapId, ttArrival, res, xn, type)
+                              srcMapId, destMapId, ttArrival, res, xn)
 {
    this.Res  = res; 
    this.ttArrival = ttArrival;
@@ -37,8 +33,6 @@ function MerchantUnderwayInfo(ownerId, ownerName, recepientId, recepientName,
 
    this.own_n = ownerName; 
    this.rec_n = recepientName; 
-
-   this.type = type;
 
    return this;
 }
