@@ -258,6 +258,8 @@ function getActualResourcesInfoNow(r, doFloor)
 // }
 function getCumulativeResourcesInfo(resourcesInfo, ttAccumulate, resToAccumulate, prevState /*opt*/)
 {
+   // fill @st fields ttf and ev bases on estimate production of resources fro @r in
+   // time range [r.dUpd,ttMax]
    function fillStateTTF(r, st, ttMax, stA)
    {
       var ttStart = r.dUpd.getTime();
@@ -317,7 +319,7 @@ function getCumulativeResourcesInfo(resourcesInfo, ttAccumulate, resToAccumulate
    {
       state.BA.ru = cloneArray(prevState.AA.ru);
       state.BA.ro = cloneArray(prevState.AA.ro);
-      state.BA.ttf = cloneArray(prevState.AA.ttf);
+      state.BA.ttf= cloneArray(prevState.AA.ttf);
       state.BA.ev = cloneArray(prevState.AA.ev);
    }
    else
@@ -331,6 +333,7 @@ function getCumulativeResourcesInfo(resourcesInfo, ttAccumulate, resToAccumulate
    if ( tms > 0 )
    {
       ar = getActualResourcesAfterMs(resourcesInfo, tms);
+      __DUMP__(ar)
       fillStateTTF(resourcesInfo, state.BA, ttAccumulate);
       fillStateRUO(resourcesInfo, state.BA, ar);
    }
@@ -349,6 +352,39 @@ function getCumulativeResourcesInfo(resourcesInfo, ttAccumulate, resToAccumulate
 
    return state;
 }
+
+M4_DEBUG({{
+/////////////////////////////////////////////////////////////////////
+// Debug!!!
+function getCumulativeResourcesStateView(state, ri) 
+{
+   function getStView(st) 
+   { 
+      var str = "";
+      str += "Under: " + st.ru[ri];
+      str += ", over: " + st.ro[ri];
+      str += ", event: " + ((st.ev[ri] === null) ? "none" : ((st.ev[ri] ) ? "fill storage" : "exhaust storage" ));
+      if ( st.ttf )
+      {
+         str += ", ttf: " + (isFinite(st.ttf[ri]) ? toDate(st.ttf[ri]) : "unknown");
+      }
+      str += "\n";
+
+      return str; 
+   }
+
+   var str = "\n";
+
+   str += "Cumulative state before accumulation:\n"
+   str += getStView(state.BA);
+   str += "Accumulation state:\n"
+   str += getStView(state.A);
+   str += "Cumulative state after accumulation:\n"
+   str += getStView(state.AA);
+
+   return str;
+}
+}})
 
 //////////////////////////////////////////////////////////////////////
 function getCumulativeResourcesInfoAfterEvent(resourcesInfo, resourcesEvent, prevState /*opt*/)

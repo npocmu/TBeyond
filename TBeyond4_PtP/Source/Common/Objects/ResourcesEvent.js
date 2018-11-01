@@ -45,3 +45,17 @@ function sortEventsQueueByTime(evQueue)
    return evQueue;
 }
 
+M4_DEBUG({{
+/////////////////////////////////////////////////////////////////////
+// Debug!!!
+function getResourcesEventView(resourcesEvent, ri) 
+{
+   var str = "\n";
+
+   str += "Event [" + toDate(resourcesEvent.ttEnd) + "]: ";
+   str +=  ( resourcesEvent.bIncoming ) ? "income +" : "outcome -";
+   str += resourcesEvent.Res[ri];
+
+   return str;
+}
+}})
