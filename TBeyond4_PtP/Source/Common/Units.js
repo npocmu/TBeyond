@@ -203,7 +203,14 @@ function getTroopNoByIndex(troopsInfo, tix)
 //  }
 function calcTroopsTotals(troopsInfo,villageId/*opt*/)
 {
+   var upgradeLevels;
    var tNinfo = [0,0,0,0,0,0,0,0,Infinity,0];
+
+   if ( villageId )
+   {
+      upgradeLevels = TB3O.VillagesInfo[villageId].upi.uul;
+   }
+
    var i,j;
    for ( i = 0; i < troopsInfo.length; i++ )
    {

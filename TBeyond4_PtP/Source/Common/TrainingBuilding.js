@@ -444,10 +444,10 @@ function uiModifyTrainingBuilding(gid)
       function uiCreateCountTip(tInfo,e)
       {
          var tip = null;
-         var count = parseInt10(e.target.textContent);
+         var count = parseSeparatedInt10(e.target.textContent);
          if ( isIntValid(count) && count > 0 )
          {
-            tip = uiCreateTroopInfoTooltip2(tInfo,count);
+            tip = uiCreateTroopInfoTooltip2(tInfo,count,TB3O.ActiveVillageId);
          }
          return tip;
       }
