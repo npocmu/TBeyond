@@ -8,6 +8,12 @@
 // @identifier 	http://userscripts.org/scripts/show/TB_USO_NO.user.js
 // @copyright	© npocmu 2011-2013,2018, © Black_Cat 2010 © ms99, 2008-2010 (parts of this script © Nux, Lux, onetmt, Velonis Petros, Richard Laffers, Szabka, Victor Garcia-aka Croc-)
 // @license 	Creative Commons Attribution-Noncommercial-Share Alike 3.0 Germany License
+// @grant 	GM_getValue
+// @grant 	GM_setValue
+// @grant 	GM_deleteValue
+// @grant 	GM_log
+// @grant 	GM_addStyle
+// @grant 	GM_xmlhttpRequest
 // @include 	*://*.travian*.*/*.php*
 // @exclude 	*://*.travian*.*/
 // @exclude 	*://*.travian*.*/hilfe.php*
