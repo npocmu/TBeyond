@@ -351,6 +351,10 @@ function uiModifyMarketSend()
    var uiOptions = new MarketSendUIOptions();
    var resTb = searchMarketSendResTable();
    var sendResTable = new SendResTable(resTb,uiOptions);
+   var formular = __TEST__($g("merchantsOnTheWayFormular")); 
+   var formularObserver = new MutationObserver(onMerchantsUnderwayModified);
+   var div_button = __TEST__($g("button"));
+   var destinationObserver = new MutationObserver(onMerchantsDestinationModified);
 
    var mu = TB3O.VillagesMUInfo.load();
    var destinationPicker;
@@ -458,31 +462,23 @@ function uiModifyMarketSend()
 
    uiModifyMerchantsUnderway();
 
-   IF_TB4({{  // new AJAX style market
-   var formular = __TEST__($g("merchantsOnTheWayFormular")); 
    if ( formular )
    {
-      formular.addEventListener("DOMSubtreeModified", onMerchantsUnderwayModified, false);
-   }
-   var div_button = __TEST__($g("button"));
-   if ( div_button )
-   {
-      div_button.addEventListener("DOMSubtreeModified", onMerchantsDestinationModified, false);
+      formularObserver.observe(formular, {childList:true});
    }
 
-   }})
+   if ( div_button )
+   {
+      destinationObserver.observe(div_button, {childList:true});
+   }
 
    __EXIT__
 
-   IF_TB4({{
    //-----------------------------------------------------------------
-   function onMerchantsUnderwayModified(e)
+   function onMerchantsUnderwayModified(mutationList,mutationObserver)
    {
-      if ( e.eventPhase === 2 && e.target === e.currentTarget )
-      {
-         e.currentTarget.removeEventListener("DOMSubtreeModified", onMerchantsUnderwayModified, false);
-         setTimeout(uiRefreshMerchantsUnderway,0);
-      }
+      mutationObserver.disconnect();
+      setTimeout(uiRefreshMerchantsUnderway,0);
    }
 
    //-----------------------------------------------------------------
@@ -502,7 +498,7 @@ function uiModifyMarketSend()
       uiModifyLinks(formular);
       refreshSupplement(TB3O.ActiveVillageId);
 
-      formular.addEventListener("DOMSubtreeModified", onMerchantsUnderwayModified, false);
+      formularObserver.observe(formular, {childList:true});
       __EXIT__
    }
 
@@ -511,25 +507,23 @@ function uiModifyMarketSend()
    {
       __ENTER__
       initMerchantsDestination();
-      div_button.addEventListener("DOMSubtreeModified", onMerchantsDestinationModified, false);
+      destinationObserver.observe(div_button, {childList:true});
       __EXIT__
    }
 
    //-----------------------------------------------------------------
    function onMerchantsDestinationModified(e)
    {
-      if ( e.eventPhase === 2 && e.target === e.currentTarget )
-      {
-         e.currentTarget.removeEventListener("DOMSubtreeModified", onMerchantsDestinationModified, false);
-         setTimeout(uiRefreshMerchantsDestination,0);
-      }
+      destinationObserver.disconnect();
+      setTimeout(uiRefreshMerchantsDestination,0);
    }
-
-   }})
 
    //-------------------------------------------------------------
    function uiModifyMerchantsUnderway()
    {
+      removeElement($g("tb_arrm_progress"));
+      removeElement($g("tb_arrm"));
+
       if ( mu )
       {
          var resourcesEventsQueue = getMerchantsUnderwayResourcesEventsQueue(mu);
@@ -553,7 +547,7 @@ function uiModifyMarketSend()
             var aTb = uiCreateCumulativeArrivalsTable(merchantGroup.textContent.replace(":", "").toLowerCase(), resourcesEventsQueue);
             if ( aTb ) 
             {
-               insertBefore(merchantGroup, aTb);
+               insertBefore(formular, aTb);
                for ( i = 0, ri = -1; i < 4; ++i )
                {
                   if ( uiOptions._.showprogress[i] )
