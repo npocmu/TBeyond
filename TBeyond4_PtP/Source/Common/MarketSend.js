@@ -496,7 +496,6 @@ function uiModifyMarketSend()
       fireChangeEvent($g("tb_usetraders")); // force recalculation for max transport
       mu = getMerchantsUnderway(TB3O.ActiveVillageId, document, ttServer, false);
       getResourcesResCap(TB3O.ActiveVillageInfo.r, document, ttServer);
-__DUMP__(TB3O.ActiveVillageInfo.r)
       saveVillagesInfo(TB3O.VillagesInfo);
       TB3O.ResInfoTotals = getResInfoTotals();
       uiModifyMerchantsUnderway();
@@ -554,7 +553,7 @@ __DUMP__(TB3O.ActiveVillageInfo.r)
             var aTb = uiCreateCumulativeArrivalsTable(merchantGroup.textContent.replace(":", "").toLowerCase(), resourcesEventsQueue);
             if ( aTb ) 
             {
-               insertAfter(merchantGroup, aTb);
+               insertBefore(merchantGroup, aTb);
                for ( i = 0, ri = -1; i < 4; ++i )
                {
                   if ( uiOptions._.showprogress[i] )
@@ -693,7 +692,7 @@ __DUMP__(TB3O.ActiveVillageInfo.r)
    }
 
    //-----------------------------------------------------------------
-   function uiCreateUnderOverrunRows(state)
+   function uiCreateUnderOverrunRows(st)
    {
       function uiCreateUnderOverrunCell(aRow, ri, ruo)
       {
@@ -721,8 +720,8 @@ __DUMP__(TB3O.ActiveVillageInfo.r)
       {
          var aRow;
          ruoRowIdx = 0;
-         var ru = Math.floor(state.AA.ru[ri]);
-         var ro = Math.floor(state.AA.ro[ri]);
+         var ru = Math.floor(st.ru[ri]);
+         var ro = Math.floor(st.ro[ri]);
 
          aRow = uiCreateUnderOverrunCell(ruoRows[ruoRowIdx], ri, ru);
          if ( aRow ) { ruoRows[ruoRowIdx++] = aRow; }
@@ -752,6 +751,7 @@ __DUMP__(TB3O.ActiveVillageInfo.r)
       var imgOutcoming = I("tbiOut");
       var imgMerchant = I("merchant");
       var rName = "r" + (ri+1);
+      var ro_rest = 0, ru_rest = 0;
 
       function onClose()
       {
@@ -759,7 +759,7 @@ __DUMP__(TB3O.ActiveVillageInfo.r)
       }
 
       //--------------------------------------------------------------
-      function uiCreateProgressRow(resourcesInfo, ri, eventCell, st, st_rest)
+      function uiCreateProgressRow(resourcesInfo, ri, eventCell, st)
       {
          var ttEvent = toTimeStamp(resourcesInfo.dUpd);
          var ruoType = st.ev[ri];
@@ -768,10 +768,17 @@ __DUMP__(TB3O.ActiveVillageInfo.r)
 
          if ( ruoType !== null )
          {
-            var ruo = Math.floor(( ruoType ) ? st.ro[ri] : st.ru[ri]);
-            (( ruoType ) ? st_rest.ro : st_rest.ru)[ri] -= ruo;
+            var ruo = ( ruoType ) ? (st.ro[ri] + ro_rest) : (st.ru[ri] + ru_rest);
+            var ruoInt = Math.floor(ruo);
+
+            // Need to fix rest of overrun/underrun resources and use this rest
+            // when calculate following progress rows
+            // Otherwise systematic using Math.floor() will produce incorrect total result
+            var rest = ruo - ruoInt;
+            if ( ruoType ) { ro_rest = rest; } else { ru_rest = rest; }
+
             totalClass = ' ' + getUnderOverrunClass(ruoType);
-            strTotal = (( ruo > 0 ) ? "+":"") + $ls(ruo);
+            strTotal = (( ruoInt > 0 ) ? "+":"") + $ls(ruoInt);
          }
          else
          {
@@ -797,7 +804,7 @@ __DUMP__(TB3O.ActiveVillageInfo.r)
       }
 
       //--------------------------------------------------------------
-      function uiCreateUnderOverrunProgressRow(resourcesInfo, ri, st, st_rest)
+      function uiCreateUnderOverrunProgressRow(resourcesInfo, ri, st)
       {
          var aRow = null;
          var ruoType = st.ev[ri];
@@ -812,7 +819,7 @@ __DUMP__(TB3O.ActiveVillageInfo.r)
             resourcesInfoEv.Res[ri] = ( ruoType ) ? resourcesInfoEv.Cap[ri] : 0;
 
             var eventCell = $td(['class', 'tbEvent ' + eventClass], eventImg);
-            aRow = uiCreateProgressRow(resourcesInfoEv, ri, eventCell, st, st_rest);
+            aRow = uiCreateProgressRow(resourcesInfoEv, ri, eventCell, st);
          }
          return aRow;
       }
@@ -848,14 +855,12 @@ __DUMP__(TB3O.ActiveVillageInfo.r)
             if ( resourcesEventsQueue[i].Res[ri] !== 0 )
             {
                resourcesEvent = resourcesEventsQueue[i];
-               state = getCumulativeResourcesInfoAfterEvent(resourcesInfo, resourcesEvent, state);
-               state.AA.ttf= [Infinity,Infinity,Infinity,Infinity];
-               state.AA.ev = [null,null,null,null];
+               state = getCumulativeResourcesInfoAfterEvent(resourcesInfo, resourcesEvent);
 
-               __DUMP__(getResourcesEventView(resourcesEvent, ri))
-               __DUMP__(getCumulativeResourcesStateView(state, ri))
-
-               addChildren(aBody,uiCreateUnderOverrunProgressRow(resourcesInfo, ri, state.BA, state.AA));
+               //__DUMP__(getResourcesEventView(resourcesEvent, ri))
+               //__DUMP__(getCumulativeResourcesStateView(resourcesInfo, state, ri))
+               
+               addChildren(aBody,uiCreateUnderOverrunProgressRow(resourcesInfo, ri, state.BA));
                var eventCell = $td(['class', 'tbEvent ' + (( resourcesEvent.bIncoming ) ? 'tbIncoming':'tbOutcoming')]);
                if ( resourcesEvent.bIncoming )
                {
@@ -866,14 +871,14 @@ __DUMP__(TB3O.ActiveVillageInfo.r)
                   addChildren(eventCell,[$span($ls(resourcesEvent.Res[ri])),imgOutcoming.cloneNode(true),imgMerchant.cloneNode(true)]);
                }
 
-               aBody.appendChild(uiCreateProgressRow(resourcesInfo, ri, eventCell, state.A, state.AA));
+               aBody.appendChild(uiCreateProgressRow(resourcesInfo, ri, eventCell, state.A));
             }
          }
 
-         if ( resourcesEvent )
+         // if there is an event for selected type of resource then we get its state after accumulation 
+         if ( state )
          {
-            state = getCumulativeResourcesInfo(resourcesInfo, resourcesEvent.ttEnd, [0,0,0,0]);
-            aBody.appendChild(uiCreateUnderOverrunProgressRow(resourcesInfo, ri, state.AA, state.AA));
+            aBody.appendChild(uiCreateUnderOverrunProgressRow(resourcesInfo, ri, state.AA));
          }
 
          insertAfter(armTable, prT);
@@ -946,13 +951,13 @@ __DUMP__(TB3O.ActiveVillageInfo.r)
       var totResIncoming = [0, 0, 0, 0], totResOutcoming = [0, 0, 0, 0];
       var resourcesInfo = cloneResourcesInfo(TB3O.ActiveVillageInfo.r);
       var eventsCount = resourcesEventsQueue.length;
-      var state;
+      var state = {};
 
       for ( i = 0; i < eventsCount; ++i )
       {
          var resourcesEvent = resourcesEventsQueue[i];
          accumulateResources( ( resourcesEvent.bIncoming ) ? totResIncoming:totResOutcoming, resourcesEvent.Res);
-         state = getCumulativeResourcesInfoAfterEvent(resourcesInfo, resourcesEvent, state);
+         getCumulativeResourcesInfoAfterEvent(resourcesInfo, resourcesEvent, state);
       }
       var ttLastArrival = resourcesEventsQueue[eventsCount-1].ttEnd;
 
@@ -1001,7 +1006,7 @@ __DUMP__(TB3O.ActiveVillageInfo.r)
       armBody.appendChild(rRow);
       armBody.appendChild(qRow);
       var rowSpan = 1;
-      var ruoRows = uiCreateUnderOverrunRows(state);
+      var ruoRows = uiCreateUnderOverrunRows(state.AA);
       if ( ruoRows[0] ) { armBody.appendChild(ruoRows[0]); ++rowSpan; }
       if ( ruoRows[1] ) { armBody.appendChild(ruoRows[1]); ++rowSpan; }
       tsCell.rowSpan = rowSpan;
@@ -1076,13 +1081,13 @@ __DUMP__(TB3O.ActiveVillageInfo.r)
       if ( TB3O.ActiveVillageInfo.r.dUpd !== undefined )
       {
          var resourcesInfo = cloneResourcesInfo(TB3O.ActiveVillageInfo.r);
-         var i, state;
+         var i, cumState = {};
 
          for ( i = 0; i < resourcesEventsQueue.length; ++i )
          {
             var resourcesEvent = resourcesEventsQueue[i];
             var merchantUnderwayInfo = resourcesEvent.details;
-            state = getCumulativeResourcesInfoAfterEvent(resourcesInfo, resourcesEvent, state);
+            getCumulativeResourcesInfoAfterEvent(resourcesInfo, resourcesEvent, cumState);
 
             var aTb = $g(MerchantsUnderwayDOMInfo.getId(merchantUnderwayInfo));
 
@@ -1110,7 +1115,7 @@ __DUMP__(TB3O.ActiveVillageInfo.r)
                }
                resTbRow.appendChild($td(null,[I("r0"),$span(" " + String(totalResources(uthen)))]));
 
-               var ruoRows = uiCreateUnderOverrunRows(state);
+               var ruoRows = uiCreateUnderOverrunRows(cumState.AA);
                if ( ruoRows[0] ) { resTb.appendChild(ruoRows[0]); }
                if ( ruoRows[1] ) { resTb.appendChild(ruoRows[1]); }
             }

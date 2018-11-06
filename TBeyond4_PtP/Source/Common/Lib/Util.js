@@ -598,6 +598,12 @@ function isIntValid(v)
 }
 
 //////////////////////////////////////////////////////////////////////
+function isObjValid(o)
+{
+   return ( typeof(o) === "object" && o !== null );
+}
+
+//////////////////////////////////////////////////////////////////////
 // return a first number from a 'str' using regexp 're', NaN if number is absent
 function scanIntRE(str, re)
 {

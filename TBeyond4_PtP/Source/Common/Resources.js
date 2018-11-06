@@ -73,65 +73,46 @@ function countResources(res, count)
    return res;
 }
 
-
-M4_DEBUG({{
-/////////////////////////////////////////////////////////////////////
-// Debug!!!
-function getResourcesInfoView(resourcesInfo) 
-{
-   var str = "";
-   str += "PpH  = " + resourcesInfo.PpH + "\n";
-   str += "EPpH = " + resourcesInfo.EPpH + "\n";
-   str += "Res  = " + resourcesInfo.Res + "\n";
-   str += "Cap  = " + resourcesInfo.Cap + "\n";
-   str += "dUpd = " + resourcesInfo.dUpd + "\n";
-
-   return str;
-}
-}})
-
-/////////////////////////////////////////////////////////////////////
-function getResourceImage(ri)
-{
-   return I("r" + (ri === 4 ? 0 : ri + 1));
-}
-
 //////////////////////////////////////////////////////////////////////
-// return clone of r (ResourcesInfo object)
-function cloneResourcesInfo(r) 
+function __initResourcesSubstate(subst, bNeedTTF) 
 {
-   var resourcesInfo = new ResourcesInfo();
+   subst.ru = [0,0,0,0];
+   subst.ro = [0,0,0,0];
+   subst.ev = [null,null,null,null];
 
-   if ( r.dUpd !== undefined )
+   if ( bNeedTTF )
    {
-      resourcesInfo.dUpd = new Date(r.dUpd.getTime());
+      subst.ttf = [Infinity,Infinity,Infinity,Infinity];
    }
-   resourcesInfo.Res  = cloneArray(r.Res);
-   resourcesInfo.PpH  = cloneArray(r.PpH);
-   resourcesInfo.EPpH = cloneArray(r.EPpH);
-   resourcesInfo.Cap  = cloneArray(r.Cap); 
 
-   return resourcesInfo;
+   return subst;
 }
-
 
 //////////////////////////////////////////////////////////////////////
 // Return:
 // {
 //    res: array[4] - resources after accumulation
+//    If bNeedState is true then calculate and return additional state:
 //    A: {
-//       ru:  array[4] - underrun resources
-//       ro:  array[4] - overrun resources
-//       ev:  array[4] event type: true - fill storage, false - exhaust storage, null - no event
+//       ru:  array[4] - underrun resources (always positive)
+//       ro:  array[4] - overrun resources (always positive)
+//       ev:  array[4] event type: true - overfill storage, false - underrun storage, null - no event
 //    }
 // }
-function getCumulativeResources(r, addRes) 
+// Note: ru[i] is a positive number only if ev[i] === false, otherwise it is zero
+//       ro[i] is a positive number only if ev[i] === true, otherwise it is zero
+function getCumulativeResources(r, addRes, bNeedState) 
 {
    var ri;
-   var res = new Array(4);
-   var ru = [0,0,0,0];
-   var ro = [0,0,0,0];
-   var ev = [null,null,null,null];
+   var result = {};
+
+   result.res = new Array(4);
+
+   if ( bNeedState )
+   {
+      result.A = {};
+      __initResourcesSubstate(result.A);
+   }
 
    // calculate resources
    for ( ri = 0; ri < 4; ++ri )
@@ -139,50 +120,59 @@ function getCumulativeResources(r, addRes)
       var v = r.Res[ri] + addRes[ri];
       if ( v < 0 )
       {
-         ru[ri] = v;
-         ev[ri] = false;
+         if ( bNeedState )
+         {
+            result.A.ru[ri] = v;
+            result.A.ev[ri] = false;
+         }
          v = 0;
       }
       else if ( v > r.Cap[ri] )
       {
-         ro[ri] = v - r.Cap[ri];
-         ev[ri] = true;
+         if ( bNeedState )
+         {
+            result.A.ro[ri] = v - r.Cap[ri];
+            result.A.ev[ri] = true;
+         }
          v = r.Cap[ri];
       }
 
-      res[ri] = v;
+      result.res[ri] = v;
    }
 
-   return {res:res, A:{ru:ru, ro:ro, ev:ev}};
+   return result;
 }
 
 //////////////////////////////////////////////////////////////////////
-// r - current resourcesInfo
+// r - current resourcesInfo (not affected by function)
 // returns:
 // {
-//   res: array[4] of resources that will actual after the given ms interval
-//   A: see getCumulativeResources
+//   res: array[4] of resources that will actual after the given interval in ms 
+//   A: see getCumulativeResources  (present only when bNeedState is true)
 // }
-// ATT!: resources are real numbers, not int!
-function getActualResourcesAfterMs(r, tms) 
+// ATT!: resources are real numbers, not integers!
+function getActualResourcesAfterMs(r, tms, bNeedState) 
 {
    var ri;
-   var addRes = new Array(4);
+   var addRes = [0,0,0,0];
 
-   // calculate resources
-   for ( ri = 0; ri < 4; ++ri )
+   if ( isFinite(tms) && tms > 0 )
    {
-      addRes[ri] = ( isFinite(tms) && tms > 0 ) ? r.EPpH[ri] / 3600000 * tms : 0;
+      // calculate resources
+      for ( ri = 0; ri < 4; ++ri )
+      {
+         addRes[ri] = r.EPpH[ri] / 3600000 * tms;
+      }
    }
 
-   return getCumulativeResources(r, addRes);
+   return getCumulativeResources(r, addRes, bNeedState);
 }
 
 //////////////////////////////////////////////////////////////////////
 // return seconds needed to fill granary/warehouse for given resource type
 //       or seconds needed to exhaust granary/warehouse if EPpH is negative
 //       or Infinity if EPpH is zero
-function getSecondsToFill(resourcesInfo,ri)
+function getSecondsToFill(resourcesInfo, ri)
 {
    var ttFill;
 
@@ -200,8 +190,8 @@ function getSecondsToFill(resourcesInfo,ri)
 }
 
 //////////////////////////////////////////////////////////////////////
-// need more accurate formula? Time to fill from dorf3 tab2 is different
-// return seconds needed to produce 'need' resources for given ePpH
+// Need more accurate formula? Time to fill from dorf3 tab2 is different.
+// Return seconds needed to produce 'need' resources for given ePpH
 //       or Infinity if ePpH is zero
 function getSecondsToProduce(need,ePpH)
 {
@@ -240,27 +230,103 @@ function getActualResourcesInfoNow(r, doFloor)
 }
 
 //////////////////////////////////////////////////////////////////////
-// State:
-// {
-//    BA: {
-//       ru:  array[4] of cumulative underrun resources before accumulation
-//       ro:  array[4] of cumulative overrun resources before accumulation
-//       ttf: array[4] milliseconds needed to fill/exhaust granary/warehouse before accumulation
-//       ev:  array[4] event type: true - fill storage/ false - exhaust storage, null - no event
-//    }
-//    A: {ru,ro,ev} accumulation state
-//    AA: {
-//       ru:  array[4] of cumulative underrun resources after accumulation
-//       ro:  array[4] of cumulative overrun resources after accumulation
-//       ttf: array[4] milliseconds needed to fill/exhaust granary/warehouse after accumulation
-//       ev:  array[4] event type: true - fill storage/ false - exhaust storage, null - no event
-//    }
-// }
-function getCumulativeResourcesInfo(resourcesInfo, ttAccumulate, resToAccumulate, prevState /*opt*/)
+/*
+   Core function for resources planning.
+
+   @resourcesInfo - the resources production state that was fixed at moment ttUpd
+   @ttAccumulate - the time when number of resources @resToAccumulate will be added
+                   ttAccumulate >= ttUpd
+   @resToAccumulate - [lumber,clay,iron,crop] number of resources to add. 
+                    Negative number cause substraction of resource. 
+
+   The function updates @resourcesInfo and set it properties to the moment immediately after @ttAccumulate
+   (after resources acummulation).
+
+   Function returns a state object that allows to exactly known what happen with resources 
+   at a three time ranges:
+   ]ttUpd,ttAccumulate[     - after @resourcesInfo was collected but before ttAccumulate
+   [ttAccumulate]           - immediately after @ttAccumulate moment
+   ]ttAccumulate,infinity[  - in future after @ttAccumulate moment
+
+   State:
+   {
+      // substate for time interval ]ttUpd,ttAccumulate[
+      BA: {
+         ru:  array[4] with number of underrun resources
+         ro:  array[4] with number of overrun resources
+         ev:  array[4] event type: true - fill storage / false - exhaust storage / null - no event
+         ttf: array[4] timestamp for a moment of fill/exhaust granary/warehouse (if it happened)
+      }
+
+      // substate for the moment immediately after @ttAccumulate
+      A: {ru,ro,ev} accumulation state
+
+      // substate for time interval ]ttAccumulate,infinity[
+      AA: {
+         ru:  array[4] with number of underrun resources
+         ro:  array[4] with number of overrun resources
+         ev:  array[4] event type: true - fill storage / false - exhaust storage / null - no event
+         ttf: array[4] timestamp for a moment of fill/exhaust granary/warehouse after accumulation
+                       (if it will happen)
+      }
+   }
+
+   Note that state fields BA.ev and AA.ev should be interpreted slightly different than 
+   ev after getCumulativeResources.
+   They indicates not overrun/underrun event but fill/exhaust event. So ru(or ro)[i] can be zero
+   but ev[i] not null and ttf[i] not infinity.
+
+   If an empty object is given as last argument cumState, then cumulative state will be 
+   collected and stored in this object. To collect cumulative state after several resource events
+   you need to pass the same object in each call of getCumulativeResourcesInfo.
+    
+   State:
+   {
+      BA: {
+         ru:  array[4] of cumulative underrun resources before accumulation
+         ro:  array[4] of cumulative overrun resources before accumulation
+         ttf: array[4] milliseconds needed to fill/exhaust granary/warehouse before accumulation
+         ev:  array[4] event type: true - fill storage/ false - exhaust storage, null - no event
+      }
+      AA: {
+         ru:  array[4] of cumulative underrun resources after accumulation
+         ro:  array[4] of cumulative overrun resources after accumulation
+         ttf: array[4] milliseconds needed to fill/exhaust granary/warehouse after accumulation
+         ev:  array[4] event type: true - fill storage/ false - exhaust storage, null - no event
+      }
+   }
+*/
+function getCumulativeResourcesInfo(resourcesInfo, ttAccumulate, resToAccumulate, cumState /*opt*/)
 {
-   // fill @st fields ttf and ev bases on estimate production of resources fro @r in
+   // fill @st fields ttf and ev bases on estimate production of resources from @r in
+   // the time interval [r.dUpd,ttMax]
+   function fillStateTTF(r, st, ttMax)
+   {
+      var ttStart = r.dUpd.getTime();
+      var ri;
+      for ( ri = 0; ri < 4; ++ri )
+      {
+         var ttToFill = ttStart + getSecondsToFill(r, ri) * 1000;
+         if ( ttToFill <= ttMax )
+         {
+            st.ttf[ri] = ttToFill;
+
+            if ( r.EPpH[ri] > 0 )
+            {
+               st.ev[ri] = true;
+            }
+            else if ( r.EPpH[ri] < 0 )
+            {
+               st.ev[ri] = false;
+            }
+         }
+      }
+   }
+
+   //-----------------------------------------------------------------
+   // fill @st fields ttf and ev bases on estimate production of resources from @r in
    // time range [r.dUpd,ttMax]
-   function fillStateTTF(r, st, ttMax, stA)
+   function fillCumulativeStateTTF(r, st, ttMax, stA)
    {
       var ttStart = r.dUpd.getTime();
       var ri;
@@ -276,8 +342,21 @@ function getCumulativeResourcesInfo(resourcesInfo, ttAccumulate, resToAccumulate
             else
             {
                var ttToFill = ttStart + getSecondsToFill(r, ri) * 1000;
+               //__DUMP__(ri,toDate(ttStart),toDate(ttToFill),ttMax)
                if ( ttToFill <= ttMax )
                {
+                  st.ttf[ri] = ttToFill;
+
+                  if ( r.EPpH[ri] > 0 )
+                  {
+                     st.ev[ri] = true;
+                  }
+                  else if ( r.EPpH[ri] < 0 )
+                  {
+                     st.ev[ri] = false;
+                  }
+
+               /*
                   if ( r.EPpH[ri] > 0 )
                   {
                      if ( ttToFill < st.ttf[ri] ) 
@@ -294,18 +373,19 @@ function getCumulativeResourcesInfo(resourcesInfo, ttAccumulate, resToAccumulate
                         st.ev[ri] = false;
                      }
                   }
+                  */
                }
             }
          }
       }
    }
 
-   function fillStateRUO(r, st, ar)
+   //-----------------------------------------------------------------
+   function fillCumulativeStateRUO(st, ar)
    {
       var ri;
       for ( ri = 0; ri < 4; ++ri )
       {
-         r.Res[ri] = ar.res[ri];
          st.ru[ri] += ar.A.ru[ri];
          st.ro[ri] += ar.A.ro[ri];
       }
@@ -314,41 +394,62 @@ function getCumulativeResourcesInfo(resourcesInfo, ttAccumulate, resToAccumulate
    var ar;
    var tms = ttAccumulate - resourcesInfo.dUpd.getTime();
    var state = { BA:{}, AA:{} };
+   var bNeedCumState = false;
 
-   if ( prevState )
+   if ( isObjValid(cumState) )
    {
-      state.BA.ru = cloneArray(prevState.AA.ru);
-      state.BA.ro = cloneArray(prevState.AA.ro);
-      state.BA.ttf= cloneArray(prevState.AA.ttf);
-      state.BA.ev = cloneArray(prevState.AA.ev);
-   }
-   else
-   {
-      state.BA.ru = [0,0,0,0];
-      state.BA.ro = [0,0,0,0];
-      state.BA.ttf= [Infinity,Infinity,Infinity,Infinity];
-      state.BA.ev = [null,null,null,null];
+      cumState.BA = {};
+      bNeedCumState = true;
+      if ( cumState.AA )
+      {
+         cumState.BA.ru = cumState.AA.ru;
+         cumState.BA.ro = cumState.AA.ro;
+         cumState.BA.ttf= cumState.AA.ttf;
+         cumState.BA.ev = cumState.AA.ev;
+      }
+      else
+      {
+         __initResourcesSubstate(cumState.BA, true);
+      }
    }
 
    if ( tms > 0 )
    {
-      ar = getActualResourcesAfterMs(resourcesInfo, tms);
-      __DUMP__(ar)
+      ar = getActualResourcesAfterMs(resourcesInfo, tms, true);
+      state.BA = ar.A;
+      state.BA.ttf = [Infinity,Infinity,Infinity,Infinity];
       fillStateTTF(resourcesInfo, state.BA, ttAccumulate);
-      fillStateRUO(resourcesInfo, state.BA, ar);
+
+      if ( bNeedCumState )
+      {
+         fillCumulativeStateTTF(resourcesInfo, cumState.BA, ttAccumulate);
+         fillCumulativeStateRUO(cumState.BA, ar);
+      }
+      resourcesInfo.Res  = ar.res;
+   }
+   else
+   {
+      __initResourcesSubstate(state.BA, true);
    }
 
-   state.AA.ru = cloneArray(state.BA.ru);
-   state.AA.ro = cloneArray(state.BA.ro);
-   state.AA.ttf= cloneArray(state.BA.ttf);
-   state.AA.ev = cloneArray(state.BA.ev);
-
    // do accumulation
+   ar = getCumulativeResources(resourcesInfo, resToAccumulate, true);
    resourcesInfo.dUpd.setTime(ttAccumulate);
-   ar = getCumulativeResources(resourcesInfo, resToAccumulate);
+   resourcesInfo.Res  = ar.res;
    state.A = ar.A;
-   fillStateRUO(resourcesInfo, state.AA, ar);
-   fillStateTTF(resourcesInfo, state.AA, Infinity, state.A);
+   __initResourcesSubstate(state.AA, true);
+   fillStateTTF(resourcesInfo, state.AA, Infinity);
+
+   if ( bNeedCumState )
+   {
+      cumState.AA = {};
+      cumState.AA.ru = cloneArray(cumState.BA.ru);
+      cumState.AA.ro = cloneArray(cumState.BA.ro);
+      cumState.AA.ttf= cloneArray(cumState.BA.ttf);
+      cumState.AA.ev = cloneArray(cumState.BA.ev);
+      fillCumulativeStateTTF(resourcesInfo, cumState.AA, Infinity, state.A);
+      fillCumulativeStateRUO(cumState.AA, ar);
+   }
 
    return state;
 }
@@ -356,7 +457,7 @@ function getCumulativeResourcesInfo(resourcesInfo, ttAccumulate, resToAccumulate
 M4_DEBUG({{
 /////////////////////////////////////////////////////////////////////
 // Debug!!!
-function getCumulativeResourcesStateView(state, ri) 
+function getCumulativeResourcesStateView(resourcesInfo, state, ri) 
 {
    function getStView(st) 
    { 
@@ -381,13 +482,16 @@ function getCumulativeResourcesStateView(state, ri)
    str += getStView(state.A);
    str += "Cumulative state after accumulation:\n"
    str += getStView(state.AA);
+   str += "Resources after accumulation:\n"
+   str += "[" + resourcesInfo.dUpd + "]: " + resourcesInfo.Res[ri] + "/" + resourcesInfo.Cap[ri];
+
 
    return str;
 }
 }})
 
 //////////////////////////////////////////////////////////////////////
-function getCumulativeResourcesInfoAfterEvent(resourcesInfo, resourcesEvent, prevState /*opt*/)
+function getCumulativeResourcesInfoAfterEvent(resourcesInfo, resourcesEvent, cumState /*opt*/)
 {
    var ri;
    var resToAccumulate = resourcesEvent.Res;
@@ -402,7 +506,7 @@ function getCumulativeResourcesInfoAfterEvent(resourcesInfo, resourcesEvent, pre
       }
    }
 
-   return getCumulativeResourcesInfo(resourcesInfo, resourcesEvent.ttEnd, resToAccumulate, prevState);
+   return getCumulativeResourcesInfo(resourcesInfo, resourcesEvent.ttEnd, resToAccumulate, cumState);
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -428,6 +532,12 @@ function getResInfoTotals()
    }
 
    return tPpH;
+}
+
+/////////////////////////////////////////////////////////////////////
+function getResourceImage(ri)
+{
+   return I("r" + (ri === 4 ? 0 : ri + 1));
 }
 
 //////////////////////////////////////////////////////////////////////
