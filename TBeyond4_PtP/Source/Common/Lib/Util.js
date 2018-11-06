@@ -43,6 +43,7 @@ function toDate(tt)
 }
 
 /////////////////////////////////////////////////////////////////////
+// return number of seconds between date1, date2. Positive if date1 is later then date2.
 function getTimeSpan(date1, date2)
 {
    return (date1 === null || date2 === null) ? null : (toTimeStamp(date1) - toTimeStamp(date2))/1000;
@@ -68,11 +69,11 @@ function formatTimeSpan(sec, aFormat)
    {
       ht = String.fromCharCode(0x221E);
    }
-   else if ( isIntValid(sec) && sec > -1 )
+   else if ( isIntValid(sec) && sec >= 0 )
    {
       h = Math.floor(sec / 3600);
       m = Math.floor(sec / 60) % 60;
-      s = parseInt(sec % 60);
+      s = Math.floor(sec) % 60;
       ht = "";
 
       switch ( aFormat )
