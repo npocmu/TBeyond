@@ -90,8 +90,6 @@ function doPage()
          getCapitalId();
       }
 
-      //getCrtLocation();
-
       /*
       if ( crtUrl.path !== "/karte.php" )
       {

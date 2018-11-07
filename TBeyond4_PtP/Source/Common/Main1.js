@@ -27,67 +27,6 @@
 		return imgPath;
 	};
 
-	//change the browser title, get active village coords and coords for the cell/oasis/village opened from the map
-	function getCrtLocation() {
-		crtLocTitle = '';
-		var locX;
-		
-		if (crtPage.indexOf('dorf3') != -1) {
-			//the dorf3 page
-			TB3O.xCrt = actV.vx;
-			TB3O.yCrt = actV.vy;
-			crtLocTitle = T("ALDEAS") + " (" + TB3O.xCrt + "|" + TB3O.yCrt + ")";
-		} else {
-			locX = $xf("//h1");
-			locXx = $xf("//span[@id='x']");
-			locXy = $xf("//span[@id='y']");
-
-			if (locXx) TB3O.xCrt = parseInt10(locXx.textContent);
-			if (locXy) TB3O.yCrt = parseInt10(locXy.textContent);
-
-			if (locX && !locXx && !locXy) {
-				aH = new Array();
-				theName = locX.textContent;
-				ipLast = theName.lastIndexOf(")");
-				if (ipLast + 1 == theName.length || ipLast + 2 == theName.length) {
-					if (ipLast > 0) theName = theName.substring(0, ipLast + 1);
-					ipLast = theName.lastIndexOf("(");
-					if (ipLast != -1) {
-						aH[0] = theName.substring(0, ipLast);
-						aH[1] = theName.substr(ipLast + 1);
-					} else aH[0] = theName;
-					crtLocTitle = aH[0];
-					if (aH.length > 1) {
-						strXY = aH[1].replace(")", "").replace(" ", "").replace(" ", "");
-						aCoord = strXY.split("|");
-						TB3O.xCrt = parseInt10(aCoord[0]);
-						TB3O.yCrt = parseInt10(aCoord[1]);
-						crtLocTitle += " (" + TB3O.xCrt + "|" + TB3O.yCrt + ")";
-					} else {
-						TB3O.xCrt = actV.vx;
-						TB3O.yCrt = actV.vy;
-						strXY = "(" + TB3O.xCrt + "|" + TB3O.yCrt + ")";
-						if (crtLocTitle.indexOf(strXY) == -1) crtLocTitle += " " + strXY;
-					};
-				} else {
-					TB3O.xCrt = actV.vx;
-					TB3O.yCrt = actV.vy;
-					crtLocTitle = theName + " (" + TB3O.xCrt + "|" + TB3O.yCrt + ")";
-				};
-			} else {
-				if (locX != null) {
-					crtLocTitle = locX.textContent;
-					strXY = "(" + TB3O.xCrt + "|" + TB3O.yCrt + ")";
-					if (crtLocTitle.indexOf(strXY) == -1) crtLocTitle += " " + strXY;
-				};
-			};
-		};
-		//change browser title
-		TB3O.BrT = crtLocTitle.replace(/\n/g, "");
-		document.title += " - " + TB3O.BrT;
-		return true;
-	};
-
 	function getTroopsToBeTrained() {
 		var xp = $xf('//input[starts-with(@id, "inputTroopNo_")]', 'r');
 		if (xp.snapshotLength > 0) {

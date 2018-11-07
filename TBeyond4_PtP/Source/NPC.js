@@ -1,7 +1,6 @@
 //////////////////////////////////////////////////////////////////////
 function uiOpenNPCAssistantDialog(cost /*opt*/)
 {
-   __ENTER__
    var ri;
 
    var data =
@@ -19,8 +18,6 @@ function uiOpenNPCAssistantDialog(cost /*opt*/)
       }
    }
 
-   __DUMP__(data)
-
    window.wrappedJSObject.jQuery(window).trigger('buttonClicked',[
       this, 
       {
@@ -37,5 +34,4 @@ function uiOpenNPCAssistantDialog(cost /*opt*/)
       }
    ]);
 
-   __EXIT__
 }
