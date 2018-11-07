@@ -263,13 +263,6 @@ function doPage()
       //if ( !TB3O.boolIsNPCExluded ) { NPCUpdate(); }
       //if (isPostNPC()) insertNPCHistoryLink();
 
-      /*
-      if (crtUrl.path === "/warsim.php" ) 
-      {
-         fillinwarsim();
-      }
-      */
-
       __DUMP__(TB3O.pageSelector, TB3O.xCrt, TB3O.yCrt)
 
       switch ( TB3O.pageSelector )
@@ -323,10 +316,6 @@ function doPage()
 
          case "rally_point_overview":
             if ( crtUrl.queryKey.filter > 0 ) { uiAddKeyboardNavigation(); }
-            /*
-            tableTotalVillageTroopsV3();
-            incomeAttackingFillter();
-            */
             uiModifyRallyPointOverview()
             break;
 

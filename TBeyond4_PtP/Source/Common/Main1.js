@@ -276,33 +276,6 @@
 		function clickOnNPCAssistant(i, maxY) {return function() {aI = $g("inputTroopNo_" + (i + 1)); if (aI) aI.value = maxY;};};
 	};
 
-
-
-	function fillinwarsim() {
-		if (TB3O.O[55] != '1') return;
-		var aTb = $xf("//table[@id='attacker'] | //table[@class='fill_in']");
-		if (!aTb) return;
-   //DL
-   if (TB3O.VillagesInfo[actV.vNewdid].pop) TB3O.AVP = TB3O.VillagesInfo[actV.vNewdid].pop;
-
-		TB3O.hOffBonus = getGMcookie("heroV", false);
-		if (TB3O.hOffBonus == "false") {setGMcookie("heroV", "0", false); TB3O.hOffBonus = 0;};
-		tTc = getGMcookieV2("Troops");
-		if (tTc && tTc[actV.vNewdid]) eT = tTc[actV.vNewdid]; else return;
-		var aI = aTb.getElementsByTagName("INPUT");
-		if (aI.length > 0) {
-			j = 1;
-			for (var i = 0; i < aI.length; i++) {
-				if (aI[i].name == "a1_" + j) {
-					//only the troop number input fields
-					aI[i].value = (eT[j - 1] > 0 ? eT[j - 1] : "");
-					j += 1;
-				} else if (aI[i].name == "ew1") aI[i].value = TB3O.AVP; else if (aI[i].name = "h_off_bonus" & aI[i].value != "") aI[i].value = TB3O.hOffBonus;
-			};
-		};
-		aTb = null; aI = null;
-	};
-	
 	//© Copyright 2007 Richard Laffers (http://userscripts.org/scripts/show/35277)
 	//Start of Drag-n-drop
 	var mouseOffset = null;
