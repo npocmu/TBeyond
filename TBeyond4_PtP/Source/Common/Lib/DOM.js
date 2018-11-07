@@ -542,13 +542,6 @@ function $r(att, content)
 }
 
 //////////////////////////////////////////////////////////////////////
-// OBSOLETE, use $td instead
-function $c(iHTML, att) 
-{
-   return $e("td", att, iHTML);
-}
-
-//////////////////////////////////////////////////////////////////////
 function $td(att, content) 
 {
    return $e("td", att, content);
@@ -560,13 +553,6 @@ function $img(att)
    var aImg = document.createElement("img");
    $at(aImg, att);
    return aImg;
-}
-
-//////////////////////////////////////////////////////////////////////
-// OBSOLETE, use $lnk instead
-function $a(iHTML, att)
-{
-   return $e("a", att, iHTML);
 }
 
 //////////////////////////////////////////////////////////////////////

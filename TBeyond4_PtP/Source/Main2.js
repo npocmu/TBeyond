@@ -96,7 +96,6 @@ function doPage()
       if ( crtUrl.path !== "/karte.php" )
       {
          TB3O.boolIsNPCExluded = isThisNPCexcluded();
-         if ( TB3O.boolIsThisNPC ) fillinNPCfields(urlNow);
       }
       */
 

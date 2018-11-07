@@ -58,8 +58,6 @@
    // current processed page id
    TB3O.pageSelector = "";
 
-   TB3O.hOffBonus = 0;
-
    TB3O.ServerInfo = undefined;   // { version:4.0, mod:"", features:{} };
    TB3O.nServerType = 0;          // 0 - normal, 1 - speed (3x), 2 - 2x,  3 - 5x, 4 - 4x, 5 - 8x
    TB3O.nMerchantSpeedFactor =    [ 1,           3,              2,       5,      4,      8];
@@ -137,12 +135,6 @@
    //available languages
    var arAvLang = ['Server language', 'ae', 'ar', 'ba', 'bg', 'br', 'cl', 'cn', 'cz', 'de', 'dk', 'el', 'en', 'es', 'fi', 'fr', 'gr', 'hk', 'hr', 'hu', 'id', 'il', 'ir', 'it', 'jp', 'kr', 'lt', 'lv', 'mx', 'my', 'nl', 'no', 'ph', 'pl', 'pt', 'ro', 'rs', 'ru', 'si', 'sk', 'th', 'tr', 'tw', 'ua', 'vn'];
 
-   function xTiT(aType, aName, t1) {this.type = aType;this.name = aName;this.t1 = t1;var aD = new Date();aD.setTime(aD.getTime());this.crtDate = aD; return this;}
-   function xTtT(tType, necRes, tTime, aRes) {this.necRes = necRes;this.tType = tType;this.tTime = tTime;this.aRes = aRes; return this;}
-
-   var arrTtT = new Array();
-   var defaultMF = [5, 5, 4, 2, 4];
-   var marketFilters;
    var wsSName;
    var wsAnalysers =	
    [
@@ -184,9 +176,6 @@
    var gIc = {};        // OBSOLETE, use I() instead
    var t = {}; 
 
-   var NPCResources = 'npcResources';
-   var NPCbacklinkName = 'npcBackLink';
-   var NPCURL = '/build.php?gid=17&t=3';
    //link to the profile
    var spLnk = '';
    //link to the barracks

@@ -25,7 +25,7 @@ function getInnerBuilding(id, aImgNode)
    {
       // get first line without markup
       titleParts = title.split("||");
-      var dummy = $d(titleParts[0]);
+      var dummy = $div(null,titleParts[0]);
       title = dummy.textContent;
    }
    var bName = title;

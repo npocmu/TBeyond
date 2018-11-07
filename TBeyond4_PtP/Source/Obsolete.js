@@ -1,9 +1,13 @@
-
 //////////////////////////////////////////////////////////////////////
-// OBSOLETE, use $div instead
-function $d(iHTML, att)
+// OBSOLETE, use $td instead
+function $c(iHTML, att) 
 {
-   return $e("div", att, iHTML);
+   return $e("td", att, iHTML);
 }
 
-
+//////////////////////////////////////////////////////////////////////
+// OBSOLETE, use $lnk instead
+function $a(iHTML, att)
+{
+   return $e("a", att, iHTML);
+}

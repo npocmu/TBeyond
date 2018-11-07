@@ -85,35 +85,6 @@
 		return true;
 	};
 
-	//fill in the NPC Merchant fields
-	function fillinNPCfields(aURL) {
-		var sumRes = parseInt10(document.getElementById('org4').innerHTML);
-		var rm1 = parseInt10(getQueryParameters(aURL, 'r1'));
-		var rm2 = parseInt10(getQueryParameters(aURL, 'r2'));
-		var rm3 = parseInt10(getQueryParameters(aURL, 'r3'));
-		var rm4 = parseInt10(getQueryParameters(aURL, 'r4'));
-		rm1_0 = rm1; rm2_0 = rm2; rm3_0 = rm3; rm4_0 = rm4;
-		while(rm1_0 + rm2_0 + rm3_0 + rm4_0 + rm1 + rm2 + rm3 + rm4 < sumRes )  {
-			rm1_0 += rm1;
-			rm2_0 += rm2;
-			rm3_0 += rm3;
-			rm4_0 += rm4;
-		}
-		urlNPCback = addQueryParameter(NPCURL, 'bid', getQueryParameters(window.location.href,'bid'));
-		urlNPCback = addQueryParameter(urlNPCback, 'r1', rm1_0);
-		urlNPCback = addQueryParameter(urlNPCback, 'r2', rm2_0);
-		urlNPCback = addQueryParameter(urlNPCback, 'r3', rm3_0);
-		urlNPCback = addQueryParameter(urlNPCback, 'r4', rm4_0);
-
-		document.getElementById("submitText").innerHTML += "<br><a href='"+urlNPCback+"'>Increse same Distribute resources :</a>";
-
-		if (aURL.indexOf('&' + NPCResources) != NPCURL.length) return false;
-		var needed = getQueryParameters(aURL, NPCResources).split(',');
-		var inputs = document.getElementsByName('m2[]');
-		for (var i = 0; i < 4; i++) {inputs[i].value = needed[i];};
-		unsafeWindow.calculateRest();
-	};
-
 	function getTroopsToBeTrained() {
 		var xp = $xf('//input[starts-with(@id, "inputTroopNo_")]', 'r');
 		if (xp.snapshotLength > 0) {
