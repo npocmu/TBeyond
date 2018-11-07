@@ -146,10 +146,10 @@
    var wsSName;
    var wsAnalysers =	
    [
-      ["World Analyser", "http://www.travian.ws/analyser.pl", getUrlWorldAnalyser], 
+//      ["World Analyser", "http://www.travian.ws/analyser.pl", getUrlWorldAnalyser], 
 //      ["Travian Utils",  "http://travian-utils.com",          getUrlTravianUtils], 
-      ["Travian-Live",  "http://travian-live.com",            getUrlTravianLive], 
-      ["Travian Box",    "http://travianbox.com",             getUrlTravianBox ], 
+//      ["Travian-Live",  "http://travian-live.com",            getUrlTravianLive], 
+//      ["Travian Box",    "http://travianbox.com",             getUrlTravianBox ], 
       ["GetterTools",    "http://www.gettertools.com",        getUrlGetterTools],
    ];
    var mapAnalysers =	
