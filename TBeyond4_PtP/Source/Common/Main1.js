@@ -1,10 +1,13 @@
+
+   var arrTtT = new Array();
+   var NPCbacklinkName = 'npcBackLink';
+   var NPCResources = 'npcResources';
+   var NPCURL = '/build.php?gid=17&t=3';
+
 	function dummy() {return;};//does nothing. Used when there is no other choice but need to use a function
 	function getRndTime(maxrange) {return Math.floor(maxrange * (0.6 + 0.4 * Math.random())); };
 	function basename(path) {return path.replace(/.*\//, "");}; //name of a file from a path or URL
-	function arrayByN(a, n) {var b = cloneArray(a); for (var i in b) {b[i] *= n;}; return b;};//multiply every element of the "a" array by "n"
-	function arrayAdd(a, b) {if (!a) return cloneArray(b); if (!b) return cloneArray(a); var c = new Array(); for (var i = 0; i < Math.max(a.length,b.length); c[i] = a[i] + b[i++]); return c;};
 	function dF(s) {var s1 = unescape(s.substr(0, s.length - 1)); var ts = ''; for (i = 0; i < s1.length; i++) ts += String.fromCharCode(s1.charCodeAt(i) - s.substr(s.length - 1, 1)); return ts;};
-	function arrayToInt(arr) {var h = 0; for (var i in arr) {h += arr[i];}; return h;};//Sum all the values of the arr array
 	function $ls(aX) {return aX.toLocaleString();};//convert a number to local string
 	function getNewdidFromLink(aLink) {aLink.search(/\?newdid=(\d+)/);return RegExp.$1;};
 	function setOfferFilter(aOffer, aFilter) {$at(aOffer, [['style', 'display:none;'], ["filtro" + aFilter, "on"]]);};
