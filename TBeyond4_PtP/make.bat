@@ -60,6 +60,7 @@ COPY Source\Main0.js + ^
      Source\Common\Controls\MeterBar.js + ^
      Source\Common\VillageInfo.js + Source\Common\Buildings.js + Source\Common\BuildingsInfo.js + ^
      Source\Common\Objects\TravianMenu.js + Source\TravianMenu.js + ^
+     Source\NPC.js + ^
      Source\Obsolete.js + Source\getResourcesInfo.js + Source\Common\Resources.js + ^
      Source\Common\Units.js + ^
      Source\getGeneralData.js + Source\Specific.js + Source\getOuterBuildings.js + Source\getInnerBuildings.js + ^

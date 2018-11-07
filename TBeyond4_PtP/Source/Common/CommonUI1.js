@@ -221,31 +221,9 @@ function uiCreateResAndTimeTable(BA, resourcesInfo,
       }
       else if ( BA[0] === STA_NPCAVAIL && options.NPCLink )
       {
-         var id = options.id; 
-         if ( !id )
-         {
-            id = crtUrl.queryKey.id;
-         }
-         
-         var urlNPCback = parseUri(NPCURL);
-         
-         if ( id )
-         {
-            urlNPCback.queryKey.bid = id;
-         }
-
-         for ( ri = 0; ri < 4; ++ri )  
-         { 
-            if ( cost[ri] > 0 )
-            {
-               urlNPCback.queryKey['r'+(ri+1)] = cost[ri];
-
-            }
-         }
-
          aTb.appendChild($r(null,
                             $td([['class','center'],['colspan', '3']],
-                               $e("a",[['href',combineUri(urlNPCback)]],T('NPCLNK')))));
+                               $action(null, T('NPCLNK'), bind(uiOpenNPCAssistantDialog,[cloneArray(cost)])))));
          boolTb = true;
       }
    }
