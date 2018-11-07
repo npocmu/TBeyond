@@ -65,7 +65,7 @@ COPY Source\Main0.js + ^
      Source\Common\Units.js + ^
      Source\getGeneralData.js + Source\Specific.js + Source\getOuterBuildings.js + Source\getInnerBuildings.js + ^
      Source\getStatisticsMenu.js + ^
-     Source\AllPages.js + Source\BigIcons.js + ^
+     Source\Common\Title.js + Source\AllPages.js + Source\BigIcons.js + ^
      Source\Common\Links.js + Source\Common\ExternalTools.js + ^
      Source\inlineMessagesLinks.js + Source\Common\inlineLinks.js + ^
      Source\getTBOptionsDefaults.js + Source\Common\TBSetup.js + Source\Common\TBUpdate.js + ^

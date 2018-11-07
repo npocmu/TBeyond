@@ -240,6 +240,7 @@ function doPage()
       if ( !fullScreenMap )
       {
          hideAd();
+         uiModifyBrowserTitle();
          uiModifySideBars();
          uiModifyBigIconsBar();
          if ( TB3O.VillagesList ) { TB3O.VillagesList2 = uiCreate2ndVillageListWidget(); }
