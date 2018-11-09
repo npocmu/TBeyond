@@ -21,7 +21,8 @@ function parseSeparatedInt10(str,defv)
 }
 
 /////////////////////////////////////////////////////////////////////
-//Compute the seconds for a given human time
+// Compute the seconds for a given human time
+// Return NaN if can't parse hTime
 function toSeconds(hTime)
 {
    var p = hTime.split(":");

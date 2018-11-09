@@ -105,8 +105,34 @@ function getCommonBuildingInfo(gid, villageId, aDoc)
 }
 
 //////////////////////////////////////////////////////////////////////
+// Search and parse all contracts for building
+function parseBuildingContracts()
+{
+   var i;
+   var contractsNodes = searchBuildingContractsNodes();
+   var contracts = [];
+
+   for ( i = 0; i < contractsNodes.snapshotLength; i++ )
+   {
+      var costNode = contractsNodes.snapshotItem(i);
+      var contractInfo = scanCommonContractInfo(costNode);
+      
+      if ( contractInfo ) 
+      {
+         contracts.push(contractInfo);
+      }
+   }
+
+   //__DUMP__(contracts)
+
+   TB3O.BuidingContracts = contracts;
+}
+
+//////////////////////////////////////////////////////////////////////
 // proccess common info about bulding
 function processBuilding(gid)
 {
    getCommonBuildingInfo(gid, TB3O.ActiveVillageId, document);
+
+   parseBuildingContracts();
 }

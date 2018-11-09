@@ -80,15 +80,35 @@ function getRaceFromBarracks()
 }
 
 //////////////////////////////////////////////////////////////////////
+// Select all contracts except: 
+//   - contracts for units training (has parent div.details)
+//   - trade route descriptions (in table#trading_routes)
+function searchBuildingContractsNodes(aDoc /*opt*/)
+{
+   var contracts = $xf("//div[@id='" + ID_CONTENT + "']//*[not(self::div and " + $xClass("details") + ")]/div[" + $xClass("showCosts") + "][not(ancestor::table[@id='trading_routes'])]", 'l', aDoc, aDoc);
+   __ASSERT__(contracts.snapshotLength, "Can't find any contracts")
+   return contracts;
+}
+
+//////////////////////////////////////////////////////////////////////
+// Return object:
+// { 
+//    costNode,   - DOM node
+//    cost,       - Array(4) - resources needed
+//    cc,         - crop consumption
+//    ts,         - seconds to build
+// }
+// or null if can't parse contract
+//
 function scanCommonContractInfo(costNode)
 {
-   var i,ri;
+   var i, ri;
    var res = Array(4);
-   var cc,ts;
-   var Spans = costNode.getElementsByTagName("span");
+   var cc, ts;
+   var aSpan, Spans = costNode.getElementsByTagName("span");
    for ( i = 0; i < Spans.length; ++i )
    {
-      var aSpan = Spans[i];
+      aSpan = Spans[i];
       var tri = scanIntWithPrefix("r",aSpan.className);
       if ( isIntValid(tri) && tri >=1 && tri <= 5 )
       {
@@ -120,13 +140,22 @@ function scanCommonContractInfo(costNode)
       }
    }
 
-   return { costNode:costNode, cost:res, cc:cc, ts:ts };
-}
+   if ( res )
+   {
+      // try to find build time for newer versions of Travian
+      if ( res && ts === undefined )
+      {
+         aSpan = $xf("ancestor::*[@id='contract']/following-sibling::*//span[" + $xClass("clocks") + "]", 'f', costNode);
+         if ( aSpan )
+         {
+            ts = toSeconds(aSpan.textContent);
+         }
+      }
 
-//////////////////////////////////////////////////////////////////////
-function getRequiredRes(costNode)
-{
-   return scanCommonContractInfo(costNode).cost;
+      __ASSERT__(ts,"Can't parse time span for contract")
+   }
+
+   return res ? { costNode:costNode, cost:res, cc:cc, ts:ts } : null;
 }
 
 //////////////////////////////////////////////////////////////////////

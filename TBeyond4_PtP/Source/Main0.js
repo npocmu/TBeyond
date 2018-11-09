@@ -54,6 +54,7 @@
 
    TB3O.MerchantsInfo = {};
    TB3O.Overview = null; // store additional info for Dorf3
+   TB3O.BuidingContracts = []; // array of building contracts when a building visited
 
    // current processed page id
    TB3O.pageSelector = "";

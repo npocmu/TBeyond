@@ -89,7 +89,7 @@ function scanTrainingContracts(aDoc)
          var countContract = parseInt10(inputNode.value);
          var setMaxNode = __TEST__($xf("./following-sibling::a", 'f', inputNode, aDoc));
 
-         if ( isIntValid(count) && inputNode && setMaxNode && contract.cost)
+         if ( isIntValid(count) && inputNode && setMaxNode && contract )
          {
             contract.contractNode = node;
             contract.tInfo = tInfo;

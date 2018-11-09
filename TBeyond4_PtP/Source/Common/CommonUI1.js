@@ -321,47 +321,39 @@ function uiModifyContracts()
    __ENTER__
    var i;
    var resourcesInfo = TB3O.ActiveVillageInfo.r;
+   var contracts = TB3O.BuidingContracts;
 
-   // select all contracts except: 
-   //   - contracts for units training (has parent div.details)
-   //   - trade route descriptions (in table#trading_routes)
-   var contracts = $xf("//div[@id='" + ID_CONTENT + "']//*[not(self::div and contains(@class,'details'))]/div[contains(@class,'showCosts')][not(ancestor::table[@id='trading_routes'])]", 'l');
-   __ASSERT__(contracts.snapshotLength, "Can't find any contracts")
-
-   for ( i = 0; i < contracts.snapshotLength; i++ )
+   for ( i = 0; i < contracts.length; i++ )
    {
-      var contract = contracts.snapshotItem(i);
-      var cost = getRequiredRes(contract);
+      var contractInfo = contracts[i];
+      var costNode = contractInfo.costNode;
       
-      if ( cost ) 
+      var av = getAvailability(contractInfo.cost, resourcesInfo, TB3O.bIsNPCInVillage);
+      
+      var aTb = uiCreateResAndTimeTable(av, resourcesInfo, null, null, null, 
+                { top_title: true,
+                  NPC: (TBO_NPC_ASSISTANT === "1" && TB3O.bIsNPCInVillage),
+                  NPCLink: false
+                });
+      if ( aTb )
       {
-         var av = getAvailability(cost, resourcesInfo, TB3O.bIsNPCInVillage);
-         
-         var aTb = uiCreateResAndTimeTable(av, resourcesInfo, null, null, null, 
-                   { top_title: true,
-                     NPC: (TBO_NPC_ASSISTANT === "1" && TB3O.bIsNPCInVillage),
-                     NPCLink: false
-                   });
-         if ( aTb )
+         var injectedContainer;
+         var xC = costNode.parentNode;
+         var tag = TAG(xC);
+         if ( tag === "TR")
          {
-            var injectedContainer;
-            var xC = contract.parentNode;
-            var tag = TAG(xC);
-            if ( tag === "TR")
-            {
-               injectedContainer = $td();
-               var aR = $r([['class', 'tb3rnb']]);
-               aR.appendChild(injectedContainer);
-               xC.parentNode.appendChild(aR);
-            }
-            else if ( tag === "FORM" || tag === "DIV")
-            {
-               injectedContainer = $e("p");
-               insertAfter(contract,injectedContainer);
-            }
-            injectedContainer.className = "tbInject";
-            injectedContainer.appendChild(aTb);
+            injectedContainer = $td();
+            var aR = $r([['class', 'tb3rnb']]);
+            aR.appendChild(injectedContainer);
+            xC.parentNode.appendChild(aR);
          }
+         else if ( tag === "FORM" || tag === "DIV")
+         {
+            injectedContainer = $e("p");
+            insertAfter(costNode,injectedContainer);
+         }
+         injectedContainer.className = "tbInject";
+         injectedContainer.appendChild(aTb);
       }
    }
 
