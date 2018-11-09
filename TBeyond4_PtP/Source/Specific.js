@@ -159,6 +159,82 @@ function scanCommonContractInfo(costNode)
 }
 
 //////////////////////////////////////////////////////////////////////
+// return building info gathered from html page
+// {
+//    name,    - building name
+//    level    - building level
+// }
+function scanCommonBuildingInfo(aDoc /*opt*/)
+{
+   var name, level;
+   var aHeader = __TEST__($xf("//div[@id='" + ID_CONTENT + "']//h1",'f', aDoc, aDoc));
+   if ( aHeader )
+   {
+      name = trimWhitespaces(aHeader.firstChild.textContent);
+      level = scanIntAny(aHeader.textContent);
+   }
+
+   return ( name !== '' && isIntValid(level) )  ? {name:name, level:level} : null;
+}
+
+//////////////////////////////////////////////////////////////////////
+function scanBuildingProductionInfo(gid, crtLevel, aDoc /*opt*/)
+{
+   var productionInfo = {};
+   var bIsValid = false;
+
+   function searchAndScanProduction(container, selector)
+   {
+      var val, lvl;
+      var aRow = $qf(selector, 'f', container, aDoc);
+
+      if ( aRow )
+      {
+         var cells = aRow.cells;
+
+         if ( cells && cells.length >= 2 )
+         {
+            lvl = scanIntAny(cells[0].textContent);
+            var prodNode = $qf(".number", 'f', cells[1], aDoc);
+            val = parseSeparatedInt10(prodNode.textContent);
+         }
+      }
+      return { lvl: lvl, production: val };
+   }
+
+   var infoNode = __TEST__($qf("#build_value", 'f', aDoc, aDoc));
+   if ( infoNode )
+   {
+      var current =  searchAndScanProduction(infoNode, ".currentLevel");
+      if ( isIntValid(current.production) )
+      {
+         current.lvl = crtLevel;
+         productionInfo.current = current;
+         bIsValid = true;
+      }
+
+      var inProgress = searchAndScanProduction(infoNode, ".underConstruction");
+      if ( isIntValid(inProgress.production) )
+      {
+         productionInfo.inProgress = inProgress;
+         bIsValid = true;
+      }
+
+      var possible = searchAndScanProduction(infoNode, ".nextPossible");
+      if ( isIntValid(possible.production) )
+      {
+         productionInfo.possible = possible;
+         bIsValid = true;
+      }
+
+      productionInfo.container = infoNode;
+
+      __ASSERT__(bIsValid, "Can't parse building production")
+   }
+   return bIsValid ? productionInfo : null;
+}
+
+//////////////////////////////////////////////////////////////////////
 function searchNavigationLinks(aDoc)
 {
    var navLinks = $xf("//div[@id='" + ID_CONTENT + "']//a[contains(@href, 'page=')]", 'l', aDoc, aDoc);
@@ -220,22 +296,6 @@ function scanCulturePoints(aDoc)
    __ASSERT__( result, "Can't parse culture points" )
 
    return result;
-}
-
-
-//////////////////////////////////////////////////////////////////////
-// return [building name,building level] gathered from html page
-function scanBuildingNameLevel(aDoc)
-{
-   var name, level;
-   var aHeader = __TEST__($xf("//div[@id='" + ID_CONTENT + "']//h1",'f', aDoc, aDoc));
-   if ( aHeader )
-   {
-      name = trimWhitespaces(aHeader.firstChild.textContent);
-      level = scanIntAny(aHeader.textContent);
-   }
-
-   return ( name !== '' && isIntValid(level) )  ? [name, level] : null;
 }
 
 //////////////////////////////////////////////////////////////////////

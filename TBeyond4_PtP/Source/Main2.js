@@ -47,7 +47,7 @@ function doPage()
    setDefLang();
    if ( getGeneralData() )
    {
-      var buildGID;
+      var buildingGID;
       var fullScreenMap = (crtUrl.path === "/karte.php" && crtUrl.queryKey.fullscreen === "1" );
 
       TB3O.VillagesInfo = loadVillagesInfo();
@@ -158,12 +158,12 @@ function doPage()
             var buildSubMenu = searchAndParseSubMenu();
             var buildActiveUrl = buildSubMenu ? parseUri(buildSubMenu.items[buildSubMenu.active][1]) : crtUrl;
 
-            buildGID = scanIntWithPrefix("gid", buildNode.className);
-            __DUMP__(buildGID)
+            buildingGID = scanIntWithPrefix("gid", buildNode.className);
+            __DUMP__(buildingGID)
 
-            processBuilding(buildGID);
+            processBuilding(buildingGID);
 
-            if ( buildGID === GID_RALLY_POINT )
+            if ( buildingGID === GID_RALLY_POINT )
             {
                if ( buildSubMenu )
                {
@@ -178,7 +178,7 @@ function doPage()
                   case "rally_point_overview":  processRallyPointOverview(); break;
                }
             }
-            else if ( buildGID === GID_MARKETPLACE && detectMarketPage() )
+            else if ( buildingGID === GID_MARKETPLACE && detectMarketPage() )
             {
                switch ( TB3O.pageSelector ) 
                {
@@ -188,28 +188,28 @@ function doPage()
                   case "market_offer":  processMarketOffer();  break;
                }
             }
-            else if ( (buildGID === GID_RESIDENCE || buildGID === GID_PALACE) && buildActiveUrl.queryKey.s === "2" )
+            else if ( (buildingGID === GID_RESIDENCE || buildingGID === GID_PALACE) && buildActiveUrl.queryKey.s === "2" )
             {
                processCultureTab();
             }
-            else if ( buildGID === GID_TOWNHALL )
+            else if ( buildingGID === GID_TOWNHALL )
             {
                processTownHall();
             }
-            else if ( buildGID === GID_SMITHY )
+            else if ( buildingGID === GID_SMITHY )
             {
-               processUpgradeBuilding(buildGID);
+               processUpgradeBuilding(buildingGID);
             }
 
-            if ( canBuildingTrainUnits(buildGID) )
+            if ( canBuildingTrainUnits(buildingGID) )
             {
                // Note: in residence/palace training stop after number of units,
                // therefore common check not worked
-               TB3O.isTtB = ((buildGID === GID_RESIDENCE || buildGID === GID_PALACE) && buildActiveUrl.queryKey.s === "1") ||
+               TB3O.isTtB = ((buildingGID === GID_RESIDENCE || buildingGID === GID_PALACE) && buildActiveUrl.queryKey.s === "1") ||
                             isThisTrainingBuilding();
                if ( TB3O.isTtB )
                {
-                  processTrainingBuilding(buildGID);
+                  processTrainingBuilding(buildingGID);
                }
             }
          }
@@ -248,14 +248,19 @@ function doPage()
          uiCreateSearchBarWidget();
       }
 
-      if ( crtUrl.path === "/build.php" )
+      if ( buildingGID !== undefined )
       {
          uiModifyContracts();
-      }
 
-      if ( TB3O.isTtB )
-      {
-         uiModifyTrainingBuilding(buildGID);
+         if ( canBuildingProduceResources(buildingGID) )
+         {
+            uiModifyResourceBuilding(buildingGID);
+         }
+
+         if ( TB3O.isTtB )
+         {
+            uiModifyTrainingBuilding(buildingGID);
+         }
       }
 
       //if ( !TB3O.boolIsNPCExluded ) { NPCUpdate(); }

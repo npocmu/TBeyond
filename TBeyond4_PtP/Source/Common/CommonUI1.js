@@ -321,7 +321,7 @@ function uiModifyContracts()
    __ENTER__
    var i;
    var resourcesInfo = TB3O.ActiveVillageInfo.r;
-   var contracts = TB3O.BuidingContracts;
+   var contracts = TB3O.BuildingContracts;
 
    for ( i = 0; i < contracts.length; i++ )
    {
@@ -355,6 +355,34 @@ function uiModifyContracts()
          injectedContainer.className = "tbInject";
          injectedContainer.appendChild(aTb);
       }
+   }
+
+   __EXIT__
+}
+
+
+//////////////////////////////////////////////////////////////////////
+// Modify all buildings that produce resources
+function uiModifyResourceBuilding(gid)
+{
+   __ENTER__
+   var productionInfo = TB3O.BuildingProductionInfo;
+   var contract = TB3O.BuildingContracts[0];
+
+   if ( contract && productionInfo && productionInfo.possible )
+   {
+      var profit = productionInfo.possible.production - 
+                   ( productionInfo.inProgress ? productionInfo.inProgress.production : productionInfo.current.production );
+      var cc = contract.cc;
+
+      var resTot = totalResources(contract.cost);
+
+      var secToProduce = Math.ceil(resTot/(profit-cc)*3600);
+      var title = formatTimeSpan(secToProduce, 1);
+      var infoSpan = $span(attrInject$,
+      "total need " + resTot + " unires, production increased on " + (profit-cc) + 
+      " unires (" + profit + "-" + cc + "), costs will pay off after " + title);
+      insertAfter(productionInfo.container, infoSpan);
    }
 
    __EXIT__

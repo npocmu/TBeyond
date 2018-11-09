@@ -93,20 +93,27 @@ function canBuildingTrainUnits(gid)
 }
 
 //////////////////////////////////////////////////////////////////////
-// get common info about bulding
-function getCommonBuildingInfo(gid, villageId, aDoc)
+// check that some building can produce resources
+function canBuildingProduceResources(gid)
 {
-   var info = scanBuildingNameLevel(aDoc);
+   return isSomeOf(gid,GID_LUMBER,GID_CLAY,GID_IRON,GID_CROP);
+}
+
+//////////////////////////////////////////////////////////////////////
+// get common info about bulding
+function getCommonBuildingInfo(gid, villageId, aDoc /*opt*/)
+{
+   var info = scanCommonBuildingInfo(aDoc);
    if ( info )
    {
-      T.saveLocaleString("BN_GID" + gid,info[0]);
+      T.saveLocaleString("BN_GID" + gid, info.name);
    }
-   return true;
+   return info;
 }
 
 //////////////////////////////////////////////////////////////////////
 // Search and parse all contracts for building
-function parseBuildingContracts()
+function getBuildingContracts()
 {
    var i;
    var contractsNodes = searchBuildingContractsNodes();
@@ -123,16 +130,31 @@ function parseBuildingContracts()
       }
    }
 
-   //__DUMP__(contracts)
-
-   TB3O.BuidingContracts = contracts;
+   return contracts;
 }
 
 //////////////////////////////////////////////////////////////////////
 // proccess common info about bulding
 function processBuilding(gid)
 {
-   getCommonBuildingInfo(gid, TB3O.ActiveVillageId, document);
+   __ENTER__
 
-   parseBuildingContracts();
+   var info = getCommonBuildingInfo(gid, TB3O.ActiveVillageId);
+   //__DUMP__(info)
+
+   if ( info )
+   {
+      var productionInfo = scanBuildingProductionInfo(gid, info.level);
+      __DUMP__(productionInfo)
+      if ( productionInfo )
+      {
+         TB3O.BuildingProductionInfo = productionInfo;
+      }
+   }
+
+   var contracts = getBuildingContracts();
+   //__DUMP__(contracts)
+   TB3O.BuildingContracts = contracts;
+
+   __EXIT__
 }
