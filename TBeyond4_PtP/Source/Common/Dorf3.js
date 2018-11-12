@@ -1266,8 +1266,9 @@ function fillD3TbRow_Tab4_Col2(villageId)
 // celebrations
 function uiCreateCelebrationTooltip(villageId, cType)
 {
+   var villageInfo = TB3O.VillagesInfo[villageId];
    var bIsNPCAvailable = getNPCAvailability(villageId);
-   var resourcesInfo = getActualResourcesInfoNow(TB3O.VillagesInfo[villageId].r, false);
+   var resourcesInfo = getActualResourcesInfoNow(villageInfo.r, false);
    var av = getAvailability(celCost[cType], resourcesInfo, bIsNPCAvailable);
    
    var title = (cType === 0) ? 'Small celebration' : 'Great celebration';
@@ -1278,8 +1279,12 @@ function uiCreateCelebrationTooltip(villageId, cType)
                NPCLink: false
              });
 
+   var cp = parseInt10($g("aldea" + (( cType === 0 ) ? villageId  : "_s") + "_4_2").textContent);
+
+   var maxcp = celCost[cType][4][TB3O.nServerType];
+
    var aDiv = $div(['class', 'tbTip'],[
-                    $e("h4",['class', 'tbTitle'], [title + " (" + celCost[cType][4][TB3O.nServerType],I("cp"),")"]),
+                    $e("h4",['class', 'tbTitle'], [title + " (" + Math.min(cp,maxcp),I("cp"),")"]),
                     aTb,
                     $e("p",null,[TX('CELHINTS',0),
                        ( av[0] === 1 ) ? [$e("br"),TX('CELHINTS',1)] : null]),
@@ -1349,18 +1354,18 @@ function fillD3TbRow_Tab4_Col3(villageId)
    }
    else
    {
-      var b = villageInfo.csi.b;
-      var id = getBuildingIdByGid(b,GID_TOWNHALL);
       aCell.textContent = "-";
-      if ( id )
+
+      var buildingInfo = getBuildingInfoByGid(villageInfo.csi.b,GID_TOWNHALL);
+      if ( buildingInfo )
       {
-         if ( b[id][1] > 0 )
+         if ( buildingInfo.lvl > 0 )
          {
             removeChildren(aCell);
             uiAddCelebrationBullet(0);
          }
 
-         if ( b[id][1] >= 10 )
+         if ( buildingInfo.lvl >= 10 )
          {
             uiAddCelebrationBullet(1);
          }
