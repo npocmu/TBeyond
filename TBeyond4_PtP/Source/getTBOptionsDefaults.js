@@ -30,10 +30,10 @@ function getTBOptionsDefaults()
    ddXupg + '|' + ddY,'0','1', 1,'1','1','1','1','1','1',           // 90 - 99
    '0', '', '1',  '1',  ddXreport + '|' + (90 + delta), '1','0','1','0','1', // 100 - 109
    '0', '1', '1', '1', '0', '0', '1', '0', '1', '',  // 110 - 119
-   '1' // 120 - 129
+   '1', '1'  // 120 - 129
    ];
 
    return OD;
 }
 
-getTBOptionsDefaults.count = 121;
+getTBOptionsDefaults.count = 122;

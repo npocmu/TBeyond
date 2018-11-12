@@ -13,6 +13,11 @@ function uiCreateTool(imgTag, tooltip/*opt*/, onClick/*opt*/)
    return tool;
 }
 
+//////////////////////////////////////////////////////////////////////
+function uiCreateTool_Close(onClose)
+{
+   return uiCreateTool("bClose", T('CLOSE'), onClose)
+}
 
 //////////////////////////////////////////////////////////////////////
 function uiToolbar_AddTools(toolbar,tools,bWithoutSep)

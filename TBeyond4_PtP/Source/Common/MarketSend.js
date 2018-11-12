@@ -539,7 +539,7 @@ function uiModifyMarketSend()
             uiModifyArrivalsTables(resourcesEventsQueue);
          }
 
-         if ( resourcesEventsQueue.length > 0 )
+         if ( TBO_SHOW_ARR_TOTALS_TABLE_MP === '1' && resourcesEventsQueue.length > 0 )
          {
             var aTb = uiCreateCumulativeArrivalsTable(resourcesEventsQueue);
             if ( aTb ) 
@@ -826,7 +826,7 @@ function uiModifyMarketSend()
                          $e("thead",null,[
                             $r($th([['class', 'tbTitle'],['colspan','6']],[
                                                    T("ARRP", T("RES" + (ri+1)), countIf(resourcesEventsQueue,function(v) { return v.Res[ri] !== 0; })),
-                                                   $div(['class', 'closediv'],uiCreateTool("bClose",T('CLOSE'),onClose))])),
+                                                   $div(['class', 'closediv'], uiCreateTool_Close(onClose))])),
                             $r(null,[
                                $th(I("clock")),
                                $th(I("hourglass")),
@@ -884,6 +884,14 @@ function uiModifyMarketSend()
    {
       var imgIncoming = I("tbiIn");
       var imgOutcoming = I("tbiOut");
+
+      function onClose()
+      {
+         removeElement($g("tb_arrm_progress"));
+         removeElement($g("tb_arrm"));
+         TBO_SHOW_ARR_TOTALS_TABLE_MP = '0';
+         saveTBOptions();
+      }
 
       //--------------------------------------------------------------
       function onChangeRollDownState(ri,e)
@@ -956,7 +964,9 @@ function uiModifyMarketSend()
       armTable = $t([attrInject$, ['id','tb_arrm']],
                        armBody = $e("tbody",
                            $r(
-                              $td([['class', 'cbgx'], ['colspan', '6']], T('ARRTOT',eventsCount)))));
+                              $td([['class', 'cbgx'], ['colspan', '6']],[
+                                 $div(['class', 'closediv'], uiCreateTool_Close(onClose)),
+                                 T('ARRTOT',eventsCount)]))));
 
       var tsCell = uiSetTimeSpanByDate($td(), dtNow, getDesiredTime(ttLastArrival), {format:1});
       var rRow = $r($th(I("hourglass")));

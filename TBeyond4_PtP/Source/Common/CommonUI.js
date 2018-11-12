@@ -28,8 +28,7 @@ function $df(dWidth, posX, posY, strTitle, sCookieN, divID, boolShowMinMax, cont
       mmDiv.appendChild(uiCreateTool(strImgMM,T(TB3O.O[xi] === '0' ? 'WMAX' : 'WMIN'),minmaxDiv));
    }
 
-   var closeDiv = $div([['class', 'closediv']]);
-   closeDiv.appendChild(uiCreateTool("bClose",T('CLOSE'),fcloseDiv));
+   var closeDiv = $div(['class', 'closediv'], uiCreateTool_Close(fcloseDiv));
    makeDraggable(fDiv, dragDiv);
    fDiv.appendChild(dragDiv);
    if ( mmDiv ) fDiv.appendChild(mmDiv);

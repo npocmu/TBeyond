@@ -96,6 +96,9 @@
    TB3O.CNc = ['#000000', '#FDF8C1', '#7DFF7D', '#FF9696', '#FFC84B', '#F096F0'];
    TB3O.DFc = ['#000000', 'white'];
 
+   // Custom handler for `hashchange` event if '#' parameters are supported on page
+   TB3O.onHashChange = null; 
+
    // currently we visit a building that can train new troops
    TB3O.isTtB = false;
 

@@ -306,4 +306,5 @@ t['TAVGDUR'] = "Avg.dur.";
 t['120'] = "Enable enhanced UI for trade routes creation/edition";
 t['EDITROUTES_TT'] = "Disable enhanced UI";
 t['ARRTOT'] = "Totals for arrivals and planned dispatches of resources (events: $1)";
+t['121'] = "Show a table of totals for arrivals/dispatches of resources";
 };

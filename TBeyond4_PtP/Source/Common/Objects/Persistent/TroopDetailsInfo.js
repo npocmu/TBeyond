@@ -267,7 +267,7 @@ function exportRallyPointInfo(villageId, rallyPointInfo)
    var clientArea = uiCreateModalWindow();
    replaceChildren(clientArea,[
       $e('textarea',[['readonly','readonly'],['rows','20'],['cols','80']],buffer+"\n"),
-      uiCreateTool("bClose",T('CLOSE'), uiHideModalWindow)
+      uiCreateTool_Close(uiHideModalWindow)
    ]);
    uiDisplayModalWindow(true);
 }

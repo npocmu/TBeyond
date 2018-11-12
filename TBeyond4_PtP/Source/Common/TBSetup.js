@@ -170,11 +170,12 @@ IF_TB3({{// Main village list
              [2, "45", "CB", "", 45],
          // marketplace
          [1, "BN_GID17", "TR", "", -1],
-             [2, "46", "CB", "", 46],
-    IF_TB3({{[2, "47", "CB", "", 47],}})
-    IF_TB3({{[2, "48", "SEL", ["1", "2", "3", "4", "5"], 48],}})
-             [2, "ventas", "T", "", -1],
-             [2, "87", "CB", "", 87],
+             [2, "121", "CB", "", 121],
+             [2,  "46", "CB", "",  46],
+    IF_TB3({{[2,  "47", "CB", "",  47],}})
+    IF_TB3({{[2,  "48", "SEL", ["1", "2", "3", "4", "5"], 48],}})
+             [2, "VENTAS", "T", "", -1],
+             [2,  "87", "CB", "",  87],
              [2, "120", "CB", "", 120],
          // rally point
          [1, "BN_GID16", "TR", "", -1],
@@ -303,7 +304,7 @@ IF_TB3({{// Main village list
       $r(['class', 'srh'],[
          $td(['class', 'tbCol1'], [T('TB3SL',TB3O.shN) + " - " + TB3O.version,(TB3O.sn ? [$e("br"),TB3O.sn] : "")]),
          $td(['class', 'tbCol2'], uiCreateTool("bSave", T('SAVE'),  TB3SetupSave)),
-         $td(['class', 'tbCol3'], uiCreateTool("bClose",T('CLOSE'), uiHideModalWindow))
+         $td(['class', 'tbCol3'], uiCreateTool_Close(uiHideModalWindow))
       ]);
       return aRow;
    }
