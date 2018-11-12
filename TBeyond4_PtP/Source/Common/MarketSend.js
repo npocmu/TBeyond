@@ -541,10 +541,7 @@ function uiModifyMarketSend()
 
          if ( resourcesEventsQueue.length > 0 )
          {
-            var merchantGroup = $xf("//div[@id='build' and contains(@class,'gid17')]//h4");
-
-            //create table to sum the resources
-            var aTb = uiCreateCumulativeArrivalsTable(merchantGroup.textContent.replace(":", "").toLowerCase(), resourcesEventsQueue);
+            var aTb = uiCreateCumulativeArrivalsTable(resourcesEventsQueue);
             if ( aTb ) 
             {
                insertBefore(formular, aTb);
@@ -881,9 +878,9 @@ function uiModifyMarketSend()
    }
 
    //-----------------------------------------------------------------
-   // create table to sum the resources
+   // create the totals table for arrivals and planned dispatches of resources
    // resourcesEventsQueue must have at least one record
-   function uiCreateCumulativeArrivalsTable(title, resourcesEventsQueue)
+   function uiCreateCumulativeArrivalsTable(resourcesEventsQueue)
    {
       var imgIncoming = I("tbiIn");
       var imgOutcoming = I("tbiOut");
@@ -959,8 +956,7 @@ function uiModifyMarketSend()
       armTable = $t([attrInject$, ['id','tb_arrm']],
                        armBody = $e("tbody",
                            $r(
-                              $td([['class', 'cbgx'], ['colspan', '6']],
-                                  T('SUMMARY') + " - " + title + " (" + eventsCount + ")"))));
+                              $td([['class', 'cbgx'], ['colspan', '6']], T('ARRTOT',eventsCount)))));
 
       var tsCell = uiSetTimeSpanByDate($td(), dtNow, getDesiredTime(ttLastArrival), {format:1});
       var rRow = $r($th(I("hourglass")));
