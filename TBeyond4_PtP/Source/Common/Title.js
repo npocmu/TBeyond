@@ -1,4 +1,6 @@
-//change the browser title, get active village coords and coords for the cell/oasis/village opened from the map
+//////////////////////////////////////////////////////////////////////
+// change the browser title, get active village coords 
+// and coords for the cell/oasis/village opened from the map
 function uiModifyBrowserTitle()
 {
    __ENTER__
@@ -26,7 +28,7 @@ function uiModifyBrowserTitle()
 
       if ( aNode )
       {
-         title = trimWhitespaces(aNode.textContent);
+         title = removeInvisibleChars(trimWhitespaces(aNode.textContent));
       }
       else
       {
@@ -41,8 +43,13 @@ function uiModifyBrowserTitle()
 
       if ( isStrValid(title) )
       {
-         crtLocTitle += title + " " + strXY;
+         crtLocTitle += title;
 
+         // if present no coords in title then add current coordinates)
+         if ( title.search(/\(.*\d+.*[|].*\d+.*\)/) === -1 )
+         {
+            crtLocTitle += " " + strXY;
+         }
       }
    }
 
