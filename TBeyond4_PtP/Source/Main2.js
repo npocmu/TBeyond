@@ -344,11 +344,11 @@ function doPage()
          {
             if ( TBO_SHOW_TROOP_INFO_TOOLTIPS === "1" ) { uiAddTroopInfoTooltips(document); }
             bAddAttSendResLinks = ( TBO_SHOW_SEND_TROOPS_RESOURCES === "1" && crtUrl.path !== "/hero_adventure.php"
-                                                                           && TB3O.pageSelector !== "position_details" );
+                                                                           && !isSomeOf(TB3O.pageSelector, "position_details", "rally_point_club") );
             bAddCoordAndDistTT =  ( TBO_SHOW_DIST_TOOLTIPS === "1" && (isSomeOf(crtUrl.path,"/spieler.php","/cropfinder.php","/cropfinder.php","/statistiken.php","/hero_adventure.php") ||
                                                                        TB3O.pageSelector.indexOf("market_send") === 0 ||
                                                                        (TB3O.pageSelector === "report_list" && crtUrl.queryKey.t === "5") || 
-                                                                       isSomeOf(TB3O.pageSelector, "rally_point_dismiss", "message_view", "report_view")));
+                                                                       isSomeOf(TB3O.pageSelector, "rally_point_dismiss", "rally_point_club", "message_view", "report_view")));
          }
          uiModifyLinks($g(ID_CONTENT),
                        {add_send_troops:bAddAttSendResLinks, 
