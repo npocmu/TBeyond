@@ -397,6 +397,8 @@ function $at(aElem, attributes)
 {
    function processAttribute(aElem, name, value)
    {
+      __ASSERT__( isStrValid(name), "invalid attribute '" + name + "'" )
+
       if ( value !== null && value !== undefined && value !== "" )
       {
          if ( name === 'class' && value.charAt(0) === '+' )

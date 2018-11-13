@@ -43,11 +43,17 @@ m4_define({{TBCN_COL_NOCAP}},		{{TPL_CNCOLOR(CN_COL_NOCAP)}})
 
 m4_define({{TB_TTF_THRESHOLD}},		7200)
 
+m4_dnl Indicies for resources
+m4_define({{RI_LUMBER}},		0)
+m4_define({{RI_CLAY}},			1)
+m4_define({{RI_IRON}},			2)
+m4_define({{RI_CROP}},			3)
+
 m4_dnl Indicies for units cost
-m4_define({{UCI_LUMBER}},		0)
-m4_define({{UCI_CLAY}},			1)
-m4_define({{UCI_IRON}},			2)
-m4_define({{UCI_CROP}},			3)
+m4_define({{UCI_LUMBER}},		RI_LUMBER)
+m4_define({{UCI_CLAY}},			RI_CLAY)
+m4_define({{UCI_IRON}},			RI_IRON)
+m4_define({{UCI_CROP}},			RI_CROP)
 m4_define({{UCI_LOAD}},			4)
 m4_define({{UCI_ATTACK}},		5)
 m4_define({{UCI_DEFENCE_I}},		6)
@@ -56,12 +62,13 @@ m4_define({{UCI_SPEED}},		8)
 m4_define({{UCI_CC}},			9)
 
 m4_dnl Indicies for buildings cost
-m4_define({{BCI_LUMBER}},		0)
-m4_define({{BCI_CLAY}},			1)
-m4_define({{BCI_IRON}},			2)
-m4_define({{BCI_CROP}},			3)
+m4_define({{BCI_LUMBER}},		RI_LUMBER)
+m4_define({{BCI_CLAY}},			RI_CLAY)
+m4_define({{BCI_IRON}},			RI_IRON)
+m4_define({{BCI_CROP}},			RI_CROP)
 m4_define({{BCI_CP}},			4)
 m4_define({{BCI_CC}},			5)
+m4_define({{BCI_INFO}},			6)
 
 m4_dnl States for getAvailability
 m4_define({{STA_NORES}},		0)

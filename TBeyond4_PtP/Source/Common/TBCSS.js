@@ -283,10 +283,6 @@ IF_TB3({{
    'table#tb_arrm th, table#tb_arrm_progress th {background-color:#F3F3F3; font-weight:bold; background-image:none; height:18px;}' +
    'table#tb_arrm td.cbgx {font-weight:bold;}' +
    'table#tb_arrm td.tbTotal {font-weight:bold; width:17%;}' +
-/*
-   'table#tb_arrm td.tbTotal .tbiIn {float:' + docDir[0] + ';}' +
-   'table#tb_arrm td.tbTotal .tbiOut {float:' + docDir[1] + ';}' +
-*/
    'table#tb_arrm td.tbTotal .tbiIn {margin-top:2px; margin-' + docDir[0] + ':5px; float:' + docDir[0] + ';}' +
    'table#tb_arrm td.tbTotal .tbiOut {margin-top:2px; margin-' + docDir[1] + ':5px; float:' + docDir[1] + ';}' +
    // padding = image margin + image width
@@ -315,6 +311,13 @@ IF_TB3({{
    'table#tb_arrm_progress td.tbResourceMeter {padding:0px; min-width:100px;height:18px;}' +
    'table#tb_arrm_progress td.tbResourceMeter .tbMeterTextContainer {padding-top:2px}' +
    'table#tb_arrm_progress th.tbTitle {font-weight:bold; padding: 0px; background-color:#F5FFF0;}' +
+
+   // resource production buildings
+   'table#tb_build_hint th {background-color:#F3F3F3; color: black;}' +
+   'table#tb_build_hint th.tbTotal {width:20%;}' +
+   'table#tb_build_hint th.tbProd  {width:30%;}' +
+   'table#tb_build_hint th.tbTimeSpan {width:35%;}' +
+   'table#tb_build_hint td {text-align:center;}' +
 
    // training quick bar
    IF_TB4({{

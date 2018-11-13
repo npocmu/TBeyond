@@ -368,21 +368,57 @@ function uiModifyResourceBuilding(gid)
    __ENTER__
    var productionInfo = TB3O.BuildingProductionInfo;
    var contract = TB3O.BuildingContracts[0];
+   var bInfo = bCost[gid][0][BCI_INFO];
 
-   if ( contract && productionInfo && productionInfo.possible )
+   if ( contract && productionInfo && productionInfo.possible && bInfo )
    {
       var profit = productionInfo.possible.production - 
                    ( productionInfo.inProgress ? productionInfo.inProgress.production : productionInfo.current.production );
+      // profit in percents?
+      if ( bInfo.upg_type === 1 )
+      {
+         var PpH = TB3O.ActiveVillageInfo.r.PpH[bInfo.produce];
+         __DUMP__(PpH)
+         if ( productionInfo.inProgress )
+         {
+            PpH += Math.floor((productionInfo.inProgress.production - productionInfo.current.production)/100 * PpH);
+         }
+         __DUMP__(PpH)
+         // slightly incorrect because need to round-down a production of each building 
+         // and do not apply hero production
+         profit = Math.floor(profit/100 * PpH);
+      }
+
       var cc = contract.cc;
 
       var resTot = totalResources(contract.cost);
 
-      var secToProduce = Math.ceil(resTot/(profit-cc)*3600);
-      var title = formatTimeSpan(secToProduce, 1);
-      var infoSpan = $span(attrInject$,
-      "total need " + resTot + " unires, production increased on " + (profit-cc) + 
-      " unires (" + profit + "-" + cc + "), costs will pay off after " + title);
-      insertAfter(productionInfo.container, infoSpan);
+      var resImg = "r" + (bInfo.produce + 1);
+
+      var secToProduce = Math.ceil(resTot/(profit-cc) * 3600);
+      var strTimeSpan = formatTimeSpan(secToProduce, 1);
+
+      var prT = $t([attrInject$, ["id","tb_build_hint"], ["cellspacing","1"]], 
+                   [
+                      $e("thead", null, [
+                         $r(null,[
+                            $th(["class","tbTotal tbCost"], [TX("PROD_HINT_COLS",0),$e("br"),I("r0")]),
+                            $th(null,                       [TX("PROD_HINT_COLS",1),$e("br"),I(resImg)]),
+                            $th(["class","tbProd"],         [TX("PROD_HINT_COLS",2),$e("br"),I("r0")," = ",I(resImg)," \u2212 ",I("r5")]),
+                            $th(["class","tbTimeSpan"],     TX("PROD_HINT_COLS",3))
+                         ])
+                      ]),
+                      $e("tbody", null, [
+                         $r(null,[
+                            $td($ls(resTot)),
+                            $td($ls(profit)),
+                            $td($ls(profit - cc)),
+                            $td(strTimeSpan)
+                         ])
+                      ])
+                   ]);
+
+      insertAfter(productionInfo.container, prT);
    }
 
    __EXIT__

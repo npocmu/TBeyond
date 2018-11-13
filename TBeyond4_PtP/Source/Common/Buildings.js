@@ -96,7 +96,8 @@ function canBuildingTrainUnits(gid)
 // check that some building can produce resources
 function canBuildingProduceResources(gid)
 {
-   return isSomeOf(gid,GID_LUMBER,GID_CLAY,GID_IRON,GID_CROP);
+   var info = bCost[gid][0][BCI_INFO];
+   return ( info && hasOwnProperty(info,"produce") )
 }
 
 //////////////////////////////////////////////////////////////////////
