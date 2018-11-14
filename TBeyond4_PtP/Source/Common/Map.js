@@ -4,10 +4,11 @@ cellInfo properties
    lnk          (string)   - url for map position details
    is_oasis     (boolean)  - true if cell is oasis, false - regular cell
    type         (integer)  - type of cell
-   playerName   (string)
-   allianceName (string)
-   villageName  (string)
-   pop          (integer)
+   playerName   (string, optional)
+   allianceName (string, optional)
+   villageName  (string, optional)
+   pop          (integer, optional)
+   rx           (integer, optional) - race index
 */
 
 //////////////////////////////////////////////////////////////////////
@@ -156,7 +157,7 @@ function uiCreateCellInfoTooltip(mapId)
 
       if ( !cellInfo.is_oasis ) //a map cell or a village
       {
-         if ( cellInfo.type < villageTypes.length )
+         if ( cellInfo.type && cellInfo.type < villageTypes.length )
          {
             info = villageTypes[cellInfo.type];
             for ( i = 1; i < 5; i++ )

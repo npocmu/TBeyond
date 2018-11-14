@@ -3,14 +3,15 @@
 function uiModifyMap()
 {
    var reCoordsSpan = /<span *class *= *"[^"]* *coordinates *[^"]*" *>(.+)<\/span>/;
-   var rePlayerName = /{k.spieler} *([^<]+)/;
-   var reAllianceName = /{k.allianz} *([^<]+)/;
-   var reVillageName = /{k.dt} *(.+)/;
-   var rePop = /{k.einwohner} *(\d+)/;
-   var reOasisTyp = /{a[.]r(\d+)} *(\d+)%/g;
-   var reTitleTyp = / *{k[.]f(\d+)} */;
-   var reTitleOasis = /{k[.](fo)|(bt)}/;
-   var translateDict;
+   var rePlayerName = /\{k\.spieler\} *([^<]+)/;
+   var reAllianceName = /\{k\.allianz\} *([^<]+)/;
+   var reVillageName = /\{k\.dt\} *(.+)/;
+   var rePop = /\{k\.einwohner\} *(\d+)/;
+   var reRaceIndex = /\{k\.volk\} *\{a.v(\d+)\}/;
+   var reOasisTyp = /\{a\.r(\d+)\} *(\d+)%/g;
+   var reTitleTyp = / *\{k\.f(\d+)\} */;
+   var reTitleOasis = /\{k\.(fo)|(bt)\}/;
+   var translateDict = null;
 
    //-----------------------------------------------------------------
    function getAreaDetails(area)
@@ -33,7 +34,7 @@ function uiModifyMap()
             if ( areaInfo && areaInfo.hasOwnProperty('title') && areaInfo.hasOwnProperty('text') )
             {
                // retrive cell info from standard tip
-               var xy, type, is_oasis, playerName, allianceName, villageName, pop;
+               var xy, type, is_oasis, playerName, allianceName, villageName, pop, racex;
                var title = areaInfo.title;
 
                if ( areaInfo.text.match(reCoordsSpan) )
@@ -59,6 +60,11 @@ function uiModifyMap()
                if ( areaInfo.text.match(rePop) )
                {
                   pop = parseInt10(RegExp.$1);
+               }
+
+               if ( areaInfo.text.match(reRaceIndex) )
+               {
+                  racex = parseInt10(RegExp.$1) - 1;
                }
 
                is_oasis = (title.search(reTitleOasis) !== -1);
@@ -100,31 +106,37 @@ function uiModifyMap()
                   title = title.replace(reTitleTyp,"");
                }
 
-               title = title.replace(/{([a-z.]+)}/g, 
-                             function(str,key) { return translateDict.get(key); });   
+               if ( translateDict )
+               {
+                  title = translateDict.translate(title);
+               }
+               else
+               {
+                  title = title.replace(/{([a-z.]+)}/g,"");
+               }
 
                if ( xy )
                {
                   var mapId = xy2id(xy[0], xy[1]);
 
-                  details = 
-                  { 
-                     id: mapId, 
-                     cellInfo: 
-                     {
-                        M4_DEBUG({{areaInfo: cloneObject(areaInfo),}})
-                        x: xy[0],
-                        y: xy[1],
-                        lnk: "position_details.php?x=" + xy[0] + "&y=" + xy[1],
-                        is_oasis: is_oasis,
-                        type: type,
-                        title: title,  
-                        playerName: playerName,
-                        allianceName: allianceName,
-                        villageName: villageName,
-                        pop: pop
-                     }
+                  var cellInfo = 
+                  {
+                     M4_DEBUG({{areaInfo: cloneObject(areaInfo),}})
+                     x: xy[0],
+                     y: xy[1],
+                     lnk: "position_details.php?x=" + xy[0] + "&y=" + xy[1],
+                     is_oasis: is_oasis,
+                     type: type,
+                     title: title  
                   };
+
+                  if ( isStrValid(playerName) )   { cellInfo.playerName = playerName; }
+                  if ( isStrValid(allianceName) ) { cellInfo.allianceName = allianceName; }
+                  if ( isStrValid(villageName) )  { cellInfo.villageName = villageName; }
+                  if ( isIntValid(pop) )          { cellInfo.pop = pop; }
+                  if ( isIntValid(racex) )        { cellInfo.rx = racex; }
+
+                  details = { id: mapId, cellInfo: cellInfo };
 
                   if ( TBO_SHOW_MAP_TOOLTIPS === "1" )
                   {
@@ -311,7 +323,11 @@ function uiModifyMap()
 
    if ( window.wrappedJSObject && window.wrappedJSObject.Travian )
    {
-      translateDict = window.wrappedJSObject.Travian.Translation;
+      var translation = window.wrappedJSObject.Travian.Translation;
+      if ( translation && isFunction(translation.translate) )
+      {
+         translateDict = translation;
+      }
    }
 
    uiRefreshMapProxy();
