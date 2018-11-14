@@ -9,9 +9,7 @@ function uiModifyBrowserTitle()
    var strXY = formatCoords(TB3O.xCrt,TB3O.yCrt);
    var vname = "[" + TB3O.ActiveVillageInfo.name + "]";
 
-
    var aNode;
-   //var locX, locXx, locXy;
 
    if ( crtUrl.queryKey.newdid !== undefined )
    {
@@ -58,8 +56,8 @@ function uiModifyBrowserTitle()
 
    if ( crtLocTitle.length > 0 )
    {
-      TB3O.BrT = trimBlanks(crtLocTitle);
-      document.title += " - " + TB3O.BrT;
+      TB3O.crtBrT = trimBlanks(crtLocTitle);
+      document.title = TB3O.origBrT + " - " + TB3O.crtBrT;
    }
 
    __EXIT__

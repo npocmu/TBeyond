@@ -172,13 +172,13 @@
 			/*
 			if (neededTotal > 0 && r >= 0 && (time_saved > 0 || time_saved == null) && TB3O.bIsNPCAvailable) {
 				urlNPCback = addQueryParameter(NPCURL, NPCResources, needRes.join(','));
-				urlNPCback = addQueryParameter(urlNPCback, NPCbacklinkName, TB3O.BrT);
+				urlNPCback = addQueryParameter(urlNPCback, NPCbacklinkName, TB3O.crtBrT);
 				container.innerHTML += '&nbsp;<a href="' + urlNPCback + '"> &raquo; NPC</a>';
 			};
 			*/			
 			if (neededTotal > 0 && r >= 0 && (time_saved > 0 || time_saved == null) && TB3O.bIsNPCAvailable) {
 				//urlNPCback = addQueryParameter(NPCURL, NPCResources, needRes.join(','));
-				//urlNPCback = addQueryParameter(urlNPCback, NPCbacklinkName, TB3O.BrT);
+				//urlNPCback = addQueryParameter(urlNPCback, NPCbacklinkName, TB3O.crtBrT);
 				var urlNPCback = addQueryParameter(NPCURL, 'bid', getQueryParameters(window.location.href,'id'));
 				if(!getQueryParameters(window.location.href,'id'))  {urlNPCback = addQueryParameter(NPCURL, 'bid', getQueryParameters(window.location.href,'gid'));};
 				for(var urli = 0; urli < needRes.length; urli++)  { urlNPCback = addQueryParameter(urlNPCback, 'r'+(urli+1), needRes[urli]);};

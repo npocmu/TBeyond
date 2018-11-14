@@ -14,7 +14,8 @@
    TB3O.shN = 'TB{{}}4-SSE{{}}M4_DEBUG({{ (DBG)}})';
    TB3O.sn = '';
 
-   TB3O.BrT = "";     // browser title
+   TB3O.origBrT = document.title;    // initial browser title
+   TB3O.crtBrT  = "";                // modified part of current browser title (set later)
    TB3O.nTARbT = '';
    TB3O.nTASb = '';
    TB3O.nTAUb = '';

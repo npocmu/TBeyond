@@ -174,10 +174,10 @@ function showUserBookmarks()
    {
       if (!ubURL)
       {
-         ubURL = prompt(T('UBU'), TB3O.BrT);
+         ubURL = prompt(T('UBU'), TB3O.crtBrT);
          if (!ubURL || ubURL == '') return;
       }
-      var ubL = prompt(T('UBT'), TB3O.BrT);
+      var ubL = prompt(T('UBT'), TB3O.crtBrT);
       if (!ubL || ubL == '') return;
       addGMcookieValue("marcadores", [ubL, ubURL], false);
       showUserBookmarks();

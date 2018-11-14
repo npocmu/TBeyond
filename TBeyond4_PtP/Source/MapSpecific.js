@@ -161,7 +161,8 @@ function uiModifyMap()
          {
             h.textContent = uiModifyMap.mapHeader + " " + formatCoords(cx,cy);
          }
-         uiRefreshVL_Distance(cx,cy); 
+         uiRefreshVL_Distance(cx,cy);
+         uiModifyBrowserTitle();
       }
    }
 
