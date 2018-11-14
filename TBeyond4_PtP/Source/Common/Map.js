@@ -150,6 +150,8 @@ function uiCreateCellInfoTooltip(mapId)
    {
       __DUMP__(cellInfo)
 
+      addChildren(aDiv, $div($span(['class', 'tbCoord'], formatCoords(cellInfo.x, cellInfo.y)))); 
+
       if ( cellInfo.title ) 
       {
          addChildren(aDiv, [$span(['class','tbTitle'],cellInfo.title), $e("br")]); 
@@ -215,7 +217,7 @@ function uiCreateCellInfoTooltip(mapId)
       if ( TBO_SHOW_DIST_TIMES === "1" )
       {
          var distTb = uiCreateTroopsMerchantsDistTable("tb_distTT", null, mapId,
-                                             { show_coords:false, show_merchant:true, show_troops:true });
+                                             { show_coords:false, show_merchant:true, show_troops:true, tooltip:true });
          if ( distTb ) { addChildren(aTipDiv,$div(['class','tbTip'],distTb)); }
       }
 

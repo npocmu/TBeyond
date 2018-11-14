@@ -567,8 +567,8 @@ M4_ECHO_ON
 
    //icons styles
    IF_TB3('img.r0 {width:18px; height:12px; background-image: url(' + image['r0'] + ');}' +)
-   'img.tbiIn  {width:12px; height:12px; background-image: url(' + image['incom' + docDir[0].substr(0, 1)] + ');}' +
-   'img.tbiOut {width:12px; height:12px; background-image: url(' + image['dist' + docDir[0].substr(0, 1)] + ');}' +
+   'img.tbiCoords, img.tbiIn  {width:12px; height:12px; background-image: url(' + image['incom' + docDir[0].substr(0, 1)] + ');}' +
+   'img.tbiDist,   img.tbiOut {width:12px; height:12px; background-image: url(' + image['dist' + docDir[0].substr(0, 1)] + ');}' +
    'img.tbiCP {width:18px; height:12px; background-image: url(' + image['cp'] + ');}' +
    'img.tbiHourglass {width:18px; height:12px; background-image: url(' + image['hourglass'] + ');}' +
    'img.tbiCentermap {width:16px; height:16px; background-image: url(' + image['centermap'] + ');}' +

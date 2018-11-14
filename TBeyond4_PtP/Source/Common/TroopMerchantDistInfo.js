@@ -26,20 +26,19 @@ function getTroopsDetails(qDist, xRace, evTS)
 
 //////////////////////////////////////////////////////////////////////
 // Create distance and time table
-// was: addCoords, addMTime, addTTime, bAR, bDist
-// now:
 // options{
-//    show_title
-//    show_coords
+//    tooltip            - (bool) - generate content for tooltip (avoid links and nested tips)
+//    show_title         - (bool) - show title bar with destination coordinates
+//    show_coords        - (bool) - show source and destination coordinates after distance
 //    show_arrival_time  - (bool) - show arrival time 
-//    start_time  - (date/timestamp) - if absent show dynamic arrival time relative to current time
-//                                     if present show static arrival time depending on start_time
-//    show_merchant      - (bool) - show info about mercants
-//    merchant_repeat    - (number) - if given then set number of routes for mercants
-//    show_merchant_return-(bool)  - if given then show additional row when merchant went home
-//    show_troops
-//    show_all_races
-//    race
+//    start_time  - (date/timestamp) - if absent then show dynamic arrival time relative to current time
+//                                     if present then show static arrival time depending on start_time
+//    show_merchant      - (bool)  - show info about merchants
+//    merchant_repeat    - (number) - if given then set number of routes for merchants
+//    show_merchant_return-(bool)  - if given then show the additional row when the merchant comes home
+//    show_troops          (bool)  - show info about troops
+//    show_all_races       (bool)  - show info about all available races
+//    race                 (string) - show info about troops and merchant for this race (by default - for player race)
 // }
 function uiCreateTroopsMerchantsDistTable(tableId, srcMapId, destMapId, options)
 {
@@ -103,7 +102,16 @@ function uiCreateTroopsMerchantsDistTable(tableId, srcMapId, destMapId, options)
    //-------------------------------------------------------------
    function uiCreateCoords(XY)
    {
-      return uiCreateIntMapLinkXY2(XY[0],XY[1]);
+      var aNode;
+      if ( options.tooltip )
+      {
+         aNode = $span(['class', 'tbCoord'], formatCoords(XY[0],XY[1]));
+      }
+      else
+      {
+         aNode = uiCreateIntMapLinkXY2(XY[0],XY[1]);
+      }
+      return aNode;
    }
 
    //-------------------------------------------------------------
@@ -142,8 +150,8 @@ function uiCreateTroopsMerchantsDistTable(tableId, srcMapId, destMapId, options)
 
       //add the distance row
       aRow = $r(null,[
-                $td([['class', 'tbIco']], I("dist" + docDir[0].substr(0, 1))),
-                $td([['class', 'tbDist']], qDist.toFixed(2)) ]);
+                $td([['class', 'tbIco']], I("tbiDist")),
+                $td([['class', 'tbDist']], qDist.toFixed(2))]);
 
       var coords_columns = columns - 2;
       if ( coords_columns )
@@ -154,7 +162,7 @@ function uiCreateTroopsMerchantsDistTable(tableId, srcMapId, destMapId, options)
          {
             addChildren(aCell,[
                uiCreateCoords(srcXY), " ",
-               I("dist" + docDir[0].substr(0, 1)),
+               I("tbiCoords"),
                " ", uiCreateCoords(destXY)
             ]);
          }
@@ -236,13 +244,13 @@ function uiCreateTroopsMerchantsDistTable(tableId, srcMapId, destMapId, options)
 
 
 //////////////////////////////////////////////////////////////////////
-function uiAddTooltipForIntMapLink(aLink,mapId)
+function uiAddTooltipForIntMapLink(aLink, mapId)
 {
    function uiCreateTipForIntMapLink(mapId)
    {
       return uiCreateTroopsMerchantsDistTable("tb_distTT", null, mapId,
                                              { show_title:true, show_arrival_time:true,
-                                               show_merchant:true, show_troops:true });
+                                               show_merchant:true, show_troops:true, tooltip:true });
    }
 
    return uiAddTooltip(aLink,bind(uiCreateTipForIntMapLink,[mapId]));
