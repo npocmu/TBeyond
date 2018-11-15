@@ -119,7 +119,7 @@ function uiCreateResAndTimeTable(BA, resourcesInfo,
          aTb.appendChild(
             $r([['class', strClass]],
             [
-               $td([['class', 'center']],getResourceImage(ri) ),
+               $td([['class', 'tbCenter']],getResourceImage(ri) ),
                rCell = $td([['class', 'timeout' + ri],['title',T("RESREQ_TT",cost[ri])]], restante),
                aCell
             ]));
@@ -197,7 +197,7 @@ function uiCreateResAndTimeTable(BA, resourcesInfo,
          aTb.appendChild(
             $r(null,
             [
-               $td([['class', 'center']],I("r" + (ri + 1)) ),
+               $td([['class', 'tbCenter']],I("r" + (ri + 1)) ),
                $td([['colspan', '2']],aV[ri])
             ]));
       }
@@ -222,7 +222,7 @@ function uiCreateResAndTimeTable(BA, resourcesInfo,
       else if ( BA[0] === STA_NPCAVAIL && options.NPCLink )
       {
          aTb.appendChild($r(null,
-                            $td([['class','center'],['colspan', '3']],
+                            $td([['class','tbCenter'],['colspan', '3']],
                                $action(null, T('NPCLNK'), bind(uiOpenNPCAssistantDialog,[cloneArray(cost)])))));
          boolTb = true;
       }
@@ -256,7 +256,7 @@ function uiCreateResAndTimeTable(BA, resourcesInfo,
 
    if ( aLnk && !boolTb )
    {
-      aTb.appendChild($r(null,$td([['class', 'center']],$a(T('EXTAV'), [['href', aLnk]]))));
+      aTb.appendChild($r(null,$td([['class', 'tbCenter']],$a(T('EXTAV'), [['href', aLnk]]))));
       boolTb = true;
    }
 

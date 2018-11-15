@@ -115,7 +115,7 @@ function uiCreateTroopsMerchantsDistTable(tableId, srcMapId, destMapId, options)
    }
 
    //-------------------------------------------------------------
-   var aTb = null;
+   var aContent = null;
    var aRow, aCell;
    var srcXY;
    var destXY = id2xy(destMapId);
@@ -138,15 +138,25 @@ function uiCreateTroopsMerchantsDistTable(tableId, srcMapId, destMapId, options)
 
    if ( qDist !== 0 )
    {
-      aTb = $t([['class','tbDistInfo'],['id',tableId]]);
+      var aTb = $t([['class','tbDistInfo'],['id',tableId]]);
+      if ( options.tooltip )
+      {
+         aContent = $div(['class','tbTip']);
+
+         //add destination coords
+         if ( options.show_title )
+         {
+            aContent.appendChild($div(['class', 'tbHeading tbCenter'], uiCreateCoords(destXY)));
+         }
+
+         aContent.appendChild(aTb);
+      }
+      else
+      {
+         aContent = aTb;
+      }
 
       var columns = ( (options.show_coords | options.show_arrival_time) ? 3 : 2 ) * races + races-1;
-
-      //add destination coords
-      if ( options.show_title )
-      {
-         aTb.appendChild($r($td([['class','tbCenter tbTitle'], ['colspan',columns]],uiCreateCoords(destXY))));
-      }
 
       //add the distance row
       aRow = $r(null,[
@@ -239,7 +249,7 @@ function uiCreateTroopsMerchantsDistTable(tableId, srcMapId, destMapId, options)
          }
       }
    }
-   return aTb;
+   return aContent;
 }
 
 

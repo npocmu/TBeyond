@@ -83,7 +83,7 @@ function uiCreateBldUpgradeTable(tableId, villageId, resourcesInfo, arrBA, build
 
          addChildren(tb2,[
             $e("tr", [],
-               $e("td", [['colspan', "2"], ['class', 'center']],
+               $e("td", [['colspan', "2"], ['class', 'tbCenter']],
                   $a(bInfo.title + strNewLevel, [['href', href]]))),
             $e("tr", [], [
                $e("td", [],

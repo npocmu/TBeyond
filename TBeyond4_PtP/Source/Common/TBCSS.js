@@ -7,6 +7,11 @@ function setTBStyles()
 
    //TBeyond specific style declarations
    acss +=
+   // Common classes defaults
+   '.tbDist {color:blue;}' +
+   '.tbCenter {text-align:center !important;}' +
+
+   //
    'table.tb3tb	{width:100%; border-collapse:collapse; border:1px solid silver; font-size:8pt; text-align:center; background-color:' + TB3O.DFc[1] + '; padding:2px; margin:1px;}' +
    'table.tb3tb tr, table.tb3tb td {border:1px solid silver;}' +
 
@@ -39,11 +44,12 @@ function setTBStyles()
    '#tbver .tbExTime, #tbver .tbTVer {display:block; color: black; text-shadow: white 0 0 2px;}' +
    '#tbver .tbExTime {margin-top: 5px;}' +
 
+   // buildings upgrade table
    'table.tbUpgTable {width:682px; table-layout: fixed; border-collapse:collapse; border:1px solid silver; background-color:' + TB3O.DFc[1] + '; font-size:8pt; padding:2px; text-align:' + docDir[0] + '; empty-cells:show; line-height:16px;}' +
    'table.tbUpgTable table {background-color:transparent; border-collapse:collapse; border:0px none transparent; font-size:8pt; padding:2px; margin:1px; text-align:' + docDir[1] + '; vertical-align:top;}' +
    'table.tbUpgTable tr {background-color:transparent; border-collapse:collapse; border:0px none transparent; font-size:8pt; padding:2px; margin:1px; text-align:' + docDir[1] + '; vertical-align:top;}' +
    'table.tbUpgTable td {background-color:transparent; border:0px none transparent; font-size:8pt; text-align:' + docDir[1] + '; padding:2px; vertical-align:top;}' +
-   'table.tbUpgTable td.center {text-align:center; vertical-align:middle;}' +
+   'table.tbUpgTable td.tbCenter {vertical-align:middle;}' +
    'table.tbUpgTable td.tb3uthc {background-color:#ECECEC; border:1px solid silver; vertical-align:middle; font-weight:normal; text-align:center; width:25%; height:18px;}' +
    'table.tbUpgTable td.tb3utbc {background-color:transparent; border:1px solid silver; margin:0px; text-align:center; vertical-align:top; width:25%; height:18px;}' +
    'table.tbUpgTable a {font-size:8pt; font-weight:bold;}' +
@@ -60,6 +66,7 @@ IF_TB3({{
    'div#resDiv div.CNBT {position:absolute; cursor:pointer; z-index:26;}' +
 }})
 
+   // time and resources needed for upgrade
    'table.rNt {background-color:transparent; border-collapse:collapse; border:0px none transparent; padding:2px; vertical-align:top;}' +
    'table.tbUpgTable table.rNt {margin:1px;}' +
    'table.rNt * {font-size:8pt !important; text-align:' + docDir[1] + ' !important;}' +
@@ -69,7 +76,7 @@ IF_TB3({{
    'table.rNt th {border-top:1px solid silver;}' +
    'table.tbUpgTable table.rNt tr:first-child th {border-top:0px;}' +
    'table.rNt td {border:0px none transparent;}' +
-   'table.rNt td.center {text-align:center !important; vertical-align:middle;}' +
+   'table.rNt td.tbCenter {vertical-align:middle;}' +
    'table.rNt .tbCC, table.rNt .tbCP {text-align:' + docDir[0] + ' !important;}' +
    'table.rNt .tbCC *, table.rNt .tbCP * {vertical-align:middle;}' +
    'table.rNt .tbCC {color:red;}' +
@@ -120,11 +127,13 @@ IF_TB3({{
    'div.tbTip table {border-collapse:collapse; border:0px none transparent; padding:2px;' + 
                'font-weight:normal; font-size:8pt; text-align:' + docDir[1] + ';  background-color:transparent; empty-cells:show; line-height:16px; white-space:nowrap;}' +
    'div.tbTip table tr {border:0px none transparent;}' +
-   'div.tbTip table td, div.tbTip table th {background-color:transparent; border:0px none transparent; font-weight:normal; font-size:8pt; text-align:' + docDir[1] + '; color:black; padding:2px; margin:0px; vertical-align:middle;}' +
+   'div.tbTip table td, div.tbTip table th {background-color:transparent; border:0px none transparent; font-weight:normal; font-size:8pt; text-align:' + docDir[1] + '; padding:2px; margin:0px; vertical-align:middle;}' +
    'div.tbTip table th {font-weight:bold; text-align:center;font-size:10pt;IF_TB3(background-image:none;)}' +
    'div.tbTip table td.tbIco {text-align:' + docDir[0] + '; width:40px;}' +
    'div.tbTip table td.tbVal {text-align:' + docDir[1] + ';}' +
-   'div.tbTip table td.center {text-align:center;}' +
+   'div.tbTip .tbHeading {font-size:10pt !important; font-weight:bold; color:green;' + 
+                         'border-bottom:1px solid grey; padding: 2px 0px; margin-bottom: 5px !important;}' +
+
 
    'table.tbAttDefInfo thead th {font-weight:bold; text-align:center; font-size:8pt; background-color:transparent; background-image:none; }' +
    'table.tbAttDefInfo td.tbIco {text-align:' + docDir[0] + '; width:40px;}' +
@@ -146,14 +155,13 @@ IF_TB3({{
    'table.tbDistInfo td {border:0px none transparent;background-color:transparent;text-align:' + docDir[1] + ';}' +
    'table.tbDistInfo td {padding:2px;}' +
    'table.tbDistInfo td[class*="tbMerc"] {color:blue;}' +
-   'table.tbDistInfo td.tbDist {color:blue;}' +
-   'table.tbDistInfo td.tbCenter {text-align:center; padding: 2px 0px;}' +
+   'table.tbDistInfo td.tbCenter {padding: 2px 0px;}' +
    'table.tbDistInfo td.tbTravelT img {padding-' + docDir[1] + ':3px;}' + 
    'table.tbDistInfo td.tbArrivalT img {padding-' + docDir[1] + ':7px;}' +
    'table.tbDistInfo td.tbArrivalT {padding-' + docDir[0] + ':7px;}' +
    'table.tbDistInfo td.tbIco {text-align:' + docDir[0] + '; padding-' + docDir[0] + ':2px; padding-' + docDir[1] + ':10px;}' +
    'table.tbDistInfo td.tbIco.tbMercRet {text-align:center}' +
-   'table.tbDistInfo td.tbTitle {font-size:10pt !important; font-weight:bold; color:green; border-bottom:1px solid grey;}' +
+//   'table.tbDistInfo td.tbHeading {font-size:10pt !important; font-weight:bold; color:green; border-bottom:1px solid grey;}' +
 
    IF_TB3({{'div#tb_unitsdest table.tbDistInfo td { font-size:11px; }' +}})
 
@@ -202,7 +210,6 @@ IF_TB3({{
    'table#vl2table td.tbMark0.tbActive {color:#FF8000;}' +
    'table#vl2table td.tbEmpty {width:10px;}' +
    'table#vl2table td.tbCoord {direction:ltr;max-width:60px;}' +
-   'table#vl2table td.tbDist {color:blue;}' +
    'table#vl2table td.tbName.tbActive a, table#vl2table td.tbCoord.tbActive a {color:black;}' +
    'table#vl2table td.tbName a, table#vl2table td.tbCoord a {color:dimgray;}' +
    'table#vl2table td.tbTool {padding:0px 1px;width:16px;max-width:16px;min-width:16px;text-align:center;}' +
@@ -312,7 +319,7 @@ IF_TB3({{
    'table#tb_arrm_progress td.tbResourceMeter .tbMeterTextContainer {padding-top:2px}' +
    'table#tb_arrm_progress th.tbTitle {font-weight:bold; padding: 0px; background-color:#F5FFF0;}' +
 
-   // resource production buildings
+   // resource production buildings - hint table
    'table#tb_build_hint th {background-color:#F3F3F3; color: black;}' +
    'table#tb_build_hint th.tbTotal {width:20%;}' +
    'table#tb_build_hint th.tbProd  {width:30%;}' +
