@@ -158,23 +158,6 @@ function uiCreateCellInfoTooltip(mapId)
          addChildren(aDiv, [$span(['class','tbTitle'],cellInfo.title), $e("br")]); 
       }
 
-      if ( cellInfo.hasOwnProperty("playerName") ) 
-      {
-         aTbl = $t();
-         aTbl.appendChild($r(null,[$th(T("PLAYER")),
-                                   $td(['class', ( cellInfo.playerName === TBU_NAME ) ? 'tb3mtcu' : ''],cellInfo.playerName)]));
-         aTbl.appendChild($r(null,[$th(T("ALLIANCE")),$td(['class','tbVal'], cellInfo.allianceName)]));
-         if ( cellInfo.hasOwnProperty("pop") ) 
-         {
-            aTbl.appendChild($r(null,[$th(T("POPULATION")),$td(['class','tbVal'], cellInfo.pop)]));
-         }
-         if ( cellInfo.hasOwnProperty("rx") ) 
-         {
-            aTbl.appendChild($r(null,[$th(T("U.2")),$td(['class','tbVal'], TB3O.KnownRaces[cellInfo.rx])]));
-         }
-         aDiv.appendChild(aTbl);
-      }
-
       if ( !cellInfo.is_oasis ) //a map cell or a village
       {
          if ( cellInfo.type && cellInfo.type < villageTypes.length )
@@ -199,36 +182,54 @@ function uiCreateCellInfoTooltip(mapId)
                }
             }
          }
+      }
 
-         if ( !cellInfo.playerName ) // unoccupied oasis
+      if ( cellInfo.hasOwnProperty("playerName") ) 
+      {
+         aTbl = $t(['class','tbMapInfo']);
+         aTbl.appendChild($r(null,[$th(T("PLAYER")),
+                                   $td(['class', ( cellInfo.playerName === TBU_NAME ) ? 'tb3mtcu' : ''],cellInfo.playerName)]));
+         aTbl.appendChild($r(null,[$th(T("ALLIANCE")),$td(['class','tbVal'], cellInfo.allianceName)]));
+         if ( cellInfo.hasOwnProperty("pop") ) 
          {
-            var bWait = false;
-            var container = $div([['id','tb_tt_' + mapId],['class','tbTitle']]);
-            addChildren(aTipDiv, container);
+            aTbl.appendChild($r(null,[$th(T("POPULATION")),$td(['class','tbVal'], cellInfo.pop)]));
+         }
+         if ( cellInfo.hasOwnProperty("rx") ) 
+         {
+            aTbl.appendChild($r(null,[$th(T("U.2")),$td(['class','tbVal'], TB3O.KnownRaces[cellInfo.rx])]));
+         }
+         aDiv.appendChild(aTbl);
+      }
 
-            if ( cellInfo.oasisInfo )
+      // unoccupied oasis?
+      if ( cellInfo.is_oasis && !cellInfo.hasOwnProperty("playerName") )
+      {
+         var bWait = false;
+         var container = $div([['id','tb_tt_' + mapId],['class','tbTitle']]);
+         addChildren(aTipDiv, container);
+
+         if ( cellInfo.oasisInfo )
+         {
+            if ( cellInfo.oasisInfo.troops !== null )
             {
-               if ( cellInfo.oasisInfo.troops !== null )
-               {
-                  uiAddTroopsInfoTables(container, cellInfo.oasisInfo.troops);
-               } 
-               else if ( cellInfo.oasisInfo.troops === undefined )
-               {
-                  bWait = true;
-               }
-            }
-            else
+               uiAddTroopsInfoTables(container, cellInfo.oasisInfo.troops);
+            } 
+            else if ( cellInfo.oasisInfo.troops === undefined )
             {
-               cellInfo.oasisInfo = {};
                bWait = true;
-               ajaxLoadDocument(cellInfo.lnk, bind2(onGetOasisDetails,[mapId]), bind(onAjaxFailed,[mapId]));
             }
+         }
+         else
+         {
+            cellInfo.oasisInfo = {};
+            bWait = true;
+            ajaxLoadDocument(cellInfo.lnk, bind2(onGetOasisDetails,[mapId]), bind(onAjaxFailed,[mapId]));
+         }
 
-            if ( bWait )
-            {
-               addClass(container,'tbWait');
-               addChildren(container, I("wait") );
-            }
+         if ( bWait )
+         {
+            addClass(container,'tbWait');
+            addChildren(container, I("wait") );
          }
       }
 

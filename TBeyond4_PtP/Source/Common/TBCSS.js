@@ -135,6 +135,8 @@ IF_TB3({{
    'div.tbTip .tbHeading {font-size:10pt !important; font-weight:bold; color:green;' + 
                          'border-bottom:1px solid grey; padding: 2px 0px; margin-bottom: 5px !important;}' +
 
+   'div.tbTip table.tbMapInfo {margin:5px 10px;border-top:1px solid grey;border-bottom:1px solid grey;}' +
+   'div.tbTip table.tbMapInfo th, div.tbTip table.tbMapInfo td {font-weight:bold; font-size:9pt;text-align:' + docDir[0] + ';}' +
 
    'table.tbAttDefInfo thead th {font-weight:bold; text-align:center; font-size:8pt; background-color:transparent; background-image:none; }' +
    'table.tbAttDefInfo td.tbIco {text-align:' + docDir[0] + '; width:40px;}' +
