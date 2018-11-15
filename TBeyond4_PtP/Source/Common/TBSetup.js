@@ -189,6 +189,7 @@ IF_TB3({{// Main village list
              [2, "86", "CB", "", 86],
          [1, "wsi", "TR", "", -1],
              [2, "55", "CB", "", 55],
+         // map (only work on old style maps)
          [1, "mapo", "TR", "", -1],
              [2, "56", "CB", "", 56],
              [2, "118","CB", "",118],

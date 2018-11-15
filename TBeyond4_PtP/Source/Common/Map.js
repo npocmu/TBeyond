@@ -4,6 +4,7 @@ cellInfo properties
    lnk          (string)   - url for map position details
    is_oasis     (boolean)  - true if cell is oasis, false - regular cell
    type         (integer)  - type of cell
+   title        (string)   - title for cell
    playerName   (string, optional)
    allianceName (string, optional)
    villageName  (string, optional)
@@ -155,6 +156,23 @@ function uiCreateCellInfoTooltip(mapId)
       if ( cellInfo.title ) 
       {
          addChildren(aDiv, [$span(['class','tbTitle'],cellInfo.title), $e("br")]); 
+      }
+
+      if ( cellInfo.hasOwnProperty("playerName") ) 
+      {
+         aTbl = $t();
+         aTbl.appendChild($r(null,[$th(T("PLAYER")),
+                                   $td(['class', ( cellInfo.playerName === TBU_NAME ) ? 'tb3mtcu' : ''],cellInfo.playerName)]));
+         aTbl.appendChild($r(null,[$th(T("8")),$td(['class','tbVal'], cellInfo.allianceName)]));
+         if ( cellInfo.hasOwnProperty("pop") ) 
+         {
+            aTbl.appendChild($r(null,[$th(T("POPULATION")),$td(['class','tbVal'], cellInfo.pop)]));
+         }
+         if ( cellInfo.hasOwnProperty("rx") ) 
+         {
+            aTbl.appendChild($r(null,[$th(T("U.2")),$td(['class','tbVal'], TB3O.KnownRaces[cellInfo.rx])]));
+         }
+         aDiv.appendChild(aTbl);
       }
 
       if ( !cellInfo.is_oasis ) //a map cell or a village

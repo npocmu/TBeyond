@@ -85,6 +85,7 @@ IF_TB3({{
 
    '.tbInject table.rNt {width:IIF_TB4(40,30)%;}' +
 
+   //Table of neighbors on the map
    'table#mapTable {width:682px; border-collapse:collapse; border:1px solid silver; background-color:' + TB3O.DFc[1] + '; font-size:8pt; margin:0px; padding:0px; text-align:center; empty-cells:show; line-height:16px;}' +
    'table#mapTable thead td {border:1px solid silver; background-color:#ECECEC; font-size:9pt; font-weight:bold; text-align:center; padding:1px; cursor:default; vertical-align:middle;}' +
    'table#mapTable thead td.tb3mthcp {cursor:pointer;}' +
@@ -122,7 +123,7 @@ IF_TB3({{
 
    'div.tbTip {text-align:center; font-size:8pt; font-weight:normal; line-height:16px; padding:3px 5px;}' + 
    'div.tbTip hr {margin-top:10px; margin-bottom:5px;}' + 
-   'div.tbTip .tbTitle {font-weight:bold;}' + 
+   'div.tbTip .tbTitle {font-weight:bold; font-size:10pt;}' + 
    'div.tbTip + div.tbTip {margin-top:5px;}' + 
    'div.tbTip table {border-collapse:collapse; border:0px none transparent; padding:2px;' + 
                'font-weight:normal; font-size:8pt; text-align:' + docDir[1] + ';  background-color:transparent; empty-cells:show; line-height:16px; white-space:nowrap;}' +
