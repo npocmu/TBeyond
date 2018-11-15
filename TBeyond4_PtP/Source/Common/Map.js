@@ -163,7 +163,7 @@ function uiCreateCellInfoTooltip(mapId)
          aTbl = $t();
          aTbl.appendChild($r(null,[$th(T("PLAYER")),
                                    $td(['class', ( cellInfo.playerName === TBU_NAME ) ? 'tb3mtcu' : ''],cellInfo.playerName)]));
-         aTbl.appendChild($r(null,[$th(T("8")),$td(['class','tbVal'], cellInfo.allianceName)]));
+         aTbl.appendChild($r(null,[$th(T("ALLIANCE")),$td(['class','tbVal'], cellInfo.allianceName)]));
          if ( cellInfo.hasOwnProperty("pop") ) 
          {
             aTbl.appendChild($r(null,[$th(T("POPULATION")),$td(['class','tbVal'], cellInfo.pop)]));
@@ -308,7 +308,7 @@ function uiCreateNeighborhoodTable(tableId)
                    tbody = $e("tbody")
                 ]);
 
-   var cL = [['PLAYER','string'], ['8','string'], ['ALDEAS','string'], ['POPULATION','int'], ['COORDS','xy'], ['MAPTBACTS',null]];
+   var cL = [['PLAYER','string'], ['ALLIANCE','string'], ['ALDEAS','string'], ['POPULATION','int'], ['COORDS','xy'], ['MAPTBACTS',null]];
    var i;
    for ( i = 0; i < cL.length; i++ )
    {

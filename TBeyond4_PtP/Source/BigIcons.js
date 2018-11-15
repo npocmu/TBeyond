@@ -103,33 +103,6 @@ function uiModifyBigIconsBar()
          );
       }
 
-      if ( TBO_SHOW_BIG_ICON_ALLIANCE === "1" )
-      {
-         var target;
-         var alfl = getGMcookie('alfl', false);
-         if (alfl == "false" || alfl == "") 
-         {
-            alfl = "allianz.php?s=2";
-         }
-         else 
-         {
-            target = "_blank";
-         }
-
-         TB3O.iBiC += 1;
-         addChildren(biBar,
-            $e("div",[['id','n8'],['class','tb3BI']],[
-               $e("img", [['usemap','#alliance'], ['src',xGIF], ['title',T('8')]]),
-               $e("map", [['name','alliance']],[
-                  $rect(strMapCbib[0], 'allianz.php',     T('8') + ':\u00A0' + T('OVERVIEW')),
-                  $rect(strMapCbib[1], alfl,              T('8') + ':\u00A0' + T('FORUM'), target),
-                  $rect(strMapCbib[2], 'allianz.php?s=3', T('8') + ':\u00A0' + T('ATTACKS')),
-                  $rect(strMapCbib[3], 'allianz.php?s=4', T('8') + ':\u00A0' + T('NEWS'))
-               ])
-            ])
-         );
-      }
-
       insertFirst(biBar,sL);
       biBar.style.width = (origWidth + TB3O.iBiC * 70) + 'px';
       biBar.style.display = '';

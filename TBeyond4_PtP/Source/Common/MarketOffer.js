@@ -208,7 +208,7 @@ function uiModifyMarketOffer()
       {
          var i, j = 0;
          var aR, aBody;
-         var arH = [T('OFREZCO'), I("ratio"), T('BUSCO'), IIF_TB4(T('MERCHANTS'),I('merchant')), T('8'), T('MAXTIME'), T('SELL'), T('DEL')];
+         var arH = [T('OFREZCO'), I("ratio"), T('BUSCO'), IIF_TB4(T('MERCHANTS'),I('merchant')), T('ALLIANCE'), T('MAXTIME'), T('SELL'), T('DEL')];
          var arCl= [            , "tbRatio"];
 
 

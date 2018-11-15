@@ -11,6 +11,6 @@
 :: COPYRIGHT:  (c) npocmu 2011
 :: PURPOSE:    
 ::********************************************************************
-cscript Source\import.js //NoLogo "Import\Travian Beyond SSE i18n - I18N.tsv"
+cscript Source\import.js //NoLogo "Import\Travian4 Beyond SSE i18n - I18N.tsv"
 
 ::*************************** END OF FILE ****************************

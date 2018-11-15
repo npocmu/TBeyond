@@ -25,7 +25,6 @@ m4_define({{TBO_SHOW_BIG_ICON_MARKET}},    	{{TPL_OPTION(4)}})
 m4_define({{TBO_SHOW_BIG_ICON_MILITARY}},  	{{TPL_OPTION(5)}})
 m4_define({{TBO_SHOW_BIG_ICON_MILITARY2}}, 	{{TPL_OPTION(6)}})
 m4_define({{TBO_SHOW_BIG_ICON_MISC}},      	{{TPL_OPTION(7)}})
-m4_define({{TBO_SHOW_BIG_ICON_ALLIANCE}},  	{{TPL_OPTION(8)}})
 
 //m4_define({{TBO_SHOW_MENU_SECTION3}},		{{TPL_OPTION(9)}})
 

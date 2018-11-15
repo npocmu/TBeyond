@@ -639,8 +639,6 @@ M4_ECHO_ON
    '.tb3BI:hover {background-position:bottom;}' +
    '#n7.tb3BI       {background-image: url(' + image['militargs'] + ');}' +
    '#n7.tb3BI:hover {background-image: url(' + image['militar'] + ');}' +
-   '#n8.tb3BI       {background-image: url(' + image['alliancegs'] + ');}' +
-   '#n8.tb3BI:hover {background-image: url(' + image['alliance'] + ');}' +
    '#n9.tb3BI       {background-image: url(' + image['setup'] + ');position:relative;float:' + docDir[1]+'}' +
    '#n9.tb3BI img   {height:52px;}' +
    '#n9.tb3BI:hover {background-position:0px -67px;}' +
