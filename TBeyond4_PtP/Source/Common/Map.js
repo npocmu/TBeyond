@@ -142,7 +142,7 @@ function uiCreateCellInfoTooltip(mapId)
 
    //-----------------------------------------------------------------
    var i, info;
-   var aDiv, aTbl;
+   var aDiv;
    var aContent = null;
    var aTipDiv = $div(aDiv = $div(['class','tbTip']));
    var cellInfo = TB3O.MapInfo.getCell(mapId);
@@ -186,9 +186,9 @@ function uiCreateCellInfoTooltip(mapId)
 
       if ( cellInfo.hasOwnProperty("playerName") ) 
       {
-         aTbl = $t(['class','tbMapInfo']);
+         var aTbl = $t(['class','tbMapInfo']);
          aTbl.appendChild($r(null,[$th(T("PLAYER")),
-                                   $td(['class', ( cellInfo.playerName === TBU_NAME ) ? 'tb3mtcu' : ''],cellInfo.playerName)]));
+                                   $td(['class', ( cellInfo.playerName === TBU_NAME ) ? 'tbMyself' : ''],cellInfo.playerName)]));
          aTbl.appendChild($r(null,[$th(T("ALLIANCE")),$td(['class','tbVal'], cellInfo.allianceName)]));
          if ( cellInfo.hasOwnProperty("pop") ) 
          {
@@ -198,7 +198,7 @@ function uiCreateCellInfoTooltip(mapId)
          {
             aTbl.appendChild($r(null,[$th(T("U.2")),$td(['class','tbVal'], TB3O.KnownRaces[cellInfo.rx])]));
          }
-         aDiv.appendChild(aTbl);
+         aDiv.appendChild($div(['class','tbMapInfo'],aTbl));
       }
 
       // unoccupied oasis?
@@ -337,7 +337,7 @@ function uiCreateNeighborhoodTable(tableId)
             var mapId = xy2id(cellInfo.x, cellInfo.y);
             tbody.appendChild($r(null,
             [
-               $td([['class', ( cellInfo.playerName === TBU_NAME ) ? 'tb3mtcu' : '']], cellInfo.playerName),
+               $td([['class', ( cellInfo.playerName === TBU_NAME ) ? 'tbMyself' : '']], cellInfo.playerName),
                $td(cellInfo.allianceName),
                aCell = $td($lnk(['href', cellInfo.lnk],  cellInfo.villageName || cellInfo.title )),
                $td([['class', 'tb3mtcp']], cellInfo.pop),

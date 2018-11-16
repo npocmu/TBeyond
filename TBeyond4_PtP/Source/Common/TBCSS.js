@@ -90,7 +90,7 @@ IF_TB3({{
    'table#mapTable thead td {border:1px solid silver; background-color:#ECECEC; font-size:9pt; font-weight:bold; text-align:center; padding:1px; cursor:default; vertical-align:middle;}' +
    'table#mapTable thead td.tb3mthcp {cursor:pointer;}' +
    'table#mapTable td {border:1px solid silver; background-color:transparent; padding:1px; margin:0px; font-size:8pt; font-weight:normal; text-align:center; vertical-align:middle;}' +
-   'table#mapTable td.tb3mtcu {font-weight:bold; color:blue;}' +
+   'table#mapTable td.tbMyself {font-weight:bold; color:blue;}' +
    'table#mapTable td.tb3mtcp {padding-' + docDir[1] + ':10px; color:black; text-align:' + docDir[1] + ';}' +
 
    'div#updDiv {position:absolute; top:200px; ' + docDir[0] + ':120px; display:block; padding:16px 4px; z-index:50; clear:both; border:2px solid #C0C0C0; background-color:black; color:yellow; font-weight:bold;}' +
@@ -135,8 +135,10 @@ IF_TB3({{
    'div.tbTip .tbHeading {font-size:10pt !important; font-weight:bold; color:green;' + 
                          'border-bottom:1px solid grey; padding: 2px 0px; margin-bottom: 5px !important;}' +
 
-   'div.tbTip table.tbMapInfo {margin:5px 10px;border-top:1px solid grey;border-bottom:1px solid grey;}' +
-   'div.tbTip table.tbMapInfo th, div.tbTip table.tbMapInfo td {font-weight:bold; font-size:9pt;text-align:' + docDir[0] + ';}' +
+   'div.tbTip div.tbMapInfo {margin:5px 0px 0px; padding:5px 10px; border-top:1px solid grey; border-bottom:1px solid grey;}' +
+   'div.tbTip div.tbMapInfo th, div.tbTip div.tbMapInfo td {font-size:9pt;font-weight:normal;text-align:' + docDir[0] + ';}' +
+   'div.tbTip div.tbMapInfo td {font-weight:bold;}' +
+   'div.tbTip div.tbMapInfo td.tbMyself {color:blue;}' +
 
    'table.tbAttDefInfo thead th {font-weight:bold; text-align:center; font-size:8pt; background-color:transparent; background-image:none; }' +
    'table.tbAttDefInfo td.tbIco {text-align:' + docDir[0] + '; width:40px;}' +
@@ -164,7 +166,6 @@ IF_TB3({{
    'table.tbDistInfo td.tbArrivalT {padding-' + docDir[0] + ':7px;}' +
    'table.tbDistInfo td.tbIco {text-align:' + docDir[0] + '; padding-' + docDir[0] + ':2px; padding-' + docDir[1] + ':10px;}' +
    'table.tbDistInfo td.tbIco.tbMercRet {text-align:center}' +
-//   'table.tbDistInfo td.tbHeading {font-size:10pt !important; font-weight:bold; color:green; border-bottom:1px solid grey;}' +
 
    IF_TB3({{'div#tb_unitsdest table.tbDistInfo td { font-size:11px; }' +}})
 
