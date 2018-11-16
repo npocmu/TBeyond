@@ -170,7 +170,19 @@ function doPage()
                   TB3O.pageSelector = ifEqual ( buildActiveUrl.queryKey.tt, "1","rally_point_overview",
                                                                             "2","rally_point_send",
                                                                            "99","rally_point_club", "");
-                  if ( TB3O.pageSelector === "rally_point_send" && crtUrl.queryKey.hasOwnProperty("d") ) { TB3O.pageSelector = "rally_point_dismiss"; }
+                  if ( TB3O.pageSelector === "rally_point_send" )
+                  {
+                     if ( crtUrl.queryKey.hasOwnProperty("d") ) 
+                     { 
+                        TB3O.pageSelector = "rally_point_dismiss";
+                     }
+                     // Rally point send/confirm has same url.
+                     // We may distinguish between them only by content.
+                     else if ( $g("short_info") )
+                     {
+                        TB3O.pageSelector = "rally_point_confirm";
+                     }
+                  }
                }
 
                switch ( TB3O.pageSelector ) 

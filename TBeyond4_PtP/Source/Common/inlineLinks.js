@@ -158,16 +158,19 @@ function uiModifyLinks(parent, options)
          // a player link
          if ( url.path === "/spieler.php" )
          {
-            //if ( aLink.parentNode.className === 'menu' || aLink.parentNode.nodeName === 'P' ) { continue; }
-
             if ( (TBO_SHOW_USER_LINKS_RP === '1' && bIsRallyPoint) || !bIsRallyPoint ) 
             {
-               if ( "uid" in url.queryKey ) 
+               if ( url.queryKey.uid !== undefined ) 
                {
-                  var id = parseInt10(url.queryKey.uid);
-                  if ( !isNaN(id) )
+                  id = parseInt10(url.queryKey.uid);
+                  if ( isIntValid(id) )
                   {
-                     insertUserLinks(aLink, id, aLink.textContent);
+                     // avoid bug in travian
+                     // When send troops to oasis then user id in link has value = 0
+                     if ( !(TB3O.pageSelector === "rally_point_confirm" && id === 0) )
+                     {
+                        insertUserLinks(aLink, id, aLink.textContent);
+                     }
                   }
                }
             }
@@ -175,10 +178,13 @@ function uiModifyLinks(parent, options)
          //an alliance link ( ignore links to internal forum )
          else if ( url.path === "/allianz.php" && !url.queryKey.s && !url.queryKey.action )
          {
-            id = url.queryKey.aid;
-            if ( id && id != 0 ) 
+            if ( url.queryKey.aid !== undefined ) 
             {
-               insertAllyLinks(aLink, id, aLink.textContent);
+               id = parseInt10(url.queryKey.aid);
+               if ( isIntValid(id) && id !== 0 )
+               {
+                  insertAllyLinks(aLink, id, aLink.textContent);
+               }
             }
          }
          // the attack link for karte.php links
