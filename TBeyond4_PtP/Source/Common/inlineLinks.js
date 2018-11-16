@@ -167,7 +167,7 @@ function uiModifyLinks(parent, options)
                   {
                      // avoid bug in travian
                      // When send troops to oasis then user id in link has value = 0
-                     if ( !(TB3O.pageSelector === "rally_point_confirm" && id === 0) )
+                     if ( !(TB3O.pageSelector === "rally_point_send_confirm" && id === 0) )
                      {
                         insertUserLinks(aLink, id, aLink.textContent);
                      }

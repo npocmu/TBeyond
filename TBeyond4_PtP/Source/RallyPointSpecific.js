@@ -11,6 +11,20 @@ function searchRallyPointSendTroopsTimesContainer()
 }
 
 //////////////////////////////////////////////////////////////////////
+function searchRallyPointSendConfirmElems()
+{
+   var detailsTable = __TEST__($qf(".troop_details"));
+   var result = null;
+   if ( detailsTable )
+   {
+      result = {};
+      result.details = detailsTable;
+   }
+
+   return result;
+}
+
+//////////////////////////////////////////////////////////////////////
 function parseTroopDetails(troopDetailsTb, aDoc, ttServer, oasisMapId, bKeepId)
 {
    function getGroupCmd(str)
@@ -93,11 +107,10 @@ function parseTroopDetails(troopDetailsTb, aDoc, ttServer, oasisMapId, bKeepId)
          cc = parseInt10((node.textContent));
       }
 
-      node = $xf(".//div[@class='in']/span", 'f', troopDetailsTb, aDoc);
+      node = $xf(".//div[@class='in']", 'f', troopDetailsTb, aDoc);
       if ( node )
       {
-         var timeSpan = toSeconds(node.textContent);
-         ttArrival = ttServer + (timeSpan * 1000);
+         ttArrival = getEventTimeStamp(ttServer, node.textContent);
       }
 
       node = $xf(".//div[@class='sback']/a", 'f', troopDetailsTb, aDoc);

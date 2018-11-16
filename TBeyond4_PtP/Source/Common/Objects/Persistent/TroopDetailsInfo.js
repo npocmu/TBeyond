@@ -170,15 +170,71 @@ function walkRallyPointInfo(villageId, rallyPointInfo, filter, handler)
 
 M4_DEBUG({{
 /////////////////////////////////////////////////////////////////////
-// Debug!!!
-function getRallyPointInfoView(villageId,rallyPointInfo) 
+function getTroopDetailsInfoView(info) 
 {
    function XY2Str(XY) { return formatCoords(XY[0],XY[1]); }
 
-   var i,str;
+   var i,str = "";
    var dtNow = new Date();
+
+   str += "g" + info.gr;
+   str += " race:" + TB3O.KnownRaces[info.rx] + " " + JSON.stringify(info.u) + " ";
+
+   if ( info.h_id !== undefined )
+   {
+      str += "Hosted at '" + info.h_vn + "'";
+      str += XY2Str(id2xy(info.h_id));
+   }
+   else
+   {
+      str += "Nature";
+   }
+
+   if ( info.own_uid  )
+   {
+      str += " by player #" + info.own_uid + " '" + info.own_un + "'";
+   }
+
+   if ( info.o_id !== undefined )
+   {
+      str += " for oasis " + XY2Str(id2xy(info.o_id));
+   }
+
+   if ( info.t_id !== undefined  && info.ttArrival )
+   {
+      var strcmd = (info.cmd === undefined) ? '' : ['Def','Att','Raid','Spy','Adv','Settle','Prison'][info.cmd];
+      str += " --" + strcmd + "--> ";
+   }
+
+   if ( info.t_id !== undefined )
+   {
+      str += "target '" + info.t_vn + "'" + XY2Str(id2xy(info.t_id));
+   }
+
+   if ( info.cc !== undefined )
+   {
+      str += " crop: " + info.cc;
+   } 
+
+   if ( info.Res )
+   {
+      str += " booty: [" + info.Res.toString() + "]";
+   } 
+
+   if ( info.ttArrival )
+   {
+      str += " arrival: " + formatDateTime(dtNow, info.ttArrival, 1);
+   }
+
+   return str;
+}
+
+/////////////////////////////////////////////////////////////////////
+// Debug!!!
+function getRallyPointInfoView(villageId, rallyPointInfo) 
+{
+   var i,str;
    var villageInfo = TB3O.VillagesInfo[villageId];
-   var mapId = xy2id(villageInfo.x,villageInfo.y);
 
    str = "ttUpd = " + Date(rallyPointInfo.ttUpd) + "(" + rallyPointInfo.ttUpd + ")\n";
    str += "Total records = " + rallyPointInfo.t.length + "\n";
@@ -186,54 +242,8 @@ function getRallyPointInfoView(villageId,rallyPointInfo)
    for (i = 0; i < rallyPointInfo.t.length; ++i)
    {
       var info = rallyPointInfo.t[i];
-
-      str += "[" + i + (info.id ? " #" + info.id : "") + "] g" + info.gr + " r" + info.rx + " [" + info.u.toString() + "] ";
-
-      if ( info.h_id !== undefined )
-      {
-         str += "Hosted at '" + info.h_vn + "'";
-         str += XY2Str(id2xy(info.h_id));
-      }
-      else
-      {
-         str += "Nature";
-      }
-
-      if ( info.own_uid  )
-      {
-         str += " by player #" + info.own_uid + " '" + info.own_un + "'";
-      }
-
-      if ( info.o_id !== undefined )
-      {
-         str += " for oasis " + XY2Str(id2xy(info.o_id));
-      }
-
-      if ( info.t_id !== undefined  && info.ttArrival )
-      {
-         var strcmd = (info.cmd === undefined) ? '' : ['Def','Att','Raid','Spy','Adv','Settle','Prison'][info.cmd];
-         str += " --" + strcmd + "--> ";
-      }
-
-      if ( info.t_id !== undefined )
-      {
-         str += "target '" + info.t_vn + "'" + XY2Str(id2xy(info.t_id));
-      }
-
-      if ( info.cc !== undefined )
-      {
-         str += " crop: " + info.cc;
-      } 
-
-      if ( info.Res )
-      {
-         str += " booty: [" + info.Res.toString() + "]";
-      } 
-
-      if ( info.ttArrival )
-      {
-         str += " arrival: " + formatDateTime(dtNow, info.ttArrival, 1);
-      }
+      str += "[" + i + (info.id ? " #" + info.id : "") + "] ";
+      str += getTroopDetailsInfoView(info);
       str += "\n";
    }
    return str;

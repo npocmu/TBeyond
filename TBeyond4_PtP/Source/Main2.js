@@ -180,7 +180,7 @@ function doPage()
                      // We may distinguish between them only by content.
                      else if ( $g("short_info") )
                      {
-                        TB3O.pageSelector = "rally_point_confirm";
+                        TB3O.pageSelector = "rally_point_send_confirm";
                      }
                   }
                }
@@ -334,8 +334,9 @@ function doPage()
             uiModifyRallyPointOverview()
             break;
 
-         case "rally_point_send":    uiModifyRallyPointSend();    break;
-         case "rally_point_dismiss": uiModifyRallyPointDismiss(); break;
+         case "rally_point_send":         uiModifyRallyPointSend();        break;
+         case "rally_point_send_confirm": uiModifyRallyPointSendConfirm(); break;
+         case "rally_point_dismiss":      uiModifyRallyPointDismiss();     break;
       }
 
       saveVillagesInfo(TB3O.VillagesInfo);
@@ -360,7 +361,7 @@ function doPage()
             bAddCoordAndDistTT =  ( TBO_SHOW_DIST_TOOLTIPS === "1" && (isSomeOf(crtUrl.path,"/spieler.php","/cropfinder.php","/cropfinder.php","/statistiken.php","/hero_adventure.php") ||
                                                                        TB3O.pageSelector.indexOf("market_send") === 0 ||
                                                                        (TB3O.pageSelector === "report_list" && crtUrl.queryKey.t === "5") || 
-                                                                       isSomeOf(TB3O.pageSelector, "rally_point_dismiss", "rally_point_club", "message_view", "report_view")));
+                                                                       isSomeOf(TB3O.pageSelector, "rally_point_dismiss", "rally_point_send_confirm", "rally_point_club", "message_view", "report_view")));
          }
          uiModifyLinks($g(ID_CONTENT),
                        {add_send_troops:bAddAttSendResLinks, 
