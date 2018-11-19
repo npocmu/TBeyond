@@ -540,6 +540,22 @@ function getResourceImage(ri)
    return I("r" + (ri === 4 ? 0 : ri + 1));
 }
 
+/////////////////////////////////////////////////////////////////////
+// Get resource type from image (or any other nodes) that have class like 'r1'
+// Returns null if can't retrieve type of resource
+function getResourceTypeFromImage(img)
+{
+   if ( img )
+   {
+      var type = scanIntWithPrefix("r", img.className);
+      if ( isIntValid(type) )
+      {
+         return type;
+      }
+   }
+   return null;
+}
+
 //////////////////////////////////////////////////////////////////////
 // parse string like    r1|r2|r3|r4
 function getResourcesFromString(str)

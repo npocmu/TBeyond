@@ -365,6 +365,24 @@ function uiModifyContracts()
 // Modify all buildings that produce resources
 function uiModifyResourceBuilding(gid)
 {
+   //-----------------------------------------------------------------
+   function getIncreasedCumulativeOasesBoost(oasesBoost, increaseFactor)
+   {
+      var oi, ri;
+      var cumulativeBoost = [0,0,0,0];
+
+      for (oi = 0; oi < oasesBoost.length; ++oi)
+      {
+         for (ri = 0; ri < 4; ++ri)
+         {
+            cumulativeBoost[ri] += oasesBoost[oi][ri] + Math.round(oasesBoost[oi][ri]*increaseFactor);
+         }
+      }
+
+      return cumulativeBoost;
+   }
+
+   //-----------------------------------------------------------------
    __ENTER__
    var productionInfo = TB3O.BuildingProductionInfo;
    var contract = TB3O.BuildingContracts[0];
@@ -374,6 +392,7 @@ function uiModifyResourceBuilding(gid)
    {
       var profit = productionInfo.possible.production - 
                    ( productionInfo.inProgress ? productionInfo.inProgress.production : productionInfo.current.production );
+
       // profit in percents?
       if ( bInfo.upg_type === 1 )
       {
@@ -382,43 +401,87 @@ function uiModifyResourceBuilding(gid)
          if ( productionInfo.inProgress )
          {
             PpH += Math.floor((productionInfo.inProgress.production - productionInfo.current.production)/100 * PpH);
+            __DUMP__(PpH)
          }
-         __DUMP__(PpH)
-         // slightly incorrect because need to round-down a production of each building 
+         // slightly incorrect because need to round a production of each building 
          // and do not apply hero production
          profit = Math.floor(profit/100 * PpH);
+      } 
+      else if ( bInfo.upg_type === 2 ) // Waterworks
+      {
+         profit = 0;
+
+         if ( TB3O.VillageOases )
+         {
+            var oi, ri;
+            var normalBoost = [];
+            for (oi = 0; oi < TB3O.VillageOases.length; ++oi)
+            {
+               normalBoost.push(oasisTypes[TB3O.VillageOases[oi]]);
+            }
+
+            var currentCumBoost = getIncreasedCumulativeOasesBoost(normalBoost, productionInfo.current.production/100);
+            var possibleCumBoost = getIncreasedCumulativeOasesBoost(normalBoost, productionInfo.possible.production/100);
+
+            var newPpH = cloneArray(TB3O.ActiveVillageInfo.r.PpH);
+
+            __DUMP__(normalBoost, currentCumBoost, possibleCumBoost, newPpH)
+ 
+            if ( productionInfo.inProgress )
+            {
+               var inProgressCumBoost = getIncreasedCumulativeOasesBoost(normalBoost, productionInfo.inProgress.production/100);
+
+               for ( ri = 0; ri < 4; ++ri )
+               {
+                  newPpH[ri] += Math.floor((inProgressCumBoost[ri] - currentCumBoost[ri])/100 * newPpH[ri]);
+               }
+
+               currentCumBoost = inProgressCumBoost;
+
+               __DUMP__(inProgressCumBoost, newPpH)
+
+            }
+
+            for ( ri = 0; ri < 4; ++ri )
+            {
+               profit += Math.floor(newPpH[ri] * (possibleCumBoost[ri] - currentCumBoost[ri])/100);
+            }
+         }
       }
 
-      var cc = contract.cc;
+      if ( profit > 0 )
+      {
+         var cc = contract.cc;
 
-      var resTot = totalResources(contract.cost);
+         var resTot = totalResources(contract.cost);
 
-      var resImg = "r" + (bInfo.produce + 1);
+         var resImg = "r" + (bInfo.produce + 1);
 
-      var secToProduce = Math.ceil(resTot/(profit-cc) * 3600);
-      var strTimeSpan = formatTimeSpan(secToProduce, 1);
+         var secToProduce = Math.ceil(resTot/(profit-cc) * 3600);
+         var strTimeSpan = formatTimeSpan(secToProduce, 1);
 
-      var prT = $t([attrInject$, ["id","tb_build_hint"], ["cellspacing","1"]], 
-                   [
-                      $e("thead", null, [
-                         $r(null,[
-                            $th(["class","tbTotal tbCost"], [TX("PROD_HINT_COLS",0),$e("br"),I("r0")]),
-                            $th(null,                       [TX("PROD_HINT_COLS",1),$e("br"),I(resImg)]),
-                            $th(["class","tbProd"],         [TX("PROD_HINT_COLS",2),$e("br"),I("r0")," = ",I(resImg)," \u2212 ",I("r5")]),
-                            $th(["class","tbTimeSpan"],     TX("PROD_HINT_COLS",3))
+         var prT = $t([attrInject$, ["id","tb_build_hint"], ["cellspacing","1"]], 
+                      [
+                         $e("thead", null, [
+                            $r(null,[
+                               $th(["class","tbTotal tbCost"], [TX("PROD_HINT_COLS",0),$e("br"),I("r0")]),
+                               $th(null,                       [TX("PROD_HINT_COLS",1),$e("br"),I(resImg)]),
+                               $th(["class","tbProd"],         [TX("PROD_HINT_COLS",2),$e("br"),I("r0")," = ",I(resImg)," \u2212 ",I("r5")]),
+                               $th(["class","tbTimeSpan"],     TX("PROD_HINT_COLS",3))
+                            ])
+                         ]),
+                         $e("tbody", null, [
+                            $r(null,[
+                               $td($ls(resTot)),
+                               $td($ls(profit)),
+                               $td($ls(profit - cc)),
+                               $td(strTimeSpan)
+                            ])
                          ])
-                      ]),
-                      $e("tbody", null, [
-                         $r(null,[
-                            $td($ls(resTot)),
-                            $td($ls(profit)),
-                            $td($ls(profit - cc)),
-                            $td(strTimeSpan)
-                         ])
-                      ])
-                   ]);
+                      ]);
 
-      insertAfter(productionInfo.container, prT);
+         insertAfter(productionInfo.container, prT);
+      }
    }
 
    __EXIT__

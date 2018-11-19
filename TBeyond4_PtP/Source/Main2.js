@@ -212,6 +212,10 @@ function doPage()
             {
                processUpgradeBuilding(buildingGID);
             }
+            else if ( buildingGID === GID_WATERWORKS )
+            {
+               processWaterworks();
+            }
 
             if ( canBuildingTrainUnits(buildingGID) )
             {

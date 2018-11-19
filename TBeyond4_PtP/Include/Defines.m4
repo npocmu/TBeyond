@@ -44,6 +44,7 @@ m4_define({{TBCN_COL_NOCAP}},		{{TPL_CNCOLOR(CN_COL_NOCAP)}})
 m4_define({{TB_TTF_THRESHOLD}},		7200)
 
 m4_dnl Indicies for resources
+m4_define({{RI_ALL}},			-1)
 m4_define({{RI_LUMBER}},		0)
 m4_define({{RI_CLAY}},			1)
 m4_define({{RI_IRON}},			2)

@@ -38,9 +38,10 @@
    TB3O.iBiC = 0;           // count of big icons added
 
    TB3O.VillagesCount = 1;
-   TB3O.VillagesList = null; // store additional info for ingame list of villages 
-   TB3O.VillagesList2= null; // store additional info for additional list of villages 
-   TB3O.VillagesInfo = {};   // store additional info about villages
+   TB3O.VillagesList = null; // stores additional info for ingame list of villages 
+   TB3O.VillagesList2= null; // stores additional info for additional list of villages 
+   TB3O.VillagesInfo = {};   // stores additional info about villages
+   TB3O.VillageOases = null; // stores additional info about oases belonging to a village
    TB3O.ActiveVillageId = undefined;
    TB3O.ActiveVillageMapId = undefined;
    TB3O.ActiveVillageInfo = undefined; // shortcut for TB3O.VillagesInfo[TB3O.ActiveVillageId]

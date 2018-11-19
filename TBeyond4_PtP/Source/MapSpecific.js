@@ -71,34 +71,18 @@ function uiModifyMap()
 
                if ( is_oasis )
                {
-                   var oasisType, ri, percent;
-                   var percents = [0,0,0,0];
+                  var oasisType, ri, percent;
+                  var percents = [0,0,0,0];
 
-                   reOasisTyp.lastIndex = 0;
-                   while ( reOasisTyp.exec(areaInfo.text) )
-                   {
-                      ri = parseInt10(RegExp.$1) - 1; 
-                      percent = parseInt10(RegExp.$2);
-                      percents[ri] = percent;
-                   }
+                  reOasisTyp.lastIndex = 0;
+                  while ( reOasisTyp.exec(areaInfo.text) )
+                  {
+                     ri = parseInt10(RegExp.$1) - 1; 
+                     percent = parseInt10(RegExp.$2);
+                     percents[ri] = percent;
+                  }
 
-                   for ( oasisType = 0; oasisType < oasisTypes.length; oasisType++ )
-                   {
-                      var bMatch = true;
-                      for ( ri = 0; ri < 4; ri++ )
-                      {
-                         if ( oasisTypes[oasisType][ri] !== percents[ri] )
-                         {
-                            bMatch = false;
-                            break;
-                         }
-                      }
-                      if ( bMatch ) 
-                      {
-                         type = oasisType;
-                         break;
-                      }
-                   }
+                  type = getOasisType(percents);
                }
                else if ( title.match(reTitleTyp) )
                {
