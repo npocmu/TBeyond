@@ -3,7 +3,7 @@ function createStatLink(strType, aX, textURL)
 {
    var aLnk = null;
    var wsIndex = parseInt10(TBO_WS_ANALYSER_INDEX);
-   if ( !(wsIndex >= 0 || wsIndex < wsAnalysers.length) ) { wsIndex = 0; }
+   if ( !(wsIndex >= 0 && wsIndex < wsAnalysers.length) ) { wsIndex = 0; }
 
    var ahws = wsAnalysers[wsIndex][2](wsAnalysers[wsIndex][1],strType,aX);
    if ( ahws !== "" ) 
