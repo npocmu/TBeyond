@@ -13,7 +13,7 @@ function searchRallyPointSendTroopsTimesContainer()
 //////////////////////////////////////////////////////////////////////
 function searchRallyPointSendConfirmElems()
 {
-   var detailsTable = __TEST__($qf(".troop_details"));
+   var detailsTable = __TEST__($qf("table.troop_details"));
    var result = null;
    if ( detailsTable )
    {

@@ -46,8 +46,6 @@ function getServerTime(aDoc)
       {
          dServerTime = new Date(ttServer);
          TB3O.localTimeOffset = ttNow - ttServer;
-         // roundup to 15 min
-         //TB3O.localTimeOffset = Math.floor(TB3O.localTimeOffset/900000)*900000;
       }
    }
    __ASSERT__(dServerTime, "Can't determine server time")

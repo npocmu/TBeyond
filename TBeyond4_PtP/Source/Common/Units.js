@@ -278,13 +278,14 @@ function getTroopInfoFromUnitCount(race, uix, unitCount)
 function getTroopsInfoFromUnitsCount(race, arrUnits)
 {
    var troopsInfo = [];
-   var i, tix = getTroopIndexFromRace(race);
+   var i, tix, tixBase = getTroopIndexFromRace(race);
 
    for ( i = 0; i < TG_UNITS_COUNT; ++i )
    {
       if ( arrUnits[i] > 0 )
       {
-         troopsInfo.push([tix+i,arrUnits[i]]);
+         tix = ( i === TG_UIDX_HERO ) ? null : tixBase + i;
+         troopsInfo.push([tix, arrUnits[i]]);
       }
    }
    return troopsInfo;
