@@ -200,7 +200,7 @@ function doPage()
                   case "market_offer":  processMarketOffer();  break;
                }
             }
-            else if ( (buildingGID === GID_RESIDENCE || buildingGID === GID_PALACE) && buildActiveUrl.queryKey.s === "2" )
+            else if ( (buildingGID === GID_RESIDENCE || buildingGID === GID_PALACE || buildingGID === GID_COMMANDCENTER) && buildActiveUrl.queryKey.s === "2" )
             {
                processCultureTab();
             }
@@ -217,7 +217,7 @@ function doPage()
             {
                // Note: in residence/palace training stop after number of units,
                // therefore common check not worked
-               TB3O.isTtB = ((buildingGID === GID_RESIDENCE || buildingGID === GID_PALACE) && buildActiveUrl.queryKey.s === "1") ||
+               TB3O.isTtB = ((buildingGID === GID_RESIDENCE || buildingGID === GID_PALACE || buildingGID === GID_COMMANDCENTER) && buildActiveUrl.queryKey.s === "1") ||
                             isThisTrainingBuilding();
                if ( TB3O.isTtB )
                {

@@ -89,7 +89,8 @@ function isBuildingPresent(villageId, gid)
 // fast check that some building can potentially train units
 function canBuildingTrainUnits(gid)
 {
-   return isSomeOf(gid,GID_BARRACKS,GID_STABLE,GID_WORKSHOP,GID_RESIDENCE,GID_PALACE,GID_GREAT_BARRACK,GID_GREAT_STABLE,GID_TRAPPER);
+   return isSomeOf(gid, GID_BARRACKS, GID_STABLE, GID_WORKSHOP, GID_RESIDENCE, GID_PALACE, 
+                        GID_COMMANDCENTER, GID_GREAT_BARRACK, GID_GREAT_STABLE, GID_TRAPPER);
 }
 
 //////////////////////////////////////////////////////////////////////

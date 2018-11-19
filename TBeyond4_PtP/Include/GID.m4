@@ -57,6 +57,10 @@ m4_define({{GID_GREAT_GRANARY}}, 	39)
 m4_define({{GID_WW}}, 			40)
 m4_define({{GID_HORSEDT}}, 		41)
 m4_define({{GID_STONEWALL}}, 		42)
+m4_define({{GID_MAKESHIFTWALL}},	43)
+m4_define({{GID_COMMANDCENTER}},	44)
+m4_define({{GID_WATERWORKS}}, 		45)
+
                                           
 M4_ECHO_ON
 m4_dnl ************************* END OF FILE *************************

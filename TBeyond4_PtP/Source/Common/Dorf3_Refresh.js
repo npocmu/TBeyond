@@ -125,6 +125,7 @@ function refreshVillageV2(villageId, tabNo)
          tryRefreshTrainingBuilding(GID_WORKSHOP);
          tryRefreshTrainingBuilding(GID_RESIDENCE,"&s=1");
          tryRefreshTrainingBuilding(GID_PALACE,"&s=1");
+         tryRefreshTrainingBuilding(GID_COMMANDCENTER,"&s=1");
          tryRefreshTrainingBuilding(GID_GREAT_BARRACK);
          tryRefreshTrainingBuilding(GID_GREAT_STABLE);
          tryRefreshTrainingBuilding(GID_TRAPPER);
@@ -139,6 +140,7 @@ function refreshVillageV2(villageId, tabNo)
       var cpbuilding = 0;
       if ( isBuildingPresent(villageId,GID_RESIDENCE) ) { cpbuilding = GID_RESIDENCE; }
       else if ( isBuildingPresent(villageId,GID_PALACE) ) { cpbuilding = GID_PALACE; }
+      else if ( isBuildingPresent(villageId,GID_COMMANDCENTER) ) { cpbuilding = GID_COMMANDCENTER; }
 
       if ( cpbuilding )
       {
