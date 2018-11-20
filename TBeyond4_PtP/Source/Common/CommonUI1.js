@@ -384,27 +384,26 @@ function uiModifyResourceBuilding(gid)
 
    //-----------------------------------------------------------------
    __ENTER__
+
+   __ASSERT__(canBuildingProduceResources(gid))
+
    var productionInfo = TB3O.BuildingProductionInfo;
    var contract = TB3O.BuildingContracts[0];
    var bInfo = bCost[gid][0][BCI_INFO];
 
    if ( contract && productionInfo && productionInfo.possible && bInfo )
    {
-      var profit = productionInfo.possible.production - 
-                   ( productionInfo.inProgress ? productionInfo.inProgress.production : productionInfo.current.production );
+      var prev_production = ( productionInfo.inProgress ) ? productionInfo.inProgress.production : productionInfo.current.production;
+      var profit = productionInfo.possible.production - prev_production;
 
       // profit in percents?
       if ( bInfo.upg_type === 1 )
       {
-         var PpH = TB3O.ActiveVillageInfo.r.PpH[bInfo.produce];
+         var PpH = getFieldsBasePpH(TB3O.ActiveVillageInfo.csi.b)[bInfo.produce];
          __DUMP__(PpH)
-         if ( productionInfo.inProgress )
-         {
-            PpH += Math.floor((productionInfo.inProgress.production - productionInfo.current.production)/100 * PpH);
-            __DUMP__(PpH)
-         }
          // slightly incorrect because need to round a production of each building 
-         // and do not apply hero production
+         // exact formula:
+         //    profit = sum(round(pph*newboost) - round(pph*oldboost))
          profit = Math.floor(profit/100 * PpH);
       } 
       else if ( bInfo.upg_type === 2 ) // Waterworks
@@ -420,28 +419,13 @@ function uiModifyResourceBuilding(gid)
                normalBoost.push(oasisTypes[TB3O.VillageOases[oi]]);
             }
 
-            var currentCumBoost = getIncreasedCumulativeOasesBoost(normalBoost, productionInfo.current.production/100);
+            var currentCumBoost = getIncreasedCumulativeOasesBoost(normalBoost, prev_production/100);
             var possibleCumBoost = getIncreasedCumulativeOasesBoost(normalBoost, productionInfo.possible.production/100);
 
-            var newPpH = cloneArray(TB3O.ActiveVillageInfo.r.PpH);
+            var newPpH = getFieldsBasePpH(TB3O.ActiveVillageInfo.csi.b);
 
             __DUMP__(normalBoost, currentCumBoost, possibleCumBoost, newPpH)
  
-            if ( productionInfo.inProgress )
-            {
-               var inProgressCumBoost = getIncreasedCumulativeOasesBoost(normalBoost, productionInfo.inProgress.production/100);
-
-               for ( ri = 0; ri < 4; ++ri )
-               {
-                  newPpH[ri] += Math.floor((inProgressCumBoost[ri] - currentCumBoost[ri])/100 * newPpH[ri]);
-               }
-
-               currentCumBoost = inProgressCumBoost;
-
-               __DUMP__(inProgressCumBoost, newPpH)
-
-            }
-
             for ( ri = 0; ri < 4; ++ri )
             {
                profit += Math.floor(newPpH[ri] * (possibleCumBoost[ri] - currentCumBoost[ri])/100);

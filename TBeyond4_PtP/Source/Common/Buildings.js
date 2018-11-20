@@ -28,6 +28,24 @@ function getBuildingIdByGid(b, gid)
 }
 
 //////////////////////////////////////////////////////////////////////
+// return array [lumber,clay,iron,crop] with sum of base production 
+// of all fields
+function getFieldsBasePpH(b)
+{
+   var prod = [0, 0, 0, 0];
+   var id; 
+   for ( id = 1; id <= 18; ++id )
+   {
+      if ( b[id] ) 
+      {
+         var info = getFieldBasePpH(b[id][0], b[id][1]);
+         prod[info.produce] += info.pph;
+      }
+   }
+   return prod;
+}
+
+//////////////////////////////////////////////////////////////////////
 function getBuildingsTotalCost(b,costIndex)
 {
    var val = 0;
@@ -97,7 +115,12 @@ function canBuildingTrainUnits(gid)
 // check that some building can produce resources
 function canBuildingProduceResources(gid)
 {
-   var info = bCost[gid][0][BCI_INFO];
+   var info;
+   var bData = bCost[gid];
+   if ( bData )
+   {
+      info = bCost[gid][0][BCI_INFO];
+   }
    return ( info && hasOwnProperty(info,"produce") )
 }
 

@@ -66,6 +66,7 @@
    TB3O.nServerType = 0;          // 0 - normal, 1 - speed (3x), 2 - 2x,  3 - 5x, 4 - 4x, 5 - 8x
    TB3O.nMerchantSpeedFactor =    [ 1,           3,              2,       5,      4,      8];
    TB3O.nMerchantCapacityFactor = [ 1,           3,              2,       5,      4,      8];
+   TB3O.nProductionFactor =       [ 1,           3,              2,       5,      4,      8];
    TB3O.nTroopSpeedFactor =       [ 1,           2,              2,       2,      2,      3];
    TB3O.nMaxTroopIndex = 70;
 

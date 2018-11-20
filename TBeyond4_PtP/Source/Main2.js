@@ -161,6 +161,7 @@ function doPage()
             buildingGID = scanIntWithPrefix("gid", buildNode.className);
             __DUMP__(buildingGID)
 
+            // buildingGID == 0 when choose which new building should be started 
             processBuilding(buildingGID);
 
             if ( buildingGID === GID_RALLY_POINT )
