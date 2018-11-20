@@ -475,59 +475,14 @@ function $at(aElem, attributes)
 
 //////////////////////////////////////////////////////////////////////
 // attributes1 and attributes2 has format like supported by function $at 
-// (one of [], [name,value] or [[name1,value1],...,[nameN,valueN]]).
-// All other forms are silently ignored.
-// Always returns array of arrays except when both arguments are the empty arrays.
-// In such case just return empty array.
-// Function take care about 'class' attribute specific.
+// [], [name,value] or [[name1,value1],...,[nameN,valueN]]
+// Returns always array of arrays except when both arguments are the empty arrays
+// In such case return empty array.
 function mergeAttributes(attributes1, attributes2)
 {
-   var result = [];
-   var classAttrIndex = null;
-
-   function mergeAttribute(attribute)
-   {
-      if ( attribute.length === 2 || attribute.length === 3 )
-      {
-         if ( attribute[0] === 'class' )
-         {
-            if ( classAttrIndex !== null )
-            {
-               result[classAttrIndex][1] += ' ' + attribute[1];
-               return;
-            }
-            classAttrIndex = result.length;
-         }
-         result.push(attribute);
-      }
-   }
-
-   function merge(attributes)
-   {
-      if ( attributes instanceof Array )
-      {
-         var xi;
-         for ( xi = 0; xi < attributes.length; xi++ )
-         {
-            var attribute = attributes[xi];
-            if ( attribute instanceof Array )
-            {
-               mergeAttribute(attribute)
-            }
-            else if ( xi === 0 )
-            {
-               mergeAttribute(attributes)
-               break;
-            }
-         }
-      }
-   }
-
-   merge(attributes1);
-   merge(attributes2);
-
-   return result;
+   return attributes1.concat(attributes2);
 }
+
 
 //////////////////////////////////////////////////////////////////////
 // Create a new element of the DOM
