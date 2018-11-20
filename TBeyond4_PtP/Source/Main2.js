@@ -154,79 +154,86 @@ function doPage()
          var buildNode = $g("build");
          if ( buildNode )
          {
-            // if buildSubMenu present then this is bulding new style layout since Dinah mod
-            var buildSubMenu = searchAndParseSubMenu();
-            var buildActiveUrl = buildSubMenu ? parseUri(buildSubMenu.items[buildSubMenu.active][1]) : crtUrl;
-
             buildingGID = scanIntWithPrefix("gid", buildNode.className);
             __DUMP__(buildingGID)
 
-            // buildingGID == 0 when choose which new building should be started 
             processBuilding(buildingGID);
 
-            if ( buildingGID === GID_RALLY_POINT )
+            // buildingGID == 0 when choose which new building should be started
+            if ( buildingGID === 0 )
             {
-               if ( buildSubMenu )
+               TB3O.pageSelector = "build_new";
+            }
+            else
+            {
+               // if buildSubMenu present then this is bulding new style layout since Dinah mod
+               var buildSubMenu = searchAndParseSubMenu();
+               var buildActiveUrl = buildSubMenu ? parseUri(buildSubMenu.items[buildSubMenu.active][1]) : crtUrl;
+
+               if ( buildingGID === GID_RALLY_POINT )
                {
-                  TB3O.pageSelector = ifEqual ( buildActiveUrl.queryKey.tt, "1","rally_point_overview",
-                                                                            "2","rally_point_send",
-                                                                           "99","rally_point_club", "");
-                  if ( TB3O.pageSelector === "rally_point_send" )
+                  if ( buildSubMenu )
                   {
-                     if ( crtUrl.queryKey.hasOwnProperty("d") ) 
-                     { 
-                        TB3O.pageSelector = "rally_point_dismiss";
-                     }
-                     // Rally point send/confirm has same url.
-                     // We may distinguish between them only by content.
-                     else if ( $g("short_info") )
+                     TB3O.pageSelector = ifEqual ( buildActiveUrl.queryKey.tt, "1","rally_point_overview",
+                                                                               "2","rally_point_send",
+                                                                              "99","rally_point_club", "");
+                     if ( TB3O.pageSelector === "rally_point_send" )
                      {
-                        TB3O.pageSelector = "rally_point_send_confirm";
+                        if ( crtUrl.queryKey.hasOwnProperty("d") ) 
+                        { 
+                           TB3O.pageSelector = "rally_point_dismiss";
+                        }
+                        // Rally point send/confirm has same url.
+                        // We may distinguish between them only by content.
+                        else if ( $g("short_info") )
+                        {
+                           TB3O.pageSelector = "rally_point_send_confirm";
+                        }
                      }
                   }
+
+                  switch ( TB3O.pageSelector ) 
+                  {
+                     case "rally_point_overview":  processRallyPointOverview(); break;
+                  }
+               }
+               else if ( buildingGID === GID_MARKETPLACE && detectMarketPage() )
+               {
+                  switch ( TB3O.pageSelector ) 
+                  {
+                     case "market_routes": processMarketRoutes(); break;
+                     case "market_routes_edit": processMarketRoutesEdit(); break;
+                     case "market_send":   processMarketSend();   break;
+                     case "market_offer":  processMarketOffer();  break;
+                  }
+               }
+               else if ( (buildingGID === GID_RESIDENCE || buildingGID === GID_PALACE || buildingGID === GID_COMMANDCENTER) && buildActiveUrl.queryKey.s === "2" )
+               {
+                  processCultureTab();
+               }
+               else if ( buildingGID === GID_TOWNHALL )
+               {
+                  processTownHall();
+               }
+               else if ( buildingGID === GID_SMITHY )
+               {
+                  processUpgradeBuilding(buildingGID);
+               }
+               else if ( buildingGID === GID_WATERWORKS )
+               {
+                  processWaterworks();
                }
 
-               switch ( TB3O.pageSelector ) 
+               if ( canBuildingTrainUnits(buildingGID) )
                {
-                  case "rally_point_overview":  processRallyPointOverview(); break;
-               }
-            }
-            else if ( buildingGID === GID_MARKETPLACE && detectMarketPage() )
-            {
-               switch ( TB3O.pageSelector ) 
-               {
-                  case "market_routes": processMarketRoutes(); break;
-                  case "market_routes_edit": processMarketRoutesEdit(); break;
-                  case "market_send":   processMarketSend();   break;
-                  case "market_offer":  processMarketOffer();  break;
-               }
-            }
-            else if ( (buildingGID === GID_RESIDENCE || buildingGID === GID_PALACE || buildingGID === GID_COMMANDCENTER) && buildActiveUrl.queryKey.s === "2" )
-            {
-               processCultureTab();
-            }
-            else if ( buildingGID === GID_TOWNHALL )
-            {
-               processTownHall();
-            }
-            else if ( buildingGID === GID_SMITHY )
-            {
-               processUpgradeBuilding(buildingGID);
-            }
-            else if ( buildingGID === GID_WATERWORKS )
-            {
-               processWaterworks();
-            }
-
-            if ( canBuildingTrainUnits(buildingGID) )
-            {
-               // Note: in residence/palace training stop after number of units,
-               // therefore common check not worked
-               TB3O.isTtB = ((buildingGID === GID_RESIDENCE || buildingGID === GID_PALACE || buildingGID === GID_COMMANDCENTER) && buildActiveUrl.queryKey.s === "1") ||
-                            isThisTrainingBuilding();
-               if ( TB3O.isTtB )
-               {
-                  processTrainingBuilding(buildingGID);
+                  // Note: in residence/palace training stop after number of units,
+                  // therefore common check not worked
+                  TB3O.isTtB = ((buildingGID === GID_RESIDENCE || buildingGID === GID_PALACE || buildingGID === GID_COMMANDCENTER) && buildActiveUrl.queryKey.s === "1") ||
+                               isThisTrainingBuilding();
+                  if ( TB3O.isTtB )
+                  {
+                     processTrainingBuilding(buildingGID);
+                  }
                }
             }
          }
@@ -333,6 +340,9 @@ function doPage()
          case "map":                 uiModifyMap();             break;
          case "culture":             uiModifyCultureTab();      break;
          case "stat":                uiAddKeyboardNavigation(); break;
+
+         case "build_new":           uiModifyBuildNew(); break;
+            
 
          case "rally_point_overview":
             if ( crtUrl.queryKey.filter > 0 ) { uiAddKeyboardNavigation(); }

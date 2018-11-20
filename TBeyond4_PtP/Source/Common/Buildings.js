@@ -159,26 +159,27 @@ function getBuildingContracts()
 }
 
 //////////////////////////////////////////////////////////////////////
-// proccess common info about bulding
+// proccess common info about building
 function processBuilding(gid)
 {
    __ENTER__
 
-   var info = getCommonBuildingInfo(gid, TB3O.ActiveVillageId);
-   //__DUMP__(info)
-
-   if ( info )
+   if ( gid )
    {
-      var productionInfo = scanBuildingProductionInfo(gid, info.level);
-      __DUMP__(productionInfo)
-      if ( productionInfo )
+      var info = getCommonBuildingInfo(gid, TB3O.ActiveVillageId);
+
+      if ( info )
       {
-         TB3O.BuildingProductionInfo = productionInfo;
+         var productionInfo = scanBuildingProductionInfo(gid, info.level);
+         __DUMP__(productionInfo)
+         if ( productionInfo )
+         {
+            TB3O.BuildingProductionInfo = productionInfo;
+         }
       }
    }
 
    var contracts = getBuildingContracts();
-   //__DUMP__(contracts)
    TB3O.BuildingContracts = contracts;
 
    __EXIT__

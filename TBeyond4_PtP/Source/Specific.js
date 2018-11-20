@@ -97,14 +97,15 @@ function searchBuildingContractsNodes(aDoc /*opt*/)
 //    cost,       - Array(4) - resources needed
 //    cc,         - crop consumption
 //    ts,         - seconds to build
+//    gid         - (optional) building gid
 // }
 // or null if can't parse contract
 //
 function scanCommonContractInfo(costNode)
 {
-   var i, ri;
+   var i, ri, v;
    var res = Array(4);
-   var cc, ts;
+   var cc, ts, gid;
    var aSpan, Spans = costNode.getElementsByTagName("span");
    for ( i = 0; i < Spans.length; ++i )
    {
@@ -112,7 +113,7 @@ function scanCommonContractInfo(costNode)
       var tri = scanIntWithPrefix("r",aSpan.className);
       if ( isIntValid(tri) && tri >=1 && tri <= 5 )
       {
-         var v = scanIntWithoutLetter(aSpan.textContent);
+         v = scanIntWithoutLetter(aSpan.textContent);
          if ( isIntValid(v) )
          {
             if ( tri === 5 )
@@ -143,7 +144,7 @@ function scanCommonContractInfo(costNode)
    if ( res )
    {
       // try to find build time for newer versions of Travian
-      if ( res && ts === undefined )
+      if ( ts === undefined )
       {
          aSpan = $xf("ancestor::*[@id='contract']/following-sibling::*//span[" + $xClass("clocks") + "]", 'f', costNode);
          if ( aSpan )
@@ -153,9 +154,21 @@ function scanCommonContractInfo(costNode)
       }
 
       __ASSERT__(ts,"Can't parse time span for contract")
+
+      // try to find building gid ( on build new building pages )
+      var container = $xf("ancestor::*[contains(@id,'contract_building')]", 'f', costNode);
+
+      if ( container )
+      {
+         v = scanIntWithPrefix("contract_building",container.id);
+         if ( isIntValid(v) )
+         {
+            gid = v;
+         }
+      }
    }
 
-   return res ? { costNode:costNode, cost:res, cc:cc, ts:ts } : null;
+   return res ? { costNode:costNode, cost:res, cc:cc, ts:ts, gid:gid } : null;
 }
 
 //////////////////////////////////////////////////////////////////////
