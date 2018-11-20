@@ -442,7 +442,7 @@ function uiCreateMerchantsTooltip(villageId)
 {
    function uiCreateUniResCell(v)
    {
-      return $td(['class', 'tbTotal'],[I("r0",[['class', 'tbPrefix']]),v.toString()])
+      return $td(['class', 'tbTotal'],[I("r0",[['class', '+tbPrefix']]),v.toString()])
 
    }
    __ENTER__
@@ -452,7 +452,7 @@ function uiCreateMerchantsTooltip(villageId)
    var aTb =
    $t(['id', 'tb_MITT'],[
       $r(
-         $td([['class','tbTitle'],['colspan','2']],[I("merchant",[['class', 'tbPrefix']]),"" + vmInfo.mAvail + "/" + vmInfo.mTotal])
+         $td([['class','tbTitle'],['colspan','2']],[I("merchant",[['class', '+tbPrefix']]),"" + vmInfo.mAvail + "/" + vmInfo.mTotal])
       ),
       $r(null,[
          $td(null,["1\u00D7",I("merchant")]),
@@ -520,7 +520,7 @@ function uiCreateTotalMerchantsTooltip()
       mCap = caps[i];
       aTb.appendChild(       
          $r(null,[
-            $td(null,[I("r0",[['class', 'tbPrefix']]),String(mCap)]),
+            $td(null,[I("r0",[['class', '+tbPrefix']]),String(mCap)]),
             $td(['class', 'tbTotal'],String(stat[mCap].villages)),
             $td(['class', 'tbTotal'],"" + stat[mCap].mAvail + "/" + stat[mCap].mTotal)
          ])
