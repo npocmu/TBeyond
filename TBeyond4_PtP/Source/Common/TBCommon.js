@@ -119,7 +119,7 @@ function I(name, attr /*opt*/)
       }
    }
 
-   return imgNode ? imgNode : $img(mergeAttributes(pre_att,attr));
+   return imgNode ? imgNode : $img(pre_att.concat(attr));
 }
 
 /////////////////////////////////////////////////////////////////////
