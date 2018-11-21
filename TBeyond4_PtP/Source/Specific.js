@@ -196,10 +196,10 @@ function scanBuildingProductionInfo(gid, crtLevel, aDoc /*opt*/)
    var productionInfo = {};
    var bIsValid = false;
 
-   function searchAndScanProduction(container, selector)
+   function searchAndScanProduction(container, selector, mode)
    {
       var val, lvl;
-      var aRow = $qf(selector, 'f', container, aDoc);
+      var aRow = $qf(selector, mode, container, aDoc);
 
       if ( aRow )
       {
@@ -218,7 +218,7 @@ function scanBuildingProductionInfo(gid, crtLevel, aDoc /*opt*/)
    var infoNode = __TEST__($qf("#build_value", 'f', aDoc, aDoc));
    if ( infoNode )
    {
-      var current =  searchAndScanProduction(infoNode, ".currentLevel");
+      var current =  searchAndScanProduction(infoNode, ".currentLevel", 'f');
       if ( isIntValid(current.production) )
       {
          current.lvl = crtLevel;
@@ -226,14 +226,16 @@ function scanBuildingProductionInfo(gid, crtLevel, aDoc /*opt*/)
          bIsValid = true;
       }
 
-      var inProgress = searchAndScanProduction(infoNode, ".underConstruction");
+      // It possible to have several ".underConstruction" nodes
+      // Need to select last one
+      var inProgress = searchAndScanProduction(infoNode, ".underConstruction", 'l');
       if ( isIntValid(inProgress.production) )
       {
          productionInfo.inProgress = inProgress;
          bIsValid = true;
       }
 
-      var possible = searchAndScanProduction(infoNode, ".nextPossible");
+      var possible = searchAndScanProduction(infoNode, ".nextPossible", 'f');
       if ( isIntValid(possible.production) )
       {
          productionInfo.possible = possible;
