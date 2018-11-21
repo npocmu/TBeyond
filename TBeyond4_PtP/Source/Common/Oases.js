@@ -51,7 +51,7 @@ function getOasisTypeFromNode(typeNode)
 {
    if ( typeNode )
    {
-      var spans = $qf("span", 'l', typeNode);
+      var spans = typeNode.getElementsByTagName("span");
       if ( spans )
       {
          var percents = [0,0,0,0];

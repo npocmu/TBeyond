@@ -285,7 +285,9 @@ function $nth_tag(parent, tag, n /*opt*/)
 // Search nodes using CSS selectors
 // If @mode 'f' (by default) - returns single first matching node. If no matching node is found, 
 //                             null is returned.
-//          'l'              - returns a NodeList containing all matching 
+//          'l'              - returns single last matching node. If no matching node is found, 
+//                             null is returned.
+//          'a'              - returns a NodeList containing all matching 
 //                             Element nodes within the node's subtree, or an empty NodeList 
 //                             if no matches are found.
 //          'n'              - returns @nth matching node. If no @nth matching node is found, 
@@ -299,20 +301,25 @@ function $qf(selector, mode/*opt*/, nth/*opt*/, startnode/*opt*/, aDoc/*opt*/)
 {
    if ( mode === undefined ) { mode = 'f'; }
 
-   __ASSERT__( isSomeOf(mode, 'f','l','n'), "Unknown mode: " + mode )
+   __ASSERT__( isSomeOf(mode, 'f','l','a','n'), "Unknown mode: " + mode )
 
    if ( mode !== 'n' )
    {
       aDoc = startnode;
       startnode = nth;
+      if ( mode === 'l' )
+      {
+         mode = 'n';
+         nth = -1;
+      }
    }
    else
    {
-       nth = nth|0;
-       if ( nth === 0 )
-       {
-          mode = 'f';
-       }
+      nth = nth|0;
+      if ( nth === 0 )
+      {
+         mode = 'f';
+      }
    } 
 
    if ( !aDoc ) 
@@ -329,7 +336,7 @@ function $qf(selector, mode/*opt*/, nth/*opt*/, startnode/*opt*/, aDoc/*opt*/)
    else
    {
       var nodeList = startnode.querySelectorAll(selector);
-      if ( mode === 'l' )
+      if ( mode === 'a' )
       {
          return nodeList;
       }
@@ -351,7 +358,8 @@ function $qf(selector, mode/*opt*/, nth/*opt*/, startnode/*opt*/, aDoc/*opt*/)
 }
 
 //////////////////////////////////////////////////////////////////////
-// search nodes using xQuery
+// Search nodes using xQuery
+// TODO: same modes as for $qf
 function $xf(xpath, xpt/*opt*/, startnode/*opt*/, aDoc/*opt*/)
 {
    if ( !aDoc ) 

@@ -6,7 +6,7 @@ function uiCreateDorf2CenterNumbers(arrBA)
 
    if ( TBO_SHOW_CENTER_NUMBERS === "1" && TBO_SHOW_COLOR_BLD_LEVELS === "1" )
    {
-      var lvlNodesList = $qf("div.village2 div#village_map .level",'l');
+      var lvlNodesList = $qf("div.village2 div#village_map .level",'a');
       __ASSERT__(lvlNodesList.length, "Can't find level numbers")
 
       var reId = /aid(\d+)/;
