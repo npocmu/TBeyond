@@ -9,12 +9,12 @@ function adaptDataToGameVersion()
    iC["bau"]   = [['class','bau'], ['src',image["bau"]]];
 
    // old aproach, obsolete
-   gIc["r1"] = '<img class="r1" src="' + xGIF + '" title="' + T('RES1') + '" alt="' + T('RES1') + '">';
-   gIc["r2"] = '<img class="r2" src="' + xGIF + '" title="' + T('RES2') + '" alt="' + T('RES2') + '">';
-   gIc["r3"] = '<img class="r3" src="' + xGIF + '" title="' + T('RES3') + '" alt="' + T('RES3') + '">';
-   gIc["r4"] = '<img class="r4" src="' + xGIF + '" title="' + T('RES4') + '" alt="' + T('RES4') + '">';
-   gIc["r41"]= '<img class="r4" src="' + xGIF + '" title="' + T('SENDRES') + '" alt="' + T('SENDRES') + '">';
-   gIc["r5"] = '<img class="r5" src="' + xGIF + '" title="' + T('RES5') + '" alt="' + T('RES5') + '">';
+   gIc["r1"] = '<i class="r1" title="' + T('RES1') + '" alt="' + T('RES1') + '"></i>';
+   gIc["r2"] = '<i class="r2" title="' + T('RES2') + '" alt="' + T('RES2') + '"></i>';
+   gIc["r3"] = '<i class="r3" title="' + T('RES3') + '" alt="' + T('RES3') + '"></i>';
+   gIc["r4"] = '<i class="r4" title="' + T('RES4') + '" alt="' + T('RES4') + '"></i>';
+   gIc["r41"]= '<i class="r4" title="' + T('SENDRES') + '" alt="' + T('SENDRES') + '"></i>';
+   gIc["r5"] = '<i class="r5" title="' + T('RES5') + '" alt="' + T('RES5') + '"></i>';
    gIc["clock"] = '<img class="clock" src="' + xGIF + '">';
    gIc["capacity"] = '<img class="carry full" src="' + xGIF + '">';
    gIc["hero"] = '<img class="unit uhero" src="' + xGIF + '">';
