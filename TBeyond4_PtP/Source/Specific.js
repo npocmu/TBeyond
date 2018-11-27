@@ -103,56 +103,31 @@ function searchBuildingContractsNodes(aDoc /*opt*/)
 //
 function scanCommonContractInfo(costNode)
 {
-   var i, ri, v;
-   var res = Array(4);
-   var cc, ts, gid;
-   var aSpan, Spans = costNode.getElementsByTagName("span");
-   for ( i = 0; i < Spans.length; ++i )
+   var v, cc, ts, gid;
+
+   var resNodes = $qf(".value", 'a', costNode);
+   var Res = getResourcesFromNodes(resNodes);
+
+   var ccNode = resNodes[4];
+   if ( ccNode )
    {
-      aSpan = Spans[i];
-      var tri = scanIntWithPrefix("r",aSpan.className);
-      if ( isIntValid(tri) && tri >=1 && tri <= 5 )
+      v = parseSeparatedInt10(resNodes[4].textContent);
+      if ( isIntValid(v) )
       {
-         v = scanIntWithoutLetter(aSpan.textContent);
-         if ( isIntValid(v) )
-         {
-            if ( tri === 5 )
-            {
-               cc = v;
-            }
-            else
-            {
-               res[tri-1] = v;
-            }
-         }
+         cc = v;
       }
-      else if ( hasClass(aSpan, "clocks") )
+   }
+
+   __ASSERT__(Res,"Can't parse resources needed for contract")
+   __ASSERT__(cc,"Can't parse crop consumption for contract")
+
+   if ( Res )
+   {
+      aSpan = $xf("ancestor::*[@id='contract']/following-sibling::*//span[" + $xClass("clocks") + "]", 'f', costNode);
+      if ( aSpan )
       {
          ts = toSeconds(aSpan.textContent);
       }
-   }
-
-   for ( ri = 0; ri < 4; ++ri )
-   {
-      if ( res[ri] === undefined )
-      {
-         res = null; 
-         break;
-      }
-   }
-
-   if ( res )
-   {
-      // try to find build time for newer versions of Travian
-      if ( ts === undefined )
-      {
-         aSpan = $xf("ancestor::*[@id='contract']/following-sibling::*//span[" + $xClass("clocks") + "]", 'f', costNode);
-         if ( aSpan )
-         {
-            ts = toSeconds(aSpan.textContent);
-         }
-      }
-
       __ASSERT__(ts,"Can't parse time span for contract")
 
       // try to find building gid ( on build new building pages )
@@ -168,7 +143,7 @@ function scanCommonContractInfo(costNode)
       }
    }
 
-   return res ? { costNode:costNode, cost:res, cc:cc, ts:ts, gid:gid } : null;
+   return Res ? { costNode:costNode, cost:Res, cc:cc, ts:ts, gid:gid } : null;
 }
 
 //////////////////////////////////////////////////////////////////////

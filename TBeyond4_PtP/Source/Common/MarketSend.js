@@ -182,7 +182,6 @@ function MerchantsUnderwayIterator(aDoc, aGroupHeader)
    };
 }
 
-
 //////////////////////////////////////////////////////////////////////
 function getMerchantsUnderwayGroup(MUInfo, villageInfo, aDoc, aGroupHeader, bIncoming, ttServer, bReadOnly)
 {
@@ -202,31 +201,24 @@ function getMerchantsUnderwayGroup(MUInfo, villageInfo, aDoc, aGroupHeader, bInc
          var pointLink = $nth_tag(aRows[0].cells[1],"a");
          var point = parseUri(pointLink.href).queryKey.d;
 
-         var timerNode = aRows[1].cells[1].getElementsByTagName("span")[0];
+         var timerNode = $nth_tag(aRows[1].cells[1],"span");
          var timeSpan = toSeconds(timerNode.textContent);
 
          var ttArrival = ttServer + (timeSpan * 1000);
 
-         var tdRes = removeInvisibleChars(aRows[2].cells[1].textContent);
          var xn = 1;
-         var xPos = tdRes.indexOf("x");
-         if ( xPos === -1 ) 
-         { 
-            xPos = tdRes.indexOf("\u00D7"); // MULTIPLICATION SIGN
-         }
-         if ( xPos !== -1 ) 
-         { 
-            xn = parseInt10(tdRes.substr(xPos-1,1));
+         var repeatNode = $qf(".repeat", 'f', aRows[2].cells[1]);
+         if ( repeatNode ) 
+         {
+            xn = scanIntAny(repeatNode.textContent);
             if ( isNaN(xn) ) 
             { 
                xn = 1; 
                __ERROR__("can't parse merchant repeat count")
             }
-
-            tdRes = tdRes.substring(xPos + 1); 
          }
-
-         var Res = getResourcesFromString(tdRes);
+         var tdRes = $qf(".value", 'a', aRows[2].cells[1]);
+         var Res = getResourcesFromNodes(tdRes);
 
          if ( userId && point && timeSpan && Res )
          {

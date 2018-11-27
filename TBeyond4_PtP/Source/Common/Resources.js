@@ -585,6 +585,32 @@ function getResourcesFromString(str)
 }
 
 //////////////////////////////////////////////////////////////////////
+function getResourcesFromNodes(resNodes)
+{
+   var ri;
+   var Res = [0,0,0,0];
+   var bResValid = true;
+
+   for ( ri = 0; ri < 4; ++ri )
+   {
+      var aNode = resNodes[ri];
+      if ( aNode ) 
+      {
+         var val = parseSeparatedInt10(aNode.textContent);
+         if ( isIntValid(val) ) 
+         {
+            Res[ri] = val;
+            continue;
+         }
+      }
+      bResValid = false; 
+      break;
+   }
+
+   return bResValid ? Res : null;
+}
+
+//////////////////////////////////////////////////////////////////////
 function isCapReached(res, EPpH, cap)
 {
    return ( (EPpH < 0 && res === 0) || (EPpH >= 0 && res === cap) );

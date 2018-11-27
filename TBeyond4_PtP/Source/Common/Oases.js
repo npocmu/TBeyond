@@ -51,15 +51,15 @@ function getOasisTypeFromNode(typeNode)
 {
    if ( typeNode )
    {
-      var spans = typeNode.getElementsByTagName("span");
-      if ( spans )
+      var percentNodes = $qf(".resources", 'a', typeNode);
+      if ( percentNodes )
       {
          var percents = [0,0,0,0];
-         for (var j = 0; j < spans.length; ++j)
+         for (var j = 0; j < percentNodes.length; ++j)
          {
-            var aSpan = spans[j];
-            var percent = scanIntAny(aSpan.textContent);
-            var type = getResourceTypeFromImage($nth_tag(aSpan,"img"));
+            var percentNode = percentNodes[j];
+            var percent = scanIntAny(percentNode.textContent);
+            var type = getResourceTypeFromImage($nth_tag(percentNode,"i"));
 
             if ( isIntValid(percent) && isIntValid(type) )
             {
