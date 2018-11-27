@@ -45,7 +45,8 @@ function setTravianStyles()
    'div#build div.action div.details input.text {width: 30px;}' +
 
    '#ingameManual {width:85px !important; height:100px !important;}' +
-   '#mapContainer .ruler, #mapContainer .toolbar {z-index: 998;}'
+   '#mapContainer .ruler, #mapContainer .toolbar {z-index: 998;}' +
+   '.resourceWrapper .resources, div#build .culturePointsAndPopulation .wrapper .unit {display:inline !important;}'
    ;
 
    GM_addStyle(acss);
