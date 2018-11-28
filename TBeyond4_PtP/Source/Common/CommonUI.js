@@ -68,7 +68,7 @@ function $df(dWidth, posX, posY, strTitle, sCookieN, divID, boolShowMinMax, cont
             uiCreateSearchBarWidget();
             break;
       }
-      setGMcookieV2('TB3Setup', TB3O.O, 'SETUP');
+      saveTBOptions();
    }
 
    function fcloseDiv()
@@ -76,16 +76,16 @@ function $df(dWidth, posX, posY, strTitle, sCookieN, divID, boolShowMinMax, cont
       $g(divID).style.display = "none";
       switch (sCookieN)
       {
-         case "resbar":        TB3O.O[39] = '0'; break;
-         case "userbookmarks": TB3O.O[20] = '0'; break;
-         case "noteblock":     TB3O.O[22] = '0'; break;
-         case "vl2table":      TB3O.O[18] = '0'; break;
-         case "searchbar":     TB3O.O[32] = '0'; break;
-         case "resupg":        TB3O.O[37] = '0'; break;
-         case "bupg":          TB3O.O[41] = '0'; break;
-         case "maptable":      TB3O.O[58] = '0'; break;
+         case "resbar":        TBO_SHOW_RESBARTABLE = '0'; break;
+         case "userbookmarks": TBO_SHOW_BOOKMARKS = '0'; break;
+         case "noteblock":     TBO_SHOW_NOTEBLOCK = '0'; break;
+         case "vl2table":      TBO_SHOW_VL2TABLE = '0'; break;
+         case "searchbar":     TBO_SHOW_SEARCHBAR = '0'; break;
+         case "resupg":        TBO_SHOW_RESUPGTABLE = '0'; break;
+         case "bupg":          TBO_SHOW_BLDUPGTABLE = '0'; break;
+         case "mapTable":      TBO_SHOW_NEIGHBORHOODTABLE = '0'; break;
       }
-      setGMcookieV2('TB3Setup', TB3O.O, 'SETUP');
+      saveTBOptions();
    }
 }
 
