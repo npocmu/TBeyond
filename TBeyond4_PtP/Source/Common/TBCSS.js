@@ -578,6 +578,8 @@ M4_ECHO_ON
 
    //icons styles
    IF_TB3('img.r0 {width:18px; height:12px; background-image: url(' + image['r0'] + ');}' +)
+   'img.r4 {width:20px; height:12px; background-image: url(' + image['r4'] + ');}' +
+   'img.r5 {width:20px; height:12px; background-image: url(' + image['r5'] + ');}' +
    'img.tbiCoords, img.tbiIn  {width:12px; height:12px; background-image: url(' + image['incom' + docDir[0].substr(0, 1)] + ');}' +
    'img.tbiDist,   img.tbiOut {width:12px; height:12px; background-image: url(' + image['dist' + docDir[0].substr(0, 1)] + ');}' +
    'img.tbiCP {width:18px; height:12px; background-image: url(' + image['cp'] + ');}' +

@@ -80,19 +80,7 @@ function updD3Bullets(villageId, intVal)
 
    if ( aE )
    {
-      IIF_TB4({{
-         aE.className = "online" + intVal;
-      }},
-      {{
-         if ( TB3O.T35 ) 
-         {
-            aE.className = "online" + intVal;
-         }
-         else 
-         {
-            aE.src = gIc["b" + intVal];
-         }
-      }})
+      aE.className = "online" + intVal;
    }
 }
 

@@ -9,7 +9,7 @@ function uiCreateResBarWidget()
 {
    __ENTER__
 
-   var rbT,prbT;
+   var rbT;
    var xy;
 
    if ( TBO_SHOW_RESBARTABLE === "1" )
@@ -18,20 +18,9 @@ function uiCreateResBarWidget()
 
       if ( rbT )
       {
-         IIF_TB3({{
-         if ( TBO_FLOAT_RESBARTABLE !== "1" )
-         {
-            prbT = $e("p");
-            prbT.appendChild(rbT);
-            TB3O.nTARbT.appendChild(prbT);
-         }
-         else }})
-         {
-            // floating window
-            xy = TBO_RESBARTABLE_XY.split("|");
-            TB3O.nTARbT = $df(200, xy[0], xy[1], T('RBTT'), "resbar", "resbarTT", true, rbT);
-            if ( TBO_RESBARTABLE_STATE !== "1" ) { rbT.style.display = 'none'; }
-         }
+         xy = TBO_RESBARTABLE_XY.split("|");
+         TB3O.nTARbT = $df(200, xy[0], xy[1], T('RBTT'), "resbar", "resbarTT", true, rbT);
+         if ( TBO_RESBARTABLE_STATE !== "1" ) { rbT.style.display = 'none'; }
 
          setInterval(uiUpdateResBarWidget, TB3O.Timeouts.resbar_update);
       }
@@ -109,11 +98,11 @@ function uiCreateResBarTable(tableId, villageId, bShowAllTotals)
          aRow = $r([['class', 'tb3r']]);
 
          aCell = $td([['class', 'tb3c']]);
-         if ( strType ) { aCell.appendChild($e("span",strType)); }
+         if ( strType ) { aCell.appendChild($span(strType)); }
          aCell.appendChild(I("r" + (ri + 1)));
          aRow.appendChild(aCell);
 
-         aCell = $td([['class', 'lr']],$e("span"));
+         aCell = $td([['class', 'lr']],$span());
          aRow.appendChild(aCell);
 
          aCell = $td([['class', 'tb3cresbar']],uiCreateFillBar());
@@ -129,37 +118,38 @@ function uiCreateResBarTable(tableId, villageId, bShowAllTotals)
       }
 
       //row for totals per hour
-      tRow = $r([['class', 'tb3pph']]);
-      tRow.appendChild($c(gIc["r1"] + " + " + gIc["r2"] + " + " + gIc["r3"] + " + " + gIc["r4"] + " / " + T('1H'), 
-                       [['class', 'tb3c'], ['colspan', bShowAllTotals ? '3' : '4']]));
-      tRow.appendChild($c($ls(intpph), [['class', bShowAllTotals ? 'tb3ctotv' : 'tb3ctot']]));
+      tRow = $r([['class', 'tb3pph']],[
+                $td([['class', 'tb3c'], ['colspan', bShowAllTotals ? '3' : '4']],
+                    [I("r1"), " + ", I("r2"), " + ", I("r3"), " + ", I("r4"), " / " + T('1H')]),
+                $td([['class', bShowAllTotals ? 'tb3ctotv' : 'tb3ctot']], $ls(intpph))
+             ]);
       if ( bShowAllTotals )
       {
-         tRow.appendChild($c($ls(intPPH), [['class', 'tb3ctot']]));
+         tRow.appendChild($td([['class', 'tb3ctot']], $ls(intPPH)));
       }
       rbT.appendChild(tRow);
 
       //row for total crop consumption
-      bRow = $r([['class', 'tb3r']]);
-      bRow.appendChild($c(gIc["r5"], [['class', 'tb3c'], ['colspan', '2']]));
-      bRow.appendChild($c("", [['class', 'tb3c'],['colspan', bShowAllTotals ? '1' : '2']]));
-      bRow.appendChild($c($ls(resourcesInfo.PpH[3]-resourcesInfo.EPpH[3]), 
-                          [['class', bShowAllTotals ? 'tb3ctotv' : 'tb3ctot']]));
+      bRow = $r([['class', 'tb3r']],[
+                $td([['class', 'tb3c'], ['colspan', '2']], I("r5")),
+                $td([['class', 'tb3c'], ['colspan', bShowAllTotals ? '1' : '2']]),
+                $td([['class', bShowAllTotals ? 'tb3ctotv' : 'tb3ctot']], $ls(resourcesInfo.PpH[3]-resourcesInfo.EPpH[3])) 
+             ]);
       if ( bShowAllTotals )
       {
-         bRow.appendChild($c($ls(TB3O.ResInfoTotals.PpH[3] - TB3O.ResInfoTotals.EPpH[3]), [['class', 'tb3ctot']]));
+         bRow.appendChild($td([['class', 'tb3ctot']], $ls(TB3O.ResInfoTotals.PpH[3] - TB3O.ResInfoTotals.EPpH[3])));
       }
       rbT.appendChild(bRow);
 
       //row for effective crop production
-      cRow = $r([['class', 'tb3r']]);
-      cRow.appendChild($c(gIc["r4"] + " - " + gIc["r5"], [['class', 'tb3c'], ['colspan', '2']]));
-      cRow.appendChild($c("", [['class', 'tb3c'],['colspan', bShowAllTotals ? '1' : '2']]));
-      cRow.appendChild($c($ls(resourcesInfo.EPpH[3]), 
-                          [['class', bShowAllTotals ? 'tb3ctotv' : 'tb3ctot']]));
+      cRow = $r([['class', 'tb3r']],[
+                $td([['class', 'tb3c'], ['colspan', '2']], [I("r4"), " \u2212 ", I("r5")]),
+                $td([['class', 'tb3c'], ['colspan', bShowAllTotals ? '1' : '2']]),
+                $td([['class', bShowAllTotals ? 'tb3ctotv' : 'tb3ctot']], $ls(resourcesInfo.EPpH[3])) 
+             ]);
       if ( bShowAllTotals )
       {
-         cRow.appendChild($c($ls(TB3O.ResInfoTotals.EPpH[3]), [['class', 'tb3ctot']]));
+         cRow.appendChild($td([['class', 'tb3ctot']], $ls(TB3O.ResInfoTotals.EPpH[3])));
       }
       rbT.appendChild(cRow);
 

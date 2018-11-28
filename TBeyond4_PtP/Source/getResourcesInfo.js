@@ -117,35 +117,3 @@ function getResourcesInfo2(villageId, aDoc, ttServer)
    __DUMP__(resourcesInfo)
    return resourcesInfo;
 }
-
-
-/////////////////////////////////////////////////////////////////////
-function getResourcesTitles()
-{
-   function getResourceTitle(i,id)
-   {
-      var aNode = $g(id);
-      if ( aNode )
-      {
-         //resource title
-         var resImg = $xf("./preceding-sibling::img["+ $xClass('res') +"]",'f',aNode);
-
-         //var resImg = aNode.previousElementSibling;
-         if ( resImg )
-         {
-            t['RES' + i] = resImg.alt;
-         }
-      }
-   }
-
-   var i;
-   for (i = 1; i <= 5; ++i)
-   {
-      getResourceTitle(i,'l' + i);
-   }
-   if ( TB3O.ServerInfo.version > 4.0 ) { getResourceTitle(5,'stockBarFreeCrop'); }
-
-   __ASSERT__( isStrValid(t['RES1']) && isStrValid(t['RES2']) && isStrValid(t['RES3']) && isStrValid(t['RES4']) && isStrValid(t['RES5']),
-              "Can't load titles for resources" )
-}
-

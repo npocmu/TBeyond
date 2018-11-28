@@ -114,7 +114,7 @@ function uiCreateResUpgradeTable(tableId, villageId, resourcesInfo, arrBA)
    {
       gid = i + 1;
 
-      var td1 = $c(gIc["r" + (i + 1)], [['class', 'tb3uthc']]);
+      var td1 = $td(['class', 'tb3uthc'], I("r" + (i + 1)));
       aRow1.appendChild(td1);
 
       for ( j = 0; j < 25; j++ )

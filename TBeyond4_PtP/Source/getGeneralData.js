@@ -8,13 +8,14 @@ function adaptDataToGameVersion()
    iC["clock"] = [['class','clock'], ['src',xGIF]];
    iC["bau"]   = [['class','bau'], ['src',image["bau"]]];
 
+   iC["r4"]  = [['class','r4'], ['src',xGIF], ['title',T('RES4')],    ['alt',T('RES4')]];
+   iC["r41"] = [['class','r4'], ['src',xGIF], ['title',T('SENDRES')], ['alt',T('SENDRES')]];
+   iC["r5"]  = [['class','r5'], ['src',xGIF], ['title',T('RES5')],    ['alt',T('RES5')]];
+
    // old aproach, obsolete
    gIc["r1"] = '<i class="r1" title="' + T('RES1') + '" alt="' + T('RES1') + '"></i>';
    gIc["r2"] = '<i class="r2" title="' + T('RES2') + '" alt="' + T('RES2') + '"></i>';
    gIc["r3"] = '<i class="r3" title="' + T('RES3') + '" alt="' + T('RES3') + '"></i>';
-   gIc["r4"] = '<i class="r4" title="' + T('RES4') + '" alt="' + T('RES4') + '"></i>';
-   gIc["r41"]= '<i class="r4" title="' + T('SENDRES') + '" alt="' + T('SENDRES') + '"></i>';
-   gIc["r5"] = '<i class="r5" title="' + T('RES5') + '" alt="' + T('RES5') + '"></i>';
    gIc["clock"] = '<img class="clock" src="' + xGIF + '">';
    gIc["capacity"] = '<img class="carry full" src="' + xGIF + '">';
    gIc["hero"] = '<img class="unit uhero" src="' + xGIF + '">';
@@ -221,10 +222,7 @@ function getGeneralData()
       TB3O.nServerType = getServerType();
       __DUMP__(TB3O.nServerType)
 
-      getResourcesTitles();
-
       getwsSName();
-
 
       //set the script language
       TBO_SCRIPT_LANG = parseInt10(TBO_SCRIPT_LANG);
