@@ -140,26 +140,20 @@ function uiModifyMap()
    }
 
    //-----------------------------------------------------------------
-   function setMapWindow(cx,cy,rows,area)
+   function setMapWindow(left, bottom, sizeX, sizeY)
    {                       
-      var sizeX = Math.floor(area/rows);
-      var sizeY = rows;
+      TB3O.MapInfo.setMapWindow(left, bottom, sizeX, sizeY);
 
-      __ASSERT__( sizeX*sizeY === area, {{"Unknown map size, area=" + area}})
+      var xy = normalizeCoords(left + Math.floor(sizeX/2), bottom + Math.floor(sizeY/2));
+      var cx = xy[0], cy = xy[1];
 
-      if ( sizeX*sizeY === area )
+      var h = $xf("//h1");
+      if ( h )
       {
-         var xy = normalizeCoords(cx - Math.floor(sizeX/2),cy - Math.floor(sizeY/2));
-         TB3O.MapInfo.setMapWindow(xy[0], xy[1], sizeX, sizeY);
-
-         var h = $xf("//h1");
-         if ( h )
-         {
-            h.textContent = uiModifyMap.mapHeader + " " + formatCoords(cx,cy);
-         }
-         uiRefreshVL_Distance(cx,cy);
-         uiModifyBrowserTitle();
+         h.textContent = uiModifyMap.mapHeader + " " + formatCoords(cx,cy);
       }
+      uiRefreshVL_Distance(cx,cy);
+      uiModifyBrowserTitle();
    }
 
    //-----------------------------------------------------------------
@@ -205,41 +199,82 @@ function uiModifyMap()
          var i;
          var mapRowsCount = $xf("count(.//div[" + $xClass('tileRow')+ "])", 'n', mapContainer);
          var mapTiles = $xf(".//div[" + $xClass('tile')+ "]", 'l', mapContainer);
+         var mapTilesCount = mapTiles.snapshotLength;
+         var bMapValid = true;
 
-         __ASSERT__(mapRowsCount > 0 && mapTiles.snapshotLength,"Can't find map data")
+         __ASSERT__(mapRowsCount > 0 && mapTilesCount > 0,"Can't find map data")
 
-         var centerTile = Math.floor(mapTiles.snapshotLength/2);
-         for ( i = 0; i < mapTiles.snapshotLength; ++i )
+         var x1, y1, x2, y2;
+         for ( i = 0; i < mapTilesCount; ++i )
          {
             var tile = mapTiles.snapshotItem(i);
             var details = getAreaDetails(tile);
-            if ( details )
+            if ( !details )
             {
-               TB3O.MapInfo.addCell(details.id, details.cellInfo);
-               if ( i === centerTile )
-               {
-                  setMapWindow(details.cellInfo.x,details.cellInfo.y,mapRowsCount,mapTiles.snapshotLength);
-               }
+               bMapValid = false;
+               break;
+            }
+
+            TB3O.MapInfo.addCell(details.id, details.cellInfo);
+
+            if ( i === 0 )
+            {
+               x1 = details.cellInfo.x;
+               y1 = details.cellInfo.y;
+            }
+
+            if ( i === (mapTilesCount-1) )
+            {
+               x2 = details.cellInfo.x;
+               y2 = details.cellInfo.y;
             }
          }
 
-         if ( TBO_SHOW_CELL_TYPE === '1' ) 
+         if ( bMapValid && mapRowsCount > 0 && mapTilesCount > 0 )
          {
-            var dx, dy;
-            for ( dx = 0; dx < TB3O.MapInfo.sizeX; dx++ )
+            var d = getCoordsDelta(x1, y1, x2, y2);
+            var sizeX = Math.floor(mapTilesCount/mapRowsCount);
+            var sizeY = mapRowsCount;
+
+            if ( sizeX*sizeY === mapTilesCount && sizeX === d[0]+1 && sizeY === d[1]+1 )
             {
-               for ( dy = 0; dy < TB3O.MapInfo.sizeY; dy++ )
+               //var x = Math.min(x1+TB3O.WorldSize.sizeX, x2+TB3O.WorldSize.sizeX);
+               //var y = Math.min(y1+TB3O.WorldSize.sizeY, y2+TB3O.WorldSize.sizeY);
+               //__DUMP__(x,y)
+
+               //var xy = normalizeCoords(x, y);
+               //setMapWindow(xy[0], xy[1], sizeX, sizeY);
+               setMapWindow(x1, y2, sizeX, sizeY);
+            }
+            else
+            {
+               bMapValid = false;
+               __ERROR__("Unknown map size")
+               __DUMP__(mapTilesCount, sizeX, sizeY, d);
+            }
+         }
+
+
+         if ( bMapValid )
+         {
+            if ( TBO_SHOW_CELL_TYPE === '1' ) 
+            {
+               var dx, dy;
+               for ( dx = 0; dx < TB3O.MapInfo.sizeX; dx++ )
                {
-                  var cellInfo = TB3O.MapInfo.getCelldXdY(dx,dy)
-                  if ( cellInfo )
+                  for ( dy = 0; dy < TB3O.MapInfo.sizeY; dy++ )
                   {
-                     uiModifyCell(dx, dy, mapTiles.snapshotItem((TB3O.MapInfo.sizeY - dy - 1)*TB3O.MapInfo.sizeX + dx), cellInfo);
+                     var cellInfo = TB3O.MapInfo.getCelldXdY(dx,dy)
+                     if ( cellInfo )
+                     {
+                        uiModifyCell(dx, dy, mapTiles.snapshotItem((TB3O.MapInfo.sizeY - dy - 1)*TB3O.MapInfo.sizeX + dx), cellInfo);
+                     }
                   }
                }
             }
-         }
 
-         uiCreateNeighborhoodWidget();
+            uiCreateNeighborhoodWidget();
+         }
 
          mapContainer.addEventListener("DOMSubtreeModified", onSubtreeModified, false);
       }

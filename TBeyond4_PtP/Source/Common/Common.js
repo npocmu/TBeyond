@@ -276,6 +276,18 @@ function normalizeCoords(x, y)
 }
 
 //////////////////////////////////////////////////////////////////////
+function getCoordsDelta(x1, y1, x2, y2)
+{
+   var dX = Math.abs(x2 - x1);
+   var dY = Math.abs(y2 - y1);
+
+   dX = Math.min(dX, Math.abs(TB3O.WorldSize.sizeX - dX));
+   dY = Math.min(dY, Math.abs(TB3O.WorldSize.sizeY - dY));
+
+   return [dX,dY];
+}
+
+//////////////////////////////////////////////////////////////////////
 // Get the mapID of the cell having the x,y coordinates
 // mapID is sequental counter of map cells starting from top left corner of map.
 // Numbering starting from 1 and increased by 1 when x coordinate grow and 
@@ -320,13 +332,9 @@ function getDistance(sx1, sy1, sx2, sy2)
    var x2 = parseInt10(sx2);
    var y2 = parseInt10(sy2);
 
-   var dX = Math.abs(x2 - x1);
-   var dY = Math.abs(y2 - y1);
+   var d = getCoordsDelta(x1, y1, x2, y2);
 
-   dX = Math.min(dX, Math.abs(TB3O.WorldSize.sizeX - dX));
-   dY = Math.min(dY, Math.abs(TB3O.WorldSize.sizeY - dY));
-
-   var dist = Math.sqrt(Math.pow(dX, 2) + Math.pow(dY, 2));
+   var dist = Math.sqrt(Math.pow(d[0], 2) + Math.pow(d[1], 2));
    return dist;
 }
 
