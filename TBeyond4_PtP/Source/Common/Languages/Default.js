@@ -2,9 +2,6 @@ function setDefLang()
 {
 //default = English
 t['0'] = "Script language"
-t['1'] = "Travian v2.x server";
-t['2'] = "Remove ad banners";
-t['3'] = "Force T3.1 Legionnaire & Phalanx capacity calculation<br>(for mixed T3.1 & T3.5 servers)";
 t['4'] = "Market";
 t['5'] = "Rally point/Barracks/Workshop/Stable";
 t['6'] = "Town hall/Hero's mansion/Armoury/Blacksmith";
@@ -179,7 +176,6 @@ t['UPDALLV'] = "Update all villages.  USE WITH MAXIMUM CARE AS THIS CAN LEAD TO 
 t['LARGEMAP'] = "Large map";
 t['USETHEMPR'] = "Use them (proportional)";
 t['USETHEMEQ'] = "Use them (equal)";
-t['GSRVT'] = "Game server";
 t['ACCINFO'] = "Account Information";
 t['NBO'] = "Noteblock";
 t['MNUL'] = "Menu on the left side";

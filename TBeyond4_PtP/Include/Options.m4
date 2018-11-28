@@ -18,9 +18,6 @@ m4_define({{TPL_OPTION}},{{TB3O.O[{{$1}}]}})
 
 
 m4_define({{TBO_SCRIPT_LANG}},             	{{TPL_OPTION(0)}})
-m4_define({{TBO_SERVER_VERSION2}},         	{{TPL_OPTION(1)}})
-m4_define({{TBO_REMOVE_ADBANNER}},         	{{TPL_OPTION(2)}})
-m4_define({{TBO_FORCE_T31TCAP}},           	{{TPL_OPTION(3)}})
 m4_define({{TBO_SHOW_BIG_ICON_MARKET}},    	{{TPL_OPTION(4)}})
 m4_define({{TBO_SHOW_BIG_ICON_MILITARY}},  	{{TPL_OPTION(5)}})
 m4_define({{TBO_SHOW_BIG_ICON_MILITARY2}}, 	{{TPL_OPTION(6)}})

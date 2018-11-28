@@ -1,8 +1,5 @@
 function switchLanguage(lang) { if ( lang !== 'en' ) { switch ( lang ) {
 case 'ae': //contributors: Dream1, Me_TheKing, kaser15, aatkco, ghooost
-t['1'] = "Travian v2.x server";
-t['2'] = "إزالة الإعلانات";
-t['3'] = "T3.1 حساب الحمولة جندي أول & الكتيبة <br> (نسخة ترافيان T3.1 تختلف عن T3.5 )";
 t['4'] = "السوق";
 t['5'] = "نقطة التجمع / الثكنة / المصانع الحربية / الإسطبل";
 t['6'] = "البلدية / قصر الأبطال / مستودع الأسلحة / الحداد";
@@ -172,7 +169,6 @@ t['UPDALLV'] = "تحديث جميع القرى. لا تستخدمها بكثرة
 t['LARGEMAP'] = "خريطة كبيرة";
 t['USETHEMPR'] = "الاستخدام (النسبي)";
 t['USETHEMEQ'] = "الاستخدام (المتساوي)";
-t['GSRVT'] = "سيرفر اللعبة";
 t['ACCINFO'] = "معلومات الحساب";
 t['NBO'] = "دفتر الملاحظات";
 t['MNUL'] = "القائمة على الجانب الأيمن";
@@ -223,9 +219,6 @@ break;
 case 'ar': //contributors: Leonel (aka Phob0z), Gabraham
 case 'cl':
 case 'mx':
-t['1'] = "Servidor Travian v2.x?";
-t['2'] = "Quitar banners publicitarios";
-t['3'] = "Forzar el cálculo de capacidad de Legionarios y Falanges según T3.1<br>(para servidores mixtos T3.1 & T3.5)";
 t['4'] = "Mercado";
 t['5'] = "Plaza de reuniones/Cuartel/Taller/Establo";
 t['6'] = "Ayuntamiento/Hogar del H&eacute;roe/Armer&iacute;a/Herrer&iacute;a";
@@ -388,7 +381,6 @@ t['UPDALLV'] = "Actualizar todas las aldeas. USAR CON MUCHO CUIDADO, PUEDE LLEVA
 t['LARGEMAP'] = "Mapa grande";
 t['USETHEMPR'] = "Llenar proporcionalmente a la cantidad de cada recurso que hay en los almacenes";
 t['USETHEMEQ'] = "Llenar con la misma cantidad de cada recurso";
-t['GSRVT'] = "Versi&oacute;n del servidor";
 t['ACCINFO'] = "Información de la Cuenta";
 t['NBO'] = "Hoja de notas";
 t['MNUL'] = "Men&uacute; en el lado izquierdo";
@@ -435,7 +427,6 @@ break;
 
 case 'ba': //contributors: Nemanja
 case 'hr':
-t['1'] = "Travian v2.x server";
 t['4'] = "Pijaca";
 t['5'] = "Vojska Mjesto okupljanja/Kasarna/Radionica/Štala";
 t['6'] = "Opština/Herojska vila/Kovačnica oklopa/Kovačnica oružja";
@@ -620,9 +611,6 @@ t['114'] = "KP/dnevno";
 break;
 
 case 'bg': //contributors: NUT 
-t['1'] = "Travian v2.x сървър";
-t['2'] = "Премахни рекламните банери";
-t['3'] = "Изчисли T3.1 Легионери & Фаланги капацитет<br>(за смесени T3.1 & T3.5 сървъри)";
 t['4'] = "Пазар";
 t['5'] = "Сборен пункт/Казарма/Работилница/Конюшня";
 t['6'] = "Кметство/Таверна/Ковачница за оръжия/Ковачница за брони";
@@ -788,7 +776,6 @@ t['UPDALLV'] = "Обнови за всички села. ИЗПОЛЗВАЙ С �
 t['LARGEMAP'] = "Голяма карта";
 t['USETHEMPR'] = "Използвай ги (пропорционално)";
 t['USETHEMEQ'] = "Използвай ги (по равно)";
-t['GSRVT'] = "Сървър на играта";
 t['ACCINFO'] = "Информация за акаунта";
 t['NBO'] = "Бележник";
 t['MNUL'] = "Меню от лявата страна";
@@ -835,7 +822,6 @@ t['114'] = "КР/ден";
 break;
 
 case 'br': //contributors: Bruno Guerreiro - brunogc@limao.com.br
-t['1'] = "Travian v2.x server";
 t['4'] = "Mercado";
 t['5'] = "Ponto de encontro/Quartel/Oficina/Cavalaria";
 t['6'] = "Edifício Principaç/Mansão do Herói/Fábrica de Armaduras/Ferreiro";
@@ -997,9 +983,6 @@ t['114'] = "CP/dia";
 break;
 
 case 'cn': //contributors: 独自疯狂, congxz6688
-t['1'] = "Travian v2.x 服务器";
-t['2'] = "移除广告并回复服务器时间";
-t['3'] = "修正古罗马步兵及方阵兵的负载量（仅适用于部分德服）";
 t['4'] = "市场";
 t['5'] = "集结点/兵营/马厩/工场";
 t['6'] = "市政厅/英雄园/铁匠铺/军械库";
@@ -1162,7 +1145,6 @@ t['UPDALLV'] = "更新所有村庄。(有可能导致账号被锁)";
 t['LARGEMAP'] = "大地图";
 t['USETHEMPR'] = "派出所有商人 (按资源比例分配)";
 t['USETHEMEQ'] = "派出所有商人 (平均分配)";
-t['GSRVT'] = "游戏服务器";
 t['ACCINFO'] = "个人资料";
 t['NBO'] = "笔记栏";
 t['MNUL'] = "左边选单";
@@ -1208,9 +1190,6 @@ t['114'] = "文明点（每天）";
 break;
 
 case 'cz': //contributors: Rypi, JiriK
-t['1'] = "Travian verze 2.x";
-t['2'] = "Odstranit reklamní bannery";
-t['3'] = "Vynutit výpočty kapacit Legionářů a Falang jako v T3.1<br>(pro smíšené servery T3.1 & T3.5)";
 t['4'] = "Tržiště";
 t['5'] = "Shromaždiště/Kasárny/Dílny/Stáje";
 t['6'] = "Radnice/Hrdinský dvůr/Zbrojnice/Kovárna";
@@ -1385,7 +1364,6 @@ t['UPDALLV'] = "Aktualizovat všechny vesnice. POUŽÍVEJ VELMI OPATRNĚ! MŮŽE
 t['LARGEMAP'] = "Velká mapa";
 t['USETHEMPR'] = "Rozdělit (proportional)";
 t['USETHEMEQ'] = "Rozdělit (equal)";
-t['GSRVT'] = "Herní server";
 t['ACCINFO'] = "Nastavení hráče <b>Čeština: <a href=\"http://www.rypi.cz\">Rypi</a>, JiriK</b>";
 t['NBO'] = "Poznámkový blok";
 t['MNUL'] = "Levá nabídka";
@@ -1444,9 +1422,6 @@ t['114'] = "KB/den";
 break;
 
 case 'de': //contributors: ms99
-t['1'] = "Travian v2.x Server";
-t['2'] = "Banners entfernen";
-t['3'] = "T3.1 Tragekapazität für Legionär & Phalanx erzwingen<br>(für T3.1 & T3.5 Spieleserver)";
 t['4'] = "Marktplatz";
 t['5'] = "Versammlungsplatz/Kaserne/Stall/Werkstatt";
 t['6'] = "Rathaus/Heldenhof/Rüstungs-/Waffenschmiede";
@@ -1607,7 +1582,6 @@ t['UPDALLV'] = "Alle Dörfer aktualisieren. BITTE MIT VORSICHT BENUTZEN, DIES K�
 t['LARGEMAP'] = "Große Karte";
 t['USETHEMPR'] = "Rohstoffe proportional verteilen";
 t['USETHEMEQ'] = "Rohstoffe gleichmäßig verteilen";
-t['GSRVT'] = "Server";
 t['ACCINFO'] = "Account Info";
 t['NBO'] = "Notizblock";
 t['MNUL'] = "Menü links";
@@ -1654,8 +1628,6 @@ t['114'] = "KPs/Tag";
 break;
 
 case 'dk': //contributors: polle1
-t['1'] = "Travian v2.x server";
-t['2'] = "Fjern reklamebannere";
 t['4'] = "Markedsplads";
 t['5'] = "Forsamlingsplads/Kaserne/Værksted/Stald";
 t['6'] = "Rådhus/Heltebygning/Rustningssmedje/Våbensmedje";
@@ -1882,9 +1854,6 @@ break;
 
 case 'el': //contributors: Tr3LoS, maintanosgr, ChuckNorris, Velonis Petros
 case 'gr':
-t['1'] = "Travian v2.x server";
-t['2'] = "Αφαίρεση διαφημίσεων";
-t['3'] = "Εξανάγκασε την χωρητικότητα υπολογισμού των T3.1 Λεγεωνάριων και Φάλαγγων</br>(Για τους Τ3.1 & Τ3.5 server) ";
 t['4'] = "Αγορά";
 t['5'] = "Πλατεία συγκεντρώσεως/Στρατόπεδο/Εργαστήριο/Στάβλος";
 t['6'] = "Δημαρχείο/Περιοχή ηρώων/Σιδηρουργείο/Οπλοποιείο";
@@ -2059,7 +2028,6 @@ t['UPDALLV'] = "Ενημέρωσε όλα τα χωριά. ΧΡΗΣΙΜΟΠΟΙ�
 t['LARGEMAP'] = "Μεγάλος χάρτης";
 t['USETHEMPR'] = "Χρησιμοποίησε τα (αναλογικά)";
 t['USETHEMEQ'] = "Χρησιμοποίησε τα (ίσα)";
-t['GSRVT'] = "Server Παιχνιδιού";
 t['ACCINFO'] = "Πληροφορίες λογαριασμού";
 t['NBO'] = "Σημειωματάριο";
 t['MNUL'] = "Μενού στο αριστερό μέρος";
@@ -2163,9 +2131,6 @@ t['114'] = "ΠΠ/μέρα";
 break;
 
 case 'es': //contributors: Psicothika
-t['1'] = "Servidor de Travian v2.x?";
-t['2'] = "Eliminar anuncios";
-t['3'] = "Forzar T3.1 Legionnaire & Phalanx capacity calculation<br>(para servidores mixtos T3.1 & T3.5)";
 t['4'] = "Mercado";
 t['5'] = "Plaza de reuniones/Cuartel/Taller/Establo";
 t['6'] = "Ayuntamiento/Hogar del Héroe/Armería/Herrería";
@@ -2330,7 +2295,6 @@ t['UPDALLV'] = "Actualizar todas las aldeas. USAR CON MUCHO CUIDADO, PUEDE LLEVA
 t['LARGEMAP'] = "Mapa grande";
 t['USETHEMPR'] = "Repartir la cantidad de recursos de los almacenes (de manera proporcional)";
 t['USETHEMEQ'] = "Repartir la cantidad de recursos de los almacenes (equitativa=misma cantidad)";
-t['GSRVT'] = "Versión del servidor";
 t['ACCINFO'] = "Información de la Cuenta";
 t['NBO'] = "Block de notas";
 t['MNUL'] = "Menú en el lado izquierdo";
@@ -2376,9 +2340,6 @@ t['114'] = "PC por día";
 break;
 
 case 'fi': //contributors: Syanidi, Haukka
-t['1'] = "Travian v2.x serveri";
-t['2'] = "Poista mainosbannerit";
-t['3'] = "Pakota T3.1 Legioonalaisten ja Falangien kantomäärälaskenta<br />(sekoitetuille T3.1 ja T3.5 servereille)";
 t['4'] = "Tori";
 t['5'] = "Kokoontumispiste/Kasarmi/Työpaja/Talli";
 t['6'] = "Kaupungintalo/Sankarinkartano/Haarniskapaja/Aseseppä";
@@ -2546,7 +2507,6 @@ t['UPDALLV'] = "Päivitä kaikki kylät. HUOMIOI: SAATTAA JOHTAA TILIN JÄÄDYTT
 t['LARGEMAP'] = "Iso kartta";
 t['USETHEMPR'] = "Käytä ne (Prosentuaalisesti)";
 t['USETHEMEQ'] = "Käytä ne (tasaisesti)";
-t['GSRVT'] = "Serveri";
 t['ACCINFO'] = "Tilin tiedot";
 t['NBO'] = "Muistilappu";
 t['MNUL'] = "Vasemmanpuoleinen valikko";
@@ -2595,8 +2555,6 @@ t['114'] = "KP/päivä";
 break;
 
 case 'fr': //contributors: fr3nchlover, britch, sp4m4me
-t['1'] = "Serveur Travian v2.x";
-t['3'] = "Forcer le calcul des Légionnaires & Phalanges T3.1<br>(pour les serveurs mixtes 3.1 et 3.5)";
 t['4'] = "Marché";
 t['5'] = "Rassemblement/Caserne/Atelier/Etable";
 t['6'] = "Hotel de ville/Manoir héros/Armurerie/Usine";
@@ -2746,7 +2704,6 @@ t['UPDALLV'] = "Actualiser tous les villages. ATTENTION : NE PAS UTILISER - RISQ
 t['LARGEMAP'] = "Carte étendue";
 t['USETHEMPR'] = "Calculer (proportionnel)";
 t['USETHEMEQ'] = "Calculer (égalité)";
-t['GSRVT'] = "Type de serveur";
 t['ACCINFO'] = "Données personnelles";
 t['NBO'] = "Bloc-notes";
 t['MNUL'] = "Menu à gauche";
@@ -2790,9 +2747,6 @@ break;
 
 case 'hk': //contributors: MarioCheng, chihsun
 case 'tw':
-t['1'] = "Travian v2.x 伺服器";
-t['2'] = "移除廣告列";
-t['3'] = "修正古羅馬步兵及方陣兵的負載量<br>(僅適用於混合 T3.1 & T3.5 的伺服器)";
 t['4'] = "市場";
 t['5'] = "集結點/兵營/工場/馬廄";
 t['6'] = "村會堂/英雄宅/鐵匠/盔甲廠";
@@ -2958,7 +2912,6 @@ t['UPDALLV'] = "更新所有村莊資料。(有機會導致被鎖帳號)";
 t['LARGEMAP'] = "大地圖";
 t['USETHEMPR'] = "派出所有商人 (按資源比例分配)";
 t['USETHEMEQ'] = "派出所有商人 (平均分配)";
-t['GSRVT'] = "遊戲伺服器";
 t['ACCINFO'] = "帳號資料";
 t['NBO'] = "筆記欄";
 t['MNUL'] = "左側選單";
@@ -3005,7 +2958,6 @@ t['114'] = "文明點（每天）";
 break;
 
 case 'hu': //contributors: geo
-t['1'] = "Travian v2.x kiszolgáló";
 t['4'] = "Piac";
 t['5'] = "Gyülekezõtér/Kaszárnya/Mûhely/Istálló";
 t['6'] = "Tanácsháza/Hõsök háza/Páncélkovács/Fegyverkovács";
@@ -3149,7 +3101,6 @@ t['UPDALLV'] = "Minden falu frissítése. HASZNÁLD ÓVATOSAN, TILTÁS JÁRHAT �
 t['LARGEMAP'] = "Nagy térkép";
 t['USETHEMPR'] = "Arányos elosztás";
 t['USETHEMEQ'] = "Egyenlõ elosztás";
-t['GSRVT'] = "Játék kiszolgáló";
 t['ACCINFO'] = "Felhasználó információ";
 t['NBO'] = "Jegyzettömb";
 t['MNUL'] = "Baloldali menü";
@@ -3191,9 +3142,6 @@ t['114'] = "KP/nap";
 break;
 
 case 'id': //contributors: CuPliz13, adudutz
-t['1'] = "Server Travian v2.x";
-t['2'] = "Hilangkan baner iklan";
-t['3'] = "Paksa kalkulasi kapasitas Legionnaire & Phalanx ke T3.1<br>(untuk server campuran T3.1 & T3.5)";
 t['4'] = "Pasar";
 t['5'] = "Titik Temu|Barak|Bengkel|Istal";
 t['6'] = "Balai desa|Padepokan|Pabrik Perisai|Pandai Besi";
@@ -3366,7 +3314,6 @@ t['UPDALLV'] = "Update semua desa. PEMAKAIAN MAKSIMUM BISA MENYEBABKAN AKUN ANDA
 t['LARGEMAP'] = "Peta lebar";
 t['USETHEMPR'] = "Pakai (proporsional)";
 t['USETHEMEQ'] = "Pakai (sama)";
-t['GSRVT'] = "Server permainan";
 t['ACCINFO'] = "Informasi Akun";
 t['NBO'] = "Catatan";
 t['MNUL'] = "Menu di sebelah kanan";
@@ -3454,9 +3401,6 @@ t['CELHINTS'] = "Klik untuk masuk ke Balai Desa.|Shift-klik untuk mengadakan pes
 break;
 
 case 'il': //contributors: zZzMichel, BlueShark, yabash, removesoul, DMaster
-t['1'] = "שרת טרוויאן גירסה 2.x";
-t['2'] = "הסר באנרים";
-t['3'] = "שנה חישובי יכולת נשיאה של ליגיונר ופלנקס בשרתי T3.1<br>(מיועד לשרתי T3.1 ו- T3.5 משולבים - מופיע בעיקר בשרתי .de)";
 t['4'] = "שוק";
 t['5'] = "נקודת מפגש/מגורי חיילים/בית-מלאכה/אורווה ";
 t['6'] = "בניין העירייה/אחוזת הגיבור/חרש שריון/חרש נשק";
@@ -3620,7 +3564,6 @@ t['UPDALLV'] = "עדכן מידע על כל הכפרים. השתמשו בזהי�
 t['LARGEMAP'] = "מפה גדולה";
 t['USETHEMPR'] = "חלק משאבים (באופן פרופורציוני)";
 t['USETHEMEQ'] = "חלק משאבים (באופן שווה)";
-t['GSRVT'] = "סוג השרת";
 t['ACCINFO'] = "מידע חשבון";
 t['NBO'] = "פנקס הרשימות";
 t['MNUL'] = "תוספות התפריט שבצד ימין";
@@ -3666,9 +3609,6 @@ t['114'] = "נקודות תרבות ליום";
 break;
 
 case 'ir': //contributors: mohammad6006, Reza_na
-t['1'] = "تراویان نسخه*.2";
-t['2'] = "پاک کردن تبلیغات";
-t['3'] = "مجبور کردن برآورد گنجایش T3.1 سرباز لژیون و سرباز پیاده(تواما برای خدمات رسان های T3.1 و T3.5)";
 t['4'] = "بازار";
 t['5'] = "اردوگاه/سربازخانه/کارگاه/اصطبل";
 t['6'] = "تالار شهر/امارت قهرمان/زره سازی/اسلحه سازی";
@@ -3840,7 +3780,6 @@ t['UPDALLV'] = "بروز رسانی تمام دهکده ها. با دقت زیا
 t['LARGEMAP'] = "نقشه بزرگ";
 t['USETHEMPR'] = "استفاده از آنها (به نسبت)";
 t['USETHEMEQ'] = "استفاده از آنها (برابر)";
-t['GSRVT'] = "خدمات رسان بازی(سرور)";
 t['ACCINFO'] = "اطلاعات حساب";
 t['NBO'] = "دفترچه یادداشت";
 t['MNUL'] = "فهرست سمت راست";
@@ -3890,9 +3829,6 @@ t['114'] = "امتیاز فرهنگی در روز";
 break;
 
 case 'it': //contributors: IcEye, rosfe y Danielle, Lello, Zippo, Nux, ns65, Acr111, onetmt, matteo466
-t['1'] = "Server Travian v2.x";
-t['2'] = "Rimuovi banner pubblicitari";
-t['3'] = "Forza il calcolo della capacitÃ  di legionari e lancieri gallici<br>come nella versione 3.1<br>(per server con versione mista 3.1 & 3.5 - per adesso solo per server .de)";
 t['4'] = "Mercato";
 t['5'] = "Caserma/Campo d'addestramento/Officina/Scuderia";
 t['6'] = "Municipio/Circolo degli eroi/Armeria/Fabbro";
@@ -4055,7 +3991,6 @@ t['UPDALLV'] = "Aggiorna tutti i villaggi.  USARE CON CAUTELA, potrebbe comporta
 t['LARGEMAP'] = "Mappa estesa";
 t['USETHEMPR'] = "Completa proporzionalmente";
 t['USETHEMEQ'] = "Completa equamente";
-t['GSRVT'] = "Server di gioco";
 t['ACCINFO'] = "Informazioni Account";
 t['NBO'] = "Blocco note";
 t['MNUL'] = "Menu di sinistra";
@@ -4101,8 +4036,6 @@ t['114'] = "PC/giorno";
 break;
 
 case 'jp': //contributors: Jackie Jack, baan
-t['2'] = "広告バナーを削除し、サーバ時間の位置を変更";
-t['3'] = "ファランクス・レジョネアをT3.1として計算する<br>(for mixed T3.1 & T3.5 servers)jp1～jp3";
 t['4'] = "市場";
 t['5'] = "集兵所/兵舎/作業場/馬舎";
 t['6'] = "集会所/英雄の館/防具工場/鍛冶場";
@@ -4243,7 +4176,6 @@ t['TB3SL'] = "$1をセットアップ";
 t['LARGEMAP'] = "地図を大きくする";
 t['USETHEMPR'] = "比例";
 t['USETHEMEQ'] = "均等";
-t['GSRVT'] = "ゲームサーバー";
 t['ACCINFO'] = "アカウント情報";
 t['NBO'] = "ノートブック";
 t['MNUL'] = "左メニューのリンク設定";
@@ -4281,9 +4213,6 @@ t['112'] = "距離と時間を表示する";
 break;
 
 case 'kr': //contributors: Daniel Cliff, Sapziller
-t['1'] = "Travian v2.x 서버";
-t['2'] = "광고 배너 제거";
-t['3'] = "Force T3.1 Legionnaire & Phalanx capacity calculation<br>(for mixed T3.1 & T3.5 servers)";
 t['4'] = "시장";
 t['5'] = "집결지/병영/공방/마구간";
 t['6'] = "마을회관/영웅 저택/병기고/대장간";
@@ -4453,7 +4382,6 @@ t['UPDALLV'] = "모든 마을 정보 갱신. <br>경고: 이 명령어 사용시
 t['LARGEMAP'] = "큰 지도";
 t['USETHEMPR'] = "비율";
 t['USETHEMEQ'] = "동일한 양";
-t['GSRVT'] = "게임 서버";
 t['ACCINFO'] = "결제 정보";
 t['NBO'] = "노트";
 t['MNUL'] = "왼쪽 메뉴";
@@ -4503,8 +4431,6 @@ t['114'] = "문화점수/일";
 break;
 
 case 'lt': //contributors: Domas, Zrip, Vykintas, Simas
-t['1'] = "Travian v2.x serveris";
-t['2'] = "Pašalinti reklamas";
 t['4'] = "Turgavietė";
 t['5'] = "Susibūrimo vieta/Kareivinės/Dirbtuvės/Arklidė";
 t['6'] = "Rotušė/Karžygio namai/Šarvų kalvė/Ginklų kalvė";
@@ -4661,7 +4587,6 @@ t['UPDALLV'] = "Atnaujinti visas gyvenvietes.  NAUDOTI ITIN ATSARGIAI, NES DĖL 
 t['LARGEMAP'] = "Didelis žemėlapis";
 t['USETHEMPR'] = "Naudoti (proporcingai)";
 t['USETHEMEQ'] = "Naudoti (lygiai)";
-t['GSRVT'] = "Žaidimo serveris";
 t['ACCINFO'] = "Registracijos informacija";
 t['NBO'] = "Užrašinė";
 t['MNUL'] = "Meniu kairėje pusėje";
@@ -4706,7 +4631,6 @@ t['TCOST'] = "Pagaminimo kaina";
 break;
 
 case 'lv': //contributors: anonymous
-t['1'] = "Travian v2.x server";
 t['4'] = "Tirgus";
 t['5'] = "Mītiņa vieta/Kazarmas/Darbnīca/Stallis";
 t['6'] = "Rātsnams/Varoņu Savrupmāja/Ieroču kaltuve/Bruņu kaltuve";
@@ -4837,7 +4761,6 @@ t['UPDALLV'] = "Uzlabot visus ciemus. ŠO LABĀK NEIZMANTOT, JO TAS VAR NOVEST P
 t['LARGEMAP'] = "Lielā karte";
 t['USETHEMPR'] = "Lietot tos (proporcionāli)";
 t['USETHEMEQ'] = "Lietot tos (vienlīdzīgi)";
-t['GSRVT'] = "Spēles serveris";
 t['NBO'] = "Pierakstu blociņs";
 t['MNUL'] = "Kreisās puses izvēles josla";
 t['STAT'] = "Statistika";
@@ -4868,8 +4791,6 @@ t['114'] = "Kultūras punkti/Dienā";
 break;
 
 case 'my': //contributors: Light@fei, dihaz06-47
-t['1'] = "Server Travian v2.x";
-t['2'] = "Hilangkan banner iklan";
 t['4'] = "Pasar";
 t['5'] = "Titik perhimpunan/Berek/Bengkel/Kandang kuda";
 t['6'] = "Dewan perbandaran/Rumah agam wira/Kedai perisai/Kedai senjata";
@@ -5019,7 +4940,6 @@ t['UPDALLV'] = "Kemaskini semua kampung.  GUNAKAN DENGAN BERHATI-HATI KERANA INI
 t['LARGEMAP'] = "Peta Besar";
 t['USETHEMPR'] = "Guna (Dalam Peratus)";
 t['USETHEMEQ'] = "Guna (Samarata)";
-t['GSRVT'] = "Server dunia permainan";
 t['ACCINFO'] = "Informasi Akaun";
 t['NBO'] = "Nota";
 t['MNUL'] = "Menu di sebelah kiri";
@@ -5063,8 +4983,6 @@ t['114'] = "MB/hari";
 break;
 
 case 'nl': //contributors: anonymous author, Boeruh, TforAgree, Dakkie
-t['1'] = "Travian v2.x server";
-t['3'] = "Forceer T3.1 Phalanx en Legionair Capaciteits berekening.<br>(Voor gemixte T3.1 & T3.5 servers - meestal .de servers)";
 t['4'] = "Marktplaats";
 t['5'] = "Verzamelplaats/Barakken/Werkplaatsen/Stal";
 t['6'] = "Raadhuis/Heldenhof/Uitrustingssmederij/Wapensmid";
@@ -5215,7 +5133,6 @@ t['UPDALLV'] = "Update alle dorpen. LETOP: Bij vaak gebruik kan dit lijden tot e
 t['LARGEMAP'] = "Grote map";
 t['USETHEMPR'] = "Verdeel (procentueel)";
 t['USETHEMEQ'] = "Verdeel (Gelijkmatig)";
-t['GSRVT'] = "Server versie";
 t['ACCINFO'] = "Account info";
 t['NBO'] = "Kladblok";
 t['MNUL'] = "Linker menu";
@@ -5255,7 +5172,6 @@ t['114'] = "CP/dag";
 break;
 
 case 'no': //contributors: ThePirate
-t['1'] = "Travian v2.x server";
 t['ALLIANCE'] = "Allianse";
 t['9'] = "Vis flere lenker i menyen til venstre<br>(Traviantoolbox, World Analyser, Travilog, Map, etc.)";
 t['10'] = "Kampsimulator link:<br>(menyen til venstre)";
@@ -5453,8 +5369,6 @@ t['114'] = "Pananim/Araw";
 break;
 
 case 'pl': //contributors: Dzikuska, Signum, llameth
-t['1'] = "Travian v2.x server";
-t['3'] = "Wymuś obliczanie liczby Legionistów i Falang wg. wersji T3.1<br>(dla mieszanych serwerów T3.1 & T3.5 – zwykle tylko serwery .de)";
 t['4'] = "Rynek";
 t['5'] = "Miejsce zbiórki/koszary/Warsztat/Stajnia";
 t['6'] = "Ratusz/Dwór bohaterów/Kuźnia/Zbrojownia";
@@ -5617,7 +5531,6 @@ t['UPDALLV'] = "Uaktualnij wszystkie osady. UŻYWAJ TEGO Z MAKSYMALNĄ ROZWAGĄ.
 t['LARGEMAP'] = "Duża mapa";
 t['USETHEMPR'] = "Użyj je  (proporcjonalnie)";
 t['USETHEMEQ'] = "Użyj je (równe)";
-t['GSRVT'] = "Serwer gry";
 t['ACCINFO'] = "Informacje o koncie";
 t['NBO'] = "Notatnik";
 t['MNUL'] = "Menu po lewej stronie";
@@ -5667,9 +5580,6 @@ t['114'] = "PK/dzień";
 break;
 
 case 'pt': //contributors: sepacavi, Fujis, VicSilveira
-t['1'] = "Travian v2.x server";
-t['2'] = "Remover ad banners";
-t['3'] = "Forçar cálculo da capacidade Legionário & Falange T3.1 <br>(para servers mistos T3.1 & T3.5)";
 t['4'] = "Mercado";
 t['5'] = "Ponto de Reunião Militar/Quartel/Oficina/Cavalariça";
 t['6'] = "Casa do Povo/Mansão do Herói/Fábrica de Armaduras/Ferreiro";
@@ -5840,7 +5750,6 @@ t['UPDALLV'] = "Actualizar todas as Aldeias. MUITA ATENÇÃO: UTILIZAR COM A MÁ
 t['LARGEMAP'] = "Mapa Grande";
 t['USETHEMPR'] = "Usar (Proporcional)";
 t['USETHEMEQ'] = "Usar (Igual)";
-t['GSRVT'] = "Servidor do Jogo";
 t['ACCINFO'] = "Informação da Conta";
 t['NBO'] = "Bloco de Notas";
 t['MNUL'] = "Menu Esquerdo";
@@ -5890,9 +5799,6 @@ t['114'] = "PsC/Dia";
 break;
 
 case 'ro': //contributors: ms99
-t['1'] = "Server Travian v2.x";
-t['2'] = "Elimină banere reclame";
-t['3'] = "Utilizează capacitatea de transport din T3.1 (legionari & scutieri)<br>(servere mixte T3.1 & T3.5)";
 t['4'] = "Târg";
 t['5'] = "Adunare/Cazarmă/Atelier/Grajd";
 t['6'] = "Casa de cultură/Reşedinţa eroului/Armurărie/Fierărie";
@@ -6102,7 +6008,6 @@ t['114'] = "PC/zi";
 break;
 
 case 'rs': //contributors: David Maćej, rsinisa
-t['1'] = "Травиан 2.x сервер";
 t['4'] = "Пијаца";
 t['5'] = "Место окупљања/Касарна/радионица/Штала";
 t['6'] = "Општина/Дворац хероја/Ковачница оклопа/Ковачница оружја";
@@ -6246,7 +6151,6 @@ t['UPDALLV'] = "Освежи сва села. КОРИСТИТИ СА ОПРЕЗ
 t['LARGEMAP'] = "Велика мапа";
 t['USETHEMPR'] = "Пропорционална подела";
 t['USETHEMEQ'] = "Једнака подела";
-t['GSRVT'] = "Сервер";
 t['NBO'] = "Бележница";
 t['MNUL'] = "Мени са леве стране";
 t['STAT'] = "Статистика";
@@ -6287,9 +6191,6 @@ t['114'] = "КП/дан";
 break;
 
 case 'ru': //contributors: millioner,MMIROSLAV,EXEMOK,AHTOH,d00mw01f,npocmu
-t['1'] = "Travian сервер версии v2.x";
-t['2'] = "Убрать рекламу";
-t['3'] = "Заменить расчеты грузоподьемности Легионера и Фаланги T3.1<br>(Для T3.1 и T3.5 серверов)";
 t['4'] = "Рынок";
 t['5'] = "Пункт сбора/Казарма/Мастерская/Конюшня";
 t['6'] = "Ратуша/Таверна/Кузница доспехов/Кузница оружия";
@@ -6464,7 +6365,6 @@ t['UPDALLV'] = "Обновить все деревни. ИСПОЛЬЗУЙТЕ �
 t['LARGEMAP'] = "Большая карта";
 t['USETHEMPR'] = "Загрузить ресурсы пропорционально их количеству на складах/амбарах";
 t['USETHEMEQ'] = "Загрузить ресурсы равномерно";
-t['GSRVT'] = "Игровой сервер";
 t['ACCINFO'] = "Информация аккаунта";
 t['NBO'] = "Блок заметок";
 t['MNUL'] = "Меню с левой стороны";
@@ -6597,9 +6497,6 @@ t['RES5'] = "Потребление зерна";
 break;
 
 case 'si': //contributors: BmW
-t['1'] = "Travian v2.x server";
-t['2'] = "Odstrani reklame";
-t['3'] = "Vsili T3.1 kapaciteto za Legionarje in Falange<br>(za različne T3.1 in T3.5 serverje)";
 t['4'] = "Tržnica";
 t['5'] = "Zbirališče/Barake/Konjušnica/Izdelovalec oblegovalnih naprav";
 t['6'] = "Mestna hiša/Herojeva residenca<br>Izdelovalec oklepov/Izdelovalec orožja";
@@ -6763,7 +6660,6 @@ t['UPDALLV'] = "Osveži vsa naselja.";
 t['LARGEMAP'] = "Velik zemljevid";
 t['USETHEMPR'] = "Uporabi (izmenično)";
 t['USETHEMEQ'] = "Uporabi (enako)";
-t['GSRVT'] = "Tip Serverja";
 t['ACCINFO'] = "Informacije o računu";
 t['NBO'] = "Beležka";
 t['MNUL'] = "Meni na levi strani";
@@ -6810,9 +6706,6 @@ t['114'] = "KT/Dan";
 break;
 
 case 'sk': //contributors: NeWbie, kupony
-t['1'] = "Travian v2.x server";
-t['2'] = "Odstrániť reklamné bannery";
-t['3'] = "Vypočitať kapacitu vojakov T3.1 Legionárov & Falangov<br>(pre mixované T3.1 & T3.5 servery)";
 t['4'] = "Trhovisko";
 t['5'] = "Zhromaždisko/Kasárne/Dielňa/Stájňa";
 t['6'] = "Radnica/Hrdinský dvor/Výzbroj/Kováč";
@@ -6987,7 +6880,6 @@ t['UPDALLV'] = "Aktualizovať informácia o všetkých dediny. POUŽÍVAJ S MAXI
 t['LARGEMAP'] = "Veľká mapa";
 t['USETHEMPR'] = "Použi ich (proporčne)";
 t['USETHEMEQ'] = "Použi ich (rovným dielom)";
-t['GSRVT'] = "Server hry";
 t['ACCINFO'] = "Informácie o účte";
 t['NBO'] = "Poznámkový blok";
 t['MNUL'] = "Menu na ľavom boku";
@@ -7254,8 +7146,6 @@ t['114'] = "CP/วัน";
 break;
 
 case 'tr': //contributors: greench, alinafiz, LeventT
-t['1'] = "Travian v2.x sunucusu";
-t['3'] = "T3.1 Lejyoner & Phalanx kapasite hesaplayıcıyı zorla<br>(karışık T3.1 & T3.5 sunucuları için)";
 t['4'] = "Pazar yeri";
 t['5'] = "Askeri Üs/Kışla/Tamirhane/Ahır";
 t['6'] = "Belediye/Kahraman Kışlası/Silah Dökümhanesi/Zırh Dökümhanesi";
@@ -7420,7 +7310,6 @@ t['UPDALLV'] = "Tüm köyleri güncelle. DİKKATLİ KULLANIN, HESABINIZ CEZA ALA
 t['LARGEMAP'] = "Büyük harita";
 t['USETHEMPR'] = "Bunları kullan (oransal)";
 t['USETHEMEQ'] = "Bunları kullan (eş miktarda)";
-t['GSRVT'] = "Oyun sunucusu";
 t['ACCINFO'] = "Hesap Bilgisi";
 t['NBO'] = "Not defteri";
 t['MNUL'] = "Soldaki menü";
@@ -7466,7 +7355,6 @@ t['114'] = "KP/gün";
 break;
 
 case 'ua': //contributors: jin
-t['1'] = "Сервер Travian 2.x версії";
 t['4'] = "Ринок";
 t['5'] = "Пункт збору/Казарма/Майстерня/Стайня";
 t['6'] = "Ратуша/Таверна/Кузня обладунків/Кузня зброї";
@@ -7626,7 +7514,6 @@ t['UPDALLV'] = "Оновити всі поселення";
 t['LARGEMAP'] = "Велика карта";
 t['USETHEMPR'] = "Використовувати (пропорційно). ";
 t['USETHEMEQ'] = "Використовувати (рівномірно).";
-t['GSRVT'] = "Ігровий сервер";
 t['ACCINFO'] = "Інформація про акаунт";
 t['NBO'] = "Поле заміток";
 t['MNUL'] = "Меню з лівого боку";
@@ -7672,9 +7559,6 @@ t['114'] = "Од.культ./день";
 break;
 
 case 'vn': //contributors: Bao Bao
-t['1'] = "Travian v2.x server";
-t['2'] = "Hủy bỏ quảng cáo biểu ngữ";
-t['3'] = "Force T3.1 Legionnaire & Phalanx capacity calculation<br>(for mixed T3.1 & T3.5 servers)";
 t['4'] = "Chợ";
 t['5'] = "Binh trường/Doanh trại/Xưởng/Chuồng ngựa";
 t['6'] = "Tòa thị chính/Lâu đài tướng/Lò luyện giáp/Lò rèn";
@@ -7839,7 +7723,6 @@ t['UPDALLV'] = "Cập nhật tất cả các làng.  USE WITH MAXIMUM CARE AS TH
 t['LARGEMAP'] = "Bản đồ lớn";
 t['USETHEMPR'] = "Sử dụng chúng (tỷ lệ)";
 t['USETHEMEQ'] = "Sử dụng (bằng)";
-t['GSRVT'] = "Game server";
 t['ACCINFO'] = "Thông tin tài khoản";
 t['NBO'] = "Bảng ghi chú";
 t['MNUL'] = "Menu hiện thị bên trái";

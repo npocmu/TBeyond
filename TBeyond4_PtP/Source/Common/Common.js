@@ -64,12 +64,8 @@ function getBuildingMaxLevel(villageId, gid)
       {
          var bIsCapital = (TBU_CAPITAL_ID == villageId); //is this the capital
 
-         if ( !bIsCapital ) { maxLevel = 10; }
-         else
-         {
-            if ( TBO_SERVER_VERSION2 === "1" ) { maxLevel = 12; }
-            else { maxLevel = 100; } // no known restrictions except resources
-         }
+         if ( !bIsCapital ) { maxLevel =  10; }
+         else               { maxLevel = 100; } // no known restrictions except resources
          break;
       }
       case GID_SAWMILL:
@@ -83,9 +79,6 @@ function getBuildingMaxLevel(villageId, gid)
       case GID_BREWERY:
          maxLevel = 10;
          break;
-      case GID_TREASURY:
-         maxLevel = 20;
-         break; //treasury -> we'll keep the level 20 as max level, even if for older game versions it is 10
       case GID_WW:
          maxLevel = 100;
          break;

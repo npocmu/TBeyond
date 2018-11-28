@@ -6,14 +6,7 @@ function cp2villages(cp)
 
    if ( TB3O.nServerType === 0 )
    {
-      if ( TBO_SERVER_VERSION2 === "1" ) 
-      {
-         noVil = Math.round(Math.pow(cp / 2000, 1 / 2));
-      }
-      else 
-      {
-         noVil = Math.round(Math.pow(cp / 1600, 1 / 2.3));
-      }
+      noVil = Math.round(Math.pow(cp / 1600, 1 / 2.3));
    }
    else
    {
@@ -35,14 +28,7 @@ function villages2cp(noVil)
    } 
    else if ( TB3O.nServerType === 0 )
    {
-      if ( TBO_SERVER_VERSION2 === "1" ) 
-      {
-         cp = Math.round(2 * Math.pow(noVil-1, 2) * 10) * 100;
-      }
-      else 
-      {
-         cp = Math.round(1.6 * Math.pow(noVil-1, 2.3)) * 1000;
-      }
+      cp = Math.round(1.6 * Math.pow(noVil-1, 2.3)) * 1000;
    }
    else
    {
