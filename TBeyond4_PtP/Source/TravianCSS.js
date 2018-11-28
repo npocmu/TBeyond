@@ -2,6 +2,17 @@ function setTravianStyles()
 {
    var acss = '';
 
+   var bIsFirefox = false;
+   var browserVersion = 0;
+
+   var match = window.navigator.userAgent.match(/Firefox\/([0-9]+)\./);
+
+   if ( match ) 
+   {
+      bIsFirefox = true;
+      browserVersion = parseInt10(match[1]);
+   }
+
    var levelCSS = 
      '{font-family:Arial, Helvetica, Verdana, sans-serif !important; font-size:12px !important; font-weight:bold !important;' +
       'color:' + TBCN_COL_TXT + ';line-height:15px !important;' + 
@@ -45,9 +56,15 @@ function setTravianStyles()
    'div#build div.action div.details input.text {width: 30px;}' +
 
    '#ingameManual {width:85px !important; height:100px !important;}' +
-   '#mapContainer .ruler, #mapContainer .toolbar {z-index: 998;}' +
-   '.resourceWrapper .resources, div#build .culturePointsAndPopulation .wrapper .unit {display:inline !important;}'
-   ;
+   '#mapContainer .ruler, #mapContainer .toolbar {z-index: 998;}';
+   
+   if ( bIsFirefox && browserVersion < 52 )
+   {
+      // fix styles after 'hotdog' release 
+      acss += 
+      '.resourceWrapper, .resourceWrapper .resources, div#build .culturePointsAndPopulation .wrapper .unit, div.hero_inventory .resourcePick .resource' +
+      '   {display:inline !important;}';
+   }
 
    GM_addStyle(acss);
 }
