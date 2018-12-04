@@ -62,7 +62,9 @@ function setTravianStyles()
    {
       // fix styles after 'hotdog' release 
       acss += 
-      '.resourceWrapper, .resourceWrapper .resources, div#build .culturePointsAndPopulation .wrapper .unit, div.hero_inventory .resourcePick .resource' +
+      '.resourceWrapper, .resourceWrapper .resources, div#build .culturePointsAndPopulation .wrapper .unit,' + 
+      'div.hero_inventory .resourcePick .resource,' +
+      'div#build.gid17 table#trading_routes td.desc .res div' +
       '   {display:inline !important;}';
    }
 
