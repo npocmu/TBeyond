@@ -324,11 +324,11 @@ IF_TB3({{
    'table#tb_arrm_progress th.tbTitle {font-weight:bold; padding: 0px; background-color:#F5FFF0;}' +
 
    // resource production buildings - hint table
-   'table#tb_build_hint th {background-color:#F3F3F3; color: black;}' +
-   'table#tb_build_hint th.tbTotal {width:20%;}' +
-   'table#tb_build_hint th.tbProd  {width:30%;}' +
-   'table#tb_build_hint th.tbTimeSpan {width:35%;}' +
-   'table#tb_build_hint td {text-align:center;}' +
+   'table.tbBuildHint th {background-color:#F3F3F3; color: black;}' +
+   'table.tbBuildHint th.tbTotal {width:20%;}' +
+   'table.tbBuildHint th.tbProd  {width:30%;}' +
+   'table.tbBuildHint th.tbTimeSpan {width:35%;}' +
+   'table.tbBuildHint td {text-align:center;}' +
 
    // training quick bar
    IF_TB4({{
