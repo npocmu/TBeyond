@@ -13,7 +13,10 @@ function getTroopsDetails(qDist, xRace, evTS)
       if ( tournamentSquareInfo )
       {
          var tDist = IIF_TB4(20,30);
-         arX[2] = 1 + tournamentSquareInfo.lvl / 10; // tournament square speed factor
+         var bonusPerLvl = ( TB3O.ServerInfo.features.path_to_pandora ) ? 20 : 10;
+      
+
+         arX[2] = 1 + tournamentSquareInfo.lvl * bonusPerLvl / 100; // tournament square speed factor
          if ( qDist > tDist )
          {
             arX[0] = tDist;
