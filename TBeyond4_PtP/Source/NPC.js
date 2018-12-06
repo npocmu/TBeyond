@@ -18,8 +18,9 @@ function uiOpenNPCAssistantDialog(cost /*opt*/)
       }
    }
 
-   window.wrappedJSObject.jQuery(window).trigger('buttonClicked',[
-      this, 
+   var triggerParam = 
+   [
+      null,
       {
          "dialog":
          {
@@ -32,6 +33,9 @@ function uiOpenNPCAssistantDialog(cost /*opt*/)
             "data":             data
          }
       }
-   ]);
+   ];
 
+   var clonedParam = cloneInto(triggerParam, window.wrappedJSObject);
+
+   window.wrappedJSObject.jQuery(window).trigger('buttonClicked', clonedParam);
 }
