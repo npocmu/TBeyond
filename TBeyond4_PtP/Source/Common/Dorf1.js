@@ -130,7 +130,7 @@ function uiCreateResUpgradeTable(tableId, villageId, resourcesInfo, arrBA)
                var bRow = $r();
                for ( xi = 0; xi < 4; xi++ )
                {
-                  bRow.appendChild($c("", [['class', 'tb3utbc']]));
+                  bRow.appendChild($td([['class', 'tb3utbc']]));
                }
                aTb.appendChild(bRow);
             }

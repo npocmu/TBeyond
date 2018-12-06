@@ -73,7 +73,7 @@ function uiCreateBldUpgradeTable(tableId, villageId, resourcesInfo, arrBA, build
          bsUT = true;
 
 
-         aCell = $c("", [['class', 'tb3utbc'], ['style', 'width:' + Math.floor(100 / intCpR) + '%;']]);
+         aCell = $td([['class', 'tb3utbc'], ['style', 'width:' + Math.floor(100 / intCpR) + '%;']]);
          aRow.appendChild(aCell);
 
          tb2 = $t();
@@ -100,7 +100,7 @@ function uiCreateBldUpgradeTable(tableId, villageId, resourcesInfo, arrBA, build
    {
       while ( (iFilledCellsCount % intCpR) !== 0 )
       {
-         aRow.appendChild($c());
+         aRow.appendChild($td());
          iFilledCellsCount++;
       }
    }

@@ -30,7 +30,7 @@ function showNoteBlock()
 	//Create a noteblock (data from GM cookie)
 	function createNoteBlock(){
 		var tr2 = $r();
-		var td2 = $c("");
+		var td2 = $td();
 		var nT = getGMcookie("notas", false);
 		if (nT == "false") nT = "";
 		//height
@@ -45,7 +45,7 @@ function showNoteBlock()
 		td2.appendChild(tA);
 		tr2.appendChild(td2);
 		var tr3 = $r();
-		var td3 = $c("", [['style', 'text-align:center;']]);
+		var td3 = $td([['style', 'text-align:center;']]);
 		var bS = $i([['type', 'image'], ['src', image["bSave"]], ['title', T('SAVE')]]);
 		if (TB3O.O[23] != '1') $at(bS, [['style', 'padding:3px']]);
 		bS.addEventListener("click", function(){setGMcookie("notas", tA.value, false); alert(T('SAVED')); }, 0);

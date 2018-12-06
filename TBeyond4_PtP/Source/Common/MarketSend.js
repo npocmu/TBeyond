@@ -124,16 +124,16 @@ function uiCreateLastMarketSendTable()
          aRow.appendChild($td([['class', 'mklshh']], T('DEL') ));
 
          var bRow = $r();
-         bRow.appendChild($c("(" + mkls[4] + "|" + mkls[5] + ")", [['class', 'mklsc']]));
+         bRow.appendChild($td([['class', 'mklsc']], "(" + mkls[4] + "|" + mkls[5] + ")"));
          for (var xi = 0; xi < 4; xi++)
          {
-            bRow.appendChild($c(mkls[xi]));
+            bRow.appendChild($td(null, mkls[xi]));
          }
-         bRow.appendChild($c('<a href=' + jsVoid + ' onClick = "' + (mkls[0] != 0 ? 'snd.r1.value=' + mkls[0] : '') + (mkls[1] != 0 ? '; snd.r2.value=' + mkls[1] : '') + (mkls[2] != 0 ? '; snd.r3.value=' + mkls[2] : '') + (mkls[3] != 0 ? '; snd.r4.value=' + mkls[3] : '') + '; snd.x.value=' + mkls[4] + '; snd.y.value=' + mkls[5] + ';"><img src="' + image["bOK"] + '" title="' + T('YES') + '" alt="' + T('YES') + '"></a>', [['class', 'mklsc']]));
+         bRow.appendChild($td([['class', 'mklsc']], '<a href=' + jsVoid + ' onClick = "' + (mkls[0] != 0 ? 'snd.r1.value=' + mkls[0] : '') + (mkls[1] != 0 ? '; snd.r2.value=' + mkls[1] : '') + (mkls[2] != 0 ? '; snd.r3.value=' + mkls[2] : '') + (mkls[3] != 0 ? '; snd.r4.value=' + mkls[3] : '') + '; snd.x.value=' + mkls[4] + '; snd.y.value=' + mkls[5] + ';"><img src="' + image["bOK"] + '" title="' + T('YES') + '" alt="' + T('YES') + '"></a>'));
 
          aLink = $a(gIc["del"], [['href', jsVoid]]);
          aLink.addEventListener("click", hideLastMarketSend(mkls), false);
-         dC = $c("", [['class', 'mklsc']]);
+         dC = $td([['class', 'mklsc']]);
          dC.appendChild(aLink);
          bRow.appendChild(dC);
 

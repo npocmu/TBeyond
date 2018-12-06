@@ -78,10 +78,10 @@ function uiCreateResBarTable(tableId, villageId, bShowAllTotals)
       rbT.id = tableId;
       rbT.className = "tbResBar";
       hRow = $r([['class', 'tb3r']]);
-      hCell1 = $c(villageInfo.name, [['class', 'tb3cvn'], ['colspan', '4']]);
+      hCell1 = $td([['class', 'tb3cvn'], ['colspan', '4']],villageInfo.name);
       hRow.appendChild(hCell1);
 
-      hCell2 = $c( (bShowAllTotals ? T('TOTAL') + " / ": "") + T('1H'), [['class', 'tb3chtot']]);
+      hCell2 = $td([['class', 'tb3chtot']], (bShowAllTotals ? T('TOTAL') + " / ": "") + T('1H') );
       hRow.appendChild(hCell2);
 
       rbT.appendChild(hRow);

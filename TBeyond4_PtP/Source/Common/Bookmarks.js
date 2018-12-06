@@ -58,17 +58,17 @@ function showUserBookmarks()
          {
             bmRow = $r();
             strBookmark = marcadores[i][0];
-            if (TB3O.O[82] != "1")
+            if ( TBO_LOCK_BOOKMARKS != "1")
             {
                var aDel = $a(gIc["del"], [['href', jsVoid]]);
                aDel.addEventListener("click", removeGMcookieValue("marcadores", i, false, showUserBookmarks, false), 0);
-               aC = $c("");
+               aC = $td();
                aC.appendChild(aDel);
                bmRow.appendChild(aC);
 
-               bmRow.appendChild($c("&nbsp;"));
+               bmRow.appendChild($td("&nbsp;"));
 
-               upC = $c("");
+               upC = $td();
                if (i > 0)
                {
                   aUp = $a("", [['href', jsVoid]]);
@@ -78,7 +78,7 @@ function showUserBookmarks()
                }
                bmRow.appendChild(upC);
 
-               downC = $c("");
+               downC = $td();
                if (i < marcadores.length - 1)
                {
                   var aDown = $a("", [['href', jsVoid]]);
@@ -87,20 +87,21 @@ function showUserBookmarks()
                   downC.appendChild(aDown);
                }
                bmRow.appendChild(downC);
-               bmRow.appendChild($c("&nbsp;"));
-               eC = $c("");
+
+               bmRow.appendChild($td("&nbsp;"));
+               eC = $td();
                aEdit = $a("", [['href', jsVoid]]);
                aEdit.appendChild($img([['src', image["editbookmark"]], ['title', T('EDIT')]]));
                aEdit.addEventListener("click", editUserBookmark(i), false);
                eC.appendChild(aEdit);
                bmRow.appendChild(eC);
-               bmRow.appendChild($c("&nbsp;"));
+               bmRow.appendChild($td("&nbsp;"));
             }
             else
             {
                aCl = 'noact';
                if (marcadores[i][1] == crtPage) aCl = 'act';
-               var aC = $c("<span>&#8226;&nbsp;&nbsp;</span>", [['class', aCl]]);
+               var aC = $td([['class', aCl]], "<span>&#8226;&nbsp;&nbsp;</span>");
                bmRow.appendChild(aC);
             }
             //fr3nchlover
@@ -114,8 +115,7 @@ function showUserBookmarks()
                iL = $a(strBookmark);
                if (marcadores[i][1] != "#") $at(iL, [['href', marcadores[i][1].substring(0, marcadores[i][1].length)]]);
             }
-            bmC = $c("");
-            bmC.appendChild(iL);
+            bmC = $td(iL);
             bmRow.appendChild(bmC);
             aTb.appendChild(bmRow);
          }
@@ -136,7 +136,7 @@ function showUserBookmarks()
                           uiCreateTool(dI[0],          T(dI[1]),       onLockUnlock)
                        ]);
 
-         var hCell = $c("", [['colspan', dI[3]]]);
+         var hCell = $td([['colspan', dI[3]]]);
          hCell.appendChild(hText);
          hCell.appendChild(toolbar);
          return hCell;
