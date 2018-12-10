@@ -305,4 +305,5 @@ t['RES2'] = "Clay";
 t['RES3'] = "Iron";
 t['RES4'] = "Crop";
 t['RES5'] = "Crop consumption";
+t['RET'] = "Return";
 };

@@ -22,27 +22,30 @@ function uiModifyRallyPointSendConfirm()
       ttServer = toTimeStamp(TB3O.serverTime);
       var troopDetailsInfo = parseTroopDetails(sendTable, document, ttServer, null, false);
 
-      // add "returns" row to table
-      secToTravel = 2 * (troopDetailsInfo.ttArrival - ttServer) / 1000;
-      ttReturn = ttServer + secToTravel * 1000;
-
-      var lastRow = sendTable.rows[sendTable.rows.length-1];
-      var timerCell = __TEST__($qf(".timer",'f',lastRow));
-      var cols = lastRow.cells[1].getAttribute("colspan");
-      var newRow = $r(attrInject$,[
-                      $th("returns"),
-                      $td(['colspan',cols],[
-                          $div(['class','in'],formatTimeSpan(secToTravel,0)),
-                          $div(['class','at'],
-                             returnNode = $span(formatDateTime(ttServer, ttReturn, 1))
-                          )])]);
-
-      insertAfter(lastRow, newRow);
-
-      // we can't use the TBeyond timer because it out of sync with the Travian timer
-      if ( timerCell )
+      if ( troopDetailsInfo.cmd !== ATC_DEFEND )
       {
-         timerObserver.observe(timerCell, {childList: true});
+         // add "returns" row to table
+         secToTravel = 2 * (troopDetailsInfo.ttArrival - ttServer) / 1000;
+         ttReturn = ttServer + secToTravel * 1000;
+
+         var lastRow = sendTable.rows[sendTable.rows.length-1];
+         var timerCell = __TEST__($qf(".timer",'f',lastRow));
+         var cols = lastRow.cells[1].getAttribute("colspan");
+         var newRow = $r(attrInject$,[
+                         $th(T("RET")),
+                         $td(['colspan',cols],[
+                             $div(['class','in'],formatTimeSpan(secToTravel,0)),
+                             $div(['class','at'],
+                                returnNode = $span(formatDateTime(ttServer, ttReturn, 1))
+                             )])]);
+
+         insertAfter(lastRow, newRow);
+
+         // we should not use the TBeyond timer because it out of sync with the Travian timer
+         if ( timerCell )
+         {
+            timerObserver.observe(timerCell, {childList: true});
+         }
       }
 
       // add stat table

@@ -126,7 +126,14 @@ function parseTroopDetails(troopDetailsTb, aDoc, ttServer, oasisMapId, bKeepId)
 
       if ( (grcmd[0] === 3 || grcmd[0] === 4) && (!backhref || backhref.indexOf("tt=2") === -1) )
       {
-         grcmd[1] = ATC_IMPRISON;
+         if ( troopDetailsTb.rows[0].cells[1].textContent.indexOf(T("AT2")) === -1 )
+         {
+            grcmd[1] = ATC_IMPRISON;
+         }
+         else // special case for send reinforcement confirmation
+         {
+            grcmd[1] = ATC_DEFEND;
+         }
       }
 
       info = new TroopDetailsInfo(hostMapId, hostVName, oasisMapId,
