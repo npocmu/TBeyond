@@ -35,7 +35,7 @@ function uiOpenNPCAssistantDialog(cost /*opt*/)
       }
    ];
 
-   var clonedParam = cloneInto(triggerParam, window.wrappedJSObject);
+   var clonedParam = (typeof(cloneInto) === "function") ? cloneInto(triggerParam, window.wrappedJSObject) : triggerParam;
 
    window.wrappedJSObject.jQuery(window).trigger('buttonClicked', clonedParam);
 }
