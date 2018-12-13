@@ -324,6 +324,7 @@ IF_TB3({{
    'table#tb_arrm_progress th.tbTitle {font-weight:bold; padding: 0px; background-color:#F5FFF0;}' +
 
    // resource production buildings - hint table
+   'table.tbBuildHint {margin-bottom: 10px; position:relative; z-index:10;}' +
    'table.tbBuildHint th {background-color:#F3F3F3; color: black;}' +
    'table.tbBuildHint th.tbTotal {width:20%;}' +
    'table.tbBuildHint th.tbProd  {width:30%;}' +
