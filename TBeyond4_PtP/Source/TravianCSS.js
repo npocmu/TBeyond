@@ -47,7 +47,7 @@ function setTravianStyles()
    'div#build.gid17 table#trading_edit td.res {padding: 0 0 0 7px;}' +
    'div#build.gid17 table#trading_edit td.res table.tbSendRes td {padding: 3px 3px;}' +
    'div#build.gid17 table#trading_edit td.res table.tbSendRes {width: ' + (( TB3O.ServerInfo.version > 4.0 )?342:340) +'px;  background-color: transparent; border: 1px solid silver;}' +
-   'div#build.gid17 table#trading_edit td.res table.tbSendRes input {margin: -moz-initial;margin:initial;}' +
+   'div#build.gid17 table#trading_edit td.res table.tbSendRes input {margin: -moz-initial;margin:initial !important;}' +
    'div#build.gid17 table#trading_edit td.res table.tbSendRes img {margin-right: auto;}' +
 
    'div#build.gid17 div.destination {float:' + docDir[1] + '; width:280px; margin-top:-75px;margin-bottom:15px;}' +
@@ -67,6 +67,9 @@ function setTravianStyles()
       'div#build.gid17 table#trading_routes td.desc .res div' +
       '   {display:inline !important;}';
    }
+
+   // fix styles after 'petchofix' release 
+   acss += 'input[type="text"] { height: 13px !important; }'
 
    GM_addStyle(acss);
 }

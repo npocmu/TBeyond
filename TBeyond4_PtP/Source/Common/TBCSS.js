@@ -172,7 +172,7 @@ IF_TB3({{
    'table#tb_distTT.tbDistInfo { padding:2px; margin:1px; font-weight:normal; font-size:8pt; line-height:16px; }' +
    'table#tb_distTT.tbDistInfo td {margin:0px; font-size:11px;}' +
 
-   '#trading_edit + #tb_unitsdest { position: relative; float: '+docDir[1]+'; border: 1px solid silver; margin-right: 65px; margin-top: -48px; width: 270px; }' + 
+   '#trading_edit + #tb_unitsdest { position: relative; float: '+docDir[1]+'; border: 1px solid silver; margin-right: 56px; margin-top: -60px; width: 270px; }' + 
    '#trading_edit + #tb_unitsdest tr.tbInfo td { font-size:11px; }' + 
 
    'table#tb_unitstime {margin-top:15px;width:' + ((TB3O.AvailableRaces.length === 3) ? '350':'550') + 'px;}' +
@@ -258,7 +258,8 @@ IF_TB3({{
    // send resource pad table
    '.tbSendRes td.tbInject {text-align:center;}' +
    '.tbSendRes td.tbInject, .tbSendRes td.tbInject * {vertical-align:middle !important;}' +
-   '.tbSendRes td.tbUseThem {padding:0px !important;}' +
+//   '.tbSendRes td.tbUseThem {padding:0px !important;}' +
+   '.tbSendRes td.tbUseThem input {padding:initial !important; margin: initial !important; width: initial !important;}' +
    '.tbSendRes td.tbTool    {padding-top:0px !important; padding-bottom:0px !important;}' +
    '.tbSendRes td.tbInject a.tbQCarry {IF_TB3(font-size:8pt;)white-space:nowrap;}' +
    '.tbSendRes td.tbInject a.tbMCap   {border-bottom:1px dotted;}' +
