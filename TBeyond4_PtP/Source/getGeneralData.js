@@ -80,9 +80,6 @@ function adaptDataToGameVersion()
    iC["ov"] = [['class','tbiOV'], ['src',xGIF]];
    iC["dup"]= [['class','tbiDup'], ['src',xGIF]];
 
-   iC["arrow_up8"] = [['src',image["aup"]],['width','8px']];
-   iC["arrow_down8"] = [['src',image["adn"]],['width','8px']];
-
    iC["ratio"] = [['src',image["ratio"]], ['title',T("MTR")]];
 }
 

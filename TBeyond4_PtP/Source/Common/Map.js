@@ -318,7 +318,7 @@ function uiCreateNeighborhoodTable(tableId)
 
       if ( sortType ) // sortable?
       {
-         addChildren(aCell,[" (",I("arrow_down8"),I("arrow_up8"),")"]);
+         addChildren(aCell,[" (",I("tbiDown"),I("tbiUp"),")"]);
          $at(aCell, [['title', T('CKSORT')], ['class', 'tb3mthcp'],
                      ['click', bind(sortTable,[tableId, i, sortType]), false]]);
       }

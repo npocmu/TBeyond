@@ -53,7 +53,8 @@ function setTravianStyles()
    'div#build.gid17 div.destination {float:' + docDir[1] + '; width:280px; margin-top:-75px;margin-bottom:15px;}' +
    '.traderCount img {vertical-align:middle;}' +
 
-   'div#build div.action div.details input.text {width: 30px;}' +
+   'div#build div.action div.details input.text {box-sizing: content-box; width: 30px;}' +
+   'div#build div.action div.details span.value { font-weight: bold; }' + 
 
    '#ingameManual {width:85px !important; height:100px !important;}' +
    '#mapContainer .ruler, #mapContainer .toolbar {z-index: 998;}';
@@ -69,7 +70,7 @@ function setTravianStyles()
    }
 
    // fix styles after 'petchofix' release 
-   acss += 'input[type="text"] { height: 13px !important; }'
+   acss += 'input[type="text"] { height: initial !important; }'
 
    GM_addStyle(acss);
 }

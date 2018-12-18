@@ -88,12 +88,13 @@ function uiCreateUpDownControl(buddy, delta)
 
    //-------------------------------------------------------------
    delta = delta || 1;
-   var up = I("arrow_up8",[['title','+' + delta],['class','tbiUp'],
-                           ['click', bind(onClick,[+delta]), false],
-                           ['mousedown', bind2(onMouseDown,[+delta]), false]]);
-   var down = I("arrow_down8",[['title','-' + delta],['class','tbiDown'],
-                               ['click', bind(onClick,[-delta]), false],
-                               ['mousedown', bind2(onMouseDown,[-delta]), false]]);
+
+   var up = I("tbiUp",[['title','+' + delta],
+                       ['click', bind(onClick,[+delta]), false],
+                       ['mousedown', bind2(onMouseDown,[+delta]), false]]);
+   var down = I("tbiDown",[['title','-' + delta],
+                           ['click', bind(onClick,[-delta]), false],
+                           ['mousedown', bind2(onMouseDown,[-delta]), false]]);
 
    var ctrl = $div([['class','tbUpDown']], [up,down]);
 
