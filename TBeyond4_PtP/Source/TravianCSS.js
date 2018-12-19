@@ -54,7 +54,7 @@ function setTravianStyles()
    '.traderCount img {vertical-align:middle;}' +
 
    'div#build div.action div.details input.text {box-sizing: content-box; width: 30px;}' +
-   'div#build div.action div.details span.value { font-weight: bold; }' + 
+   'div#build div.action div.details .tbOrg span.value { font-weight: bold; padding-' + docDir[1] + ':5px;}' + 
 
    '#ingameManual {width:85px !important; height:100px !important;}' +
    '#mapContainer .ruler, #mapContainer .toolbar {z-index: 998;}';
