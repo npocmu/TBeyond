@@ -1,8 +1,8 @@
 
-m4_define(COL_PNAME,  IIF_TB4(0,1))
-m4_define(COL_POP,    IIF_TB4(1,2))
-m4_define(COL_VCOUNT, IIF_TB4(2,3))
-m4_define(COL_BULLET, IIF_TB4(0,4))
+m4_define(COL_PNAME,  2)
+m4_define(COL_POP,    3)
+m4_define(COL_VCOUNT, 4)
+m4_define(COL_BULLET, 2)
 
 /////////////////////////////////////////////////////////////////////
 function getMemberTitles(aTb)
@@ -44,14 +44,12 @@ function uiModifyAllianceMembersTable(aTb, memberTitles)
       var totalBullets = [[0, ""], [0, ""], [0, ""], [0, ""], [0, ""]]; //blue, green, yellow, red, grey
       var boolIsMyAlly = true;
 
-      IF_TB4(insertFirst(aTb.rows[0],$td(['style','width:6%'])); ++columns;)
-
       __DUMP__(playersCount,columns,memberTitles)
 
       for ( i = 1; i < aTb.rows.length; i++ )
       {
          cells = aTb.rows[i].cells;
-         var uLink = $nth_tag(cells[COL_PNAME],"a",0);
+         var uLink = $nth_tag(cells[COL_PNAME],"a");
          if ( uLink )
          {
             var uid = parseUri(uLink.href).queryKey.uid;
@@ -75,7 +73,7 @@ function uiModifyAllianceMembersTable(aTb, memberTitles)
             j = 0;
             if ( cells[COL_BULLET] )
             {
-               var imgBullet = $nth_tag(cells[COL_BULLET],"img",0);
+               var imgBullet = $nth_tag(cells[COL_BULLET],"img");
                if ( imgBullet )
                {
                   if (imgBullet.src.indexOf("x.gif") === -1)
@@ -103,10 +101,6 @@ function uiModifyAllianceMembersTable(aTb, memberTitles)
                boolIsMyAlly = false;
             }
          }
-
-         IF_TB4({{
-         insertFirst(aTb.rows[i],$td(String(i)+"."))
-         }})
       }
 
       var avgP = Math.round(totP / playersCount);
@@ -115,39 +109,39 @@ function uiModifyAllianceMembersTable(aTb, memberTitles)
       for ( i = 1; i < aTb.rows.length; i++ )
       {
          cells = aTb.rows[i].cells;
-         var pop = parseInt10(cells[2].textContent);
-         var vil = parseInt10(cells[3].textContent);
+         var pop = parseInt10(cells[COL_POP].textContent);
+         var vil = parseInt10(cells[COL_VCOUNT].textContent);
 
          if ( pop > avgP*3/2 )
          {
-            cells[2].style.backgroundColor = '#E8FFE8';
+            cells[COL_POP].style.backgroundColor = '#E8FFE8';
          }
          if ( pop < avgP*2/3 )
          {
-            cells[2].style.backgroundColor = 'bisque';
+            cells[COL_POP].style.backgroundColor = 'bisque';
          }
          else if ( pop < avgP )
          {
-            cells[2].style.backgroundColor = 'cornsilk';
+            cells[COL_POP].style.backgroundColor = 'cornsilk';
          }
 
          if ( vil > avgV*3/2 )
          {
-            cells[3].style.backgroundColor = '#E8FFE8';
+            cells[COL_VCOUNT].style.backgroundColor = '#E8FFE8';
          }
          if ( vil < avgV*2/3 )
          {
-            cells[3].style.backgroundColor = 'bisque';
+            cells[COL_VCOUNT].style.backgroundColor = 'bisque';
          }
          else if ( vil < avgV )
          {
-            cells[3].style.backgroundColor = 'cornsilk';
+            cells[COL_VCOUNT].style.backgroundColor = 'cornsilk';
          }
       }
 
       // total member of aliance
       var trT = $r(['class', 'tb3r']);
-      trT.appendChild($td([['class', 'tb3chnb'], ["colspan", "2"]], T('TOTAL')));
+      trT.appendChild($td([['class', 'tb3chnb'], ["colspan", "COL_POP"]], T('TOTAL')));
       trT.appendChild($td([['class', 'tb3chnb'], ['style', 'text-align:center']], totP));
       trT.appendChild($td([['class', 'tb3chnb'], ['style', 'text-align:center']], totV));
       if ( columns > 4 ) { trT.appendChild($td([['class', 'tb3chnb'], ["colspan", columns-4]])); }
@@ -155,7 +149,7 @@ function uiModifyAllianceMembersTable(aTb, memberTitles)
 
       //average population per member of aliance
       var trAv = $r(['class', 'tb3r']);
-      trAv.appendChild($td([['class', 'tb3chnb'], ["colspan", "2"]], T('AVPPP')));
+      trAv.appendChild($td([['class', 'tb3chnb'], ["colspan", "COL_POP"]], T('AVPPP')));
       trAv.appendChild($td([['class', 'tb3chnb'], ['style', 'text-align:center']], avgP));
       trAv.appendChild($td([['class', 'tb3chnb'], ['style', 'text-align:center']], avgV));
       if ( columns > 4 ) { trAv.appendChild($td([['class', 'tb3chnb'], ["colspan", columns-4]])); }
@@ -163,7 +157,7 @@ function uiModifyAllianceMembersTable(aTb, memberTitles)
 
       //average population per village
       trAv = $r(['class', 'tb3r']);
-      trAv.appendChild($td([['class', 'tb3chnb'], ["colspan", "2"]], T('AVPPV')));
+      trAv.appendChild($td([['class', 'tb3chnb'], ["colspan", "COL_POP"]], T('AVPPV')));
       trAv.appendChild($td([['class', 'tb3chnb'], ["colspan", "2"], ['style', 'text-align:center']], Math.round(totP / totV)));
       if ( columns > 4 ) { trAv.appendChild($td([['class', 'tb3chnb'], ["colspan", columns-4]])); }
       aTb.appendChild(trAv);
@@ -203,7 +197,7 @@ function uiModifyAllianceProfile()
       uiModifyAllianceProfileName(aProfile);
       uiModifyAllianceProfileDescription(aProfile);
 
-      uiModifyAllianceMembersTable(searchAllianceMembersTable(),memberTitles);
+      uiModifyAllianceMembersTable(searchAllianceMembersTable(), memberTitles);
    }
 
    __EXIT__

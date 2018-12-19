@@ -135,11 +135,13 @@ function doPage()
       }
       else if ( TB3O.pageSelector === "" && crtUrl.path === "/allianz.php" )
       {
-         if ( !crtUrl.queryKey.s )
+         var alliSubMenu = searchAndParseSubMenu();
+         var alliActiveUrl = ( alliSubMenu ) ? parseUri(alliSubMenu.items[alliSubMenu.active][1]) : crtUrl;
+         if ( alliActiveUrl.queryKey.s === "1" )
          {
             TB3O.pageSelector = "profile_alliance";
          }
-         else if ( crtUrl.queryKey.s === "2" )
+         else if ( alliActiveUrl.queryKey.s === "2" )
          {
             TB3O.pageSelector = "alliance_forum";
          }
