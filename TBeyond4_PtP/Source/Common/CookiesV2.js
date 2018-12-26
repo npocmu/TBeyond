@@ -1,5 +1,6 @@
 //////////////////////////////////////////////////////////////////////
 // FireFox+GM specific
+/*
 var persistence = new Persistence(
    {   
       serialize: uneval, 
@@ -17,9 +18,9 @@ persistence.getUserSpecificNS = function()
 {
    return TB3O.gServer + '_' + TB3O.UserID;
 };
+*/
 
 
-/*
 //////////////////////////////////////////////////////////////////////
 // standard way
 // current problem: date deserialization
@@ -37,7 +38,7 @@ persistence.getUserSpecificNS = function()
 {
    return TB3O.UserID;
 };
-*/
+
 
 //////////////////////////////////////////////////////////////////////
 persistence.getVillageSpecificNS = function(villageId /*opt*/)
