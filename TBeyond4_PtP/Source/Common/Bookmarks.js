@@ -164,7 +164,7 @@ function showUserBookmarks()
          function onLockUnlock() 
          {
             TB3O.O[82] = dI[2];
-            setGMcookieV2('TB3Setup', TB3O.O, 'SETUP');
+            saveTBOptions();
             showUserBookmarks();
          }
       }

@@ -149,7 +149,7 @@ function getRaceFromTroopIndex(tix)
    var racex = getRaceIndexFromTroopIndex(tix);
    var race = ( racex >= 0 && racex < TB3O.KnownRaces.length ) ? TB3O.KnownRaces[racex] : '';
 
-   __ASSERT__(isValidStr(race), "Unknown race for troop index: " + tix)
+   __ASSERT__(isStrValid(race), "Unknown race for troop index: " + tix)
 
    return race;
 }
