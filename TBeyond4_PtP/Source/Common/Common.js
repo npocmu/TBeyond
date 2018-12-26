@@ -378,13 +378,13 @@ function getNewdidFromChild(aParent)
 function setVillageRes(villageId, aDoc, ttServer)
 {
    var resourcesInfo = getResourcesInfo2(villageId, aDoc, ttServer);
-   if ( resourcesInfo.dUpd )
+   if ( resourcesInfo.ttUpd )
    {
       TB3O.VillagesInfo[villageId].r = resourcesInfo;
    }
-   __ASSERT__(resourcesInfo.dUpd,"Can't get resources for village id=" + villageId)
+   __ASSERT__(resourcesInfo.ttUpd,"Can't get resources for village id=" + villageId)
 
-   return !!resourcesInfo.dUpd;
+   return !!resourcesInfo.ttUpd;
 }
 
 /////////////////////////////////////////////////////////////////////

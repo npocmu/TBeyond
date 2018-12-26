@@ -7,8 +7,7 @@ function ResourcesInfo()
    this.Res  = [  0,  0,  0,  0]; // resources available
    this.Cap  = [  0,  0,  0,  0]; // resource storage capacity
 
-   // TODO: replace with ttUpd
-   this.dUpd = undefined; // date of information update 
+   this.ttUpd = undefined; // date of information update (server timestamp)
 
    return this;
 }
@@ -20,14 +19,11 @@ function cloneResourcesInfo(r)
 {
    var resourcesInfo = new ResourcesInfo();
 
-   if ( r.dUpd !== undefined )
-   {
-      resourcesInfo.dUpd = new Date(r.dUpd.getTime());
-   }
-   resourcesInfo.Res  = cloneArray(r.Res);
-   resourcesInfo.PpH  = cloneArray(r.PpH);
-   resourcesInfo.EPpH = cloneArray(r.EPpH);
-   resourcesInfo.Cap  = cloneArray(r.Cap); 
+   resourcesInfo.ttUpd = r.ttUpd;
+   resourcesInfo.Res   = cloneArray(r.Res);
+   resourcesInfo.PpH   = cloneArray(r.PpH);
+   resourcesInfo.EPpH  = cloneArray(r.EPpH);
+   resourcesInfo.Cap   = cloneArray(r.Cap); 
 
    return resourcesInfo;
 }
@@ -43,7 +39,7 @@ function getResourcesInfoView(resourcesInfo)
    str += "EPpH = " + resourcesInfo.EPpH + "\n";
    str += "Res  = " + resourcesInfo.Res + "\n";
    str += "Cap  = " + resourcesInfo.Cap + "\n";
-   str += "dUpd = " + resourcesInfo.dUpd + "\n";
+   str += "ttUpd = " + $toStr(toDate(resourcesInfo.ttUpd)) + "\n";
 
    return str;
 }

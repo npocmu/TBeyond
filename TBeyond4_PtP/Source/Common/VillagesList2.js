@@ -20,7 +20,7 @@ function uiFillVillagesListCells(vRow, nStartColumn, villageInfo, layout_options
    var k = nStartColumn;
    var aCell, aIco;
    var resourcesInfo = villageInfo.r;
-   var villageResKnown = ( resourcesInfo.dUpd !== undefined );
+   var villageResKnown = ( resourcesInfo.ttUpd !== undefined );
 
    // show population
    if ( layout_options.show_pop )

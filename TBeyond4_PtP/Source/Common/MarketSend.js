@@ -744,7 +744,7 @@ function uiModifyMarketSend()
       //--------------------------------------------------------------
       function uiCreateProgressRow(resourcesInfo, ri, eventCell, st)
       {
-         var ttEvent = toTimeStamp(resourcesInfo.dUpd);
+         var ttEvent = resourcesInfo.ttUpd;
          var ruoType = st.ev[ri];
          var totalClass = '';
          var strTotal;
@@ -798,7 +798,7 @@ function uiModifyMarketSend()
             var eventClass = getUnderOverrunClass(ruoType);
             var eventImg = ( ruoType ) ? [I(rName),I(rName),I(rName)] : I("r5");
             var resourcesInfoEv = cloneResourcesInfo(resourcesInfo); 
-            resourcesInfoEv.dUpd = toDate(st.ttf[ri]);
+            resourcesInfoEv.ttUpd = st.ttf[ri];
             resourcesInfoEv.Res[ri] = ( ruoType ) ? resourcesInfoEv.Cap[ri] : 0;
 
             var eventCell = $td(['class', 'tbEvent ' + eventClass], eventImg);
@@ -1070,7 +1070,7 @@ function uiModifyMarketSend()
    {
       __ENTER__
 
-      if ( TB3O.ActiveVillageInfo.r.dUpd !== undefined )
+      if ( TB3O.ActiveVillageInfo.r.ttUpd !== undefined )
       {
          var resourcesInfo = cloneResourcesInfo(TB3O.ActiveVillageInfo.r);
          var i, cumState = {};

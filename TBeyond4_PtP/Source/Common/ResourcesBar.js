@@ -66,7 +66,7 @@ function uiCreateResBarTable(tableId, villageId, bShowAllTotals)
 
    var villageInfo = TB3O.VillagesInfo[villageId];
    var resourcesInfo = villageInfo.r;
-   if ( resourcesInfo.dUpd !== undefined )
+   if ( resourcesInfo.ttUpd !== undefined )
    {
       for ( ri = 0; ri < 4; ri++ )
       {

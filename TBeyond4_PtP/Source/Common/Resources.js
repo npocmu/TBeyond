@@ -203,18 +203,15 @@ function getSecondsToProduce(need,ePpH)
 function getActualResourcesInfo(r, doFloor, ttCurrent) 
 {
    var tmsElapsed;
-   var resourcesInfo = new ResourcesInfo();
+   var resourcesInfo = cloneResourcesInfo(r);
 
-   if ( r.dUpd !== undefined )
+   if ( r.ttUpd !== undefined )
    {
-      resourcesInfo.dUpd = toDate(ttCurrent);
+      resourcesInfo.ttUpd = ttCurrent;
 
-      tmsElapsed = ttCurrent - r.dUpd.getTime();
+      tmsElapsed = ttCurrent - r.ttUpd;
 
       resourcesInfo.Res  = getActualResourcesAfterMs(r,tmsElapsed).res;
-      resourcesInfo.PpH  = cloneArray(r.PpH);
-      resourcesInfo.EPpH = cloneArray(r.EPpH);
-      resourcesInfo.Cap  = cloneArray(r.Cap); 
 
       if ( doFloor ) { floorResources(resourcesInfo.Res); }
    }
@@ -299,10 +296,10 @@ function getActualResourcesInfoNow(r, doFloor)
 function getCumulativeResourcesInfo(resourcesInfo, ttAccumulate, resToAccumulate, cumState /*opt*/)
 {
    // fill @st fields ttf and ev bases on estimate production of resources from @r in
-   // the time interval [r.dUpd,ttMax]
+   // the time interval [r.ttUpd,ttMax]
    function fillStateTTF(r, st, ttMax)
    {
-      var ttStart = r.dUpd.getTime();
+      var ttStart = r.ttUpd;
       var ri;
       for ( ri = 0; ri < 4; ++ri )
       {
@@ -325,10 +322,10 @@ function getCumulativeResourcesInfo(resourcesInfo, ttAccumulate, resToAccumulate
 
    //-----------------------------------------------------------------
    // fill @st fields ttf and ev bases on estimate production of resources from @r in
-   // time range [r.dUpd,ttMax]
+   // time range [r.ttUpd,ttMax]
    function fillCumulativeStateTTF(r, st, ttMax, stA)
    {
-      var ttStart = r.dUpd.getTime();
+      var ttStart = r.ttUpd;
       var ri;
       for ( ri = 0; ri < 4; ++ri )
       {
@@ -392,7 +389,7 @@ function getCumulativeResourcesInfo(resourcesInfo, ttAccumulate, resToAccumulate
    }
 
    var ar;
-   var tms = ttAccumulate - resourcesInfo.dUpd.getTime();
+   var tms = ttAccumulate - resourcesInfo.ttUpd;
    var state = { BA:{}, AA:{} };
    var bNeedCumState = false;
 
@@ -434,7 +431,7 @@ function getCumulativeResourcesInfo(resourcesInfo, ttAccumulate, resToAccumulate
 
    // do accumulation
    ar = getCumulativeResources(resourcesInfo, resToAccumulate, true);
-   resourcesInfo.dUpd.setTime(ttAccumulate);
+   resourcesInfo.ttUpd = ttAccumulate;
    resourcesInfo.Res  = ar.res;
    state.A = ar.A;
    __initResourcesSubstate(state.AA, true);
@@ -483,7 +480,7 @@ function getCumulativeResourcesStateView(resourcesInfo, state, ri)
    str += "Cumulative state after accumulation:\n"
    str += getStView(state.AA);
    str += "Resources after accumulation:\n"
-   str += "[" + resourcesInfo.dUpd + "]: " + resourcesInfo.Res[ri] + "/" + resourcesInfo.Cap[ri];
+   str += "[" + $toStr(resourcesInfo.ttUpd) + "]: " + resourcesInfo.Res[ri] + "/" + resourcesInfo.Cap[ri];
 
 
    return str;
@@ -519,7 +516,7 @@ function getResInfoTotals()
    for ( villageId in TB3O.VillagesInfo )
    {
       resourcesInfo = TB3O.VillagesInfo[villageId].r;
-      if ( resourcesInfo.dUpd !== undefined )
+      if ( resourcesInfo.ttUpd !== undefined )
       {
          for ( ri = 0; ri < 4; ++ri )
          {

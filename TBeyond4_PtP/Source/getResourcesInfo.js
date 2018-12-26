@@ -51,7 +51,7 @@ function getResourcesResCap(resourcesInfo, aDoc, ttServer)
       }
    }
    
-   if ( validCount === 4 ) { resourcesInfo.dUpd = new Date(ttServer); }
+   if ( validCount === 4 ) { resourcesInfo.ttUpd = ttServer; }
 
    return resourcesInfo;
 }
@@ -73,7 +73,7 @@ function getResourcesInfo2(villageId, aDoc, ttServer)
       var nodeList = $xf("//ul[@id='stockBar']//a", 'l', aDoc, aDoc);
       if ( nodeList.snapshotLength < 5 )
       {
-         resourcesInfo.dUpd = undefined;
+         resourcesInfo.ttUpd = undefined;
          __ERROR__("Can't retreive resources production")
       }
       else

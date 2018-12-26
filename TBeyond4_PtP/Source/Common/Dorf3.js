@@ -70,7 +70,7 @@ function processDorf3_Tab2(origT)
                resourcesInfo.Cap[j] = v;
             }
          }
-         resourcesInfo.dUpd = new Date(TB3O.serverTime.getTime());
+         resourcesInfo.ttUpd = toTimeStamp(TB3O.serverTime);
       }
    }
 
@@ -113,7 +113,7 @@ function processDorf3_Tab3(origT)
                {
                   resourcesInfo.Res[j] = parseSeparatedInt10(r[0]);
                   resourcesInfo.Cap[j] = parseSeparatedInt10(r[1]);
-                  resourcesInfo.dUpd = new Date(TB3O.serverTime.getTime());
+                  resourcesInfo.ttUpd = toTimeStamp(TB3O.serverTime);
                }
             }
          }
@@ -1137,7 +1137,7 @@ function fillD3TbRow_Tab1_Col4(villageId)
 function fillD3TbRow_Tab2(villageId)
 {
    var resourcesInfo = getActualResourcesInfoNow(TB3O.VillagesInfo[villageId].r,true);
-   var villageResKnown = ( resourcesInfo.dUpd !== undefined );
+   var villageResKnown = ( resourcesInfo.ttUpd !== undefined );
    var aCell;
    var ri;
    if ( villageResKnown )
@@ -1218,7 +1218,7 @@ function fillD3TbRow_Tab3(villageId)
    //-------------------------
    resourcesInfo = getActualResourcesInfoNow(TB3O.VillagesInfo[villageId].r, false);
 
-   if ( resourcesInfo.dUpd !== undefined )
+   if ( resourcesInfo.ttUpd !== undefined )
    {
       ttFillW = Infinity;
       for ( ri = 0; ri < 4; ri++)
@@ -1236,13 +1236,6 @@ function fillD3TbRow_Tab3(villageId)
          }
          aCell = $g("aldea" + villageId + "_3_" + cellNo);
          uiSetFillPercent(aCell, resourcesInfo, ri)
-         /*
-         fillPercent = getFillPercent(resourcesInfo, ri);
-         aCell.textContent = fillPercent + " %";
-         $at(aCell, [['style', 'font-size:10pt; text-align:' + docDir[1] + ';' +
-                      ( fillPercent >= 95 ? 'color:red' : '' )
-                    ]]);
-                    */
       }
       //time to empty/fill the warehouse
       uiSetTimeout($g("aldea" + villageId + "_3_5"),ttFillW,1,{format:1});
