@@ -91,36 +91,35 @@ function $test(text, v)
 }
 
 //--------------------------------------------------------------------
+function $toStr(v) 
+{
+   var strv;
+   if ( v instanceof Array ) 
+   {
+      strv = uneval(v) + ", length = " + v.length;
+   }
+   if ( v instanceof Date ) 
+   {
+      strv = v.toString() + ", timestamp = " + v.getTime();
+   }
+   else if ( typeof(v) === "object" ) 
+   {
+      strv = uneval(v);
+   }
+   else if ( v === undefined )
+   {
+      strv = "undefined";
+   }
+   else
+   {
+      strv = v.toString();
+   }
+   return strv;
+}
+
+//--------------------------------------------------------------------
 function $dump_expr(expr, e /*, exprN, eN */) 
 {
-   //-----------------------------------------------------------------
-   function $toStr(v) 
-   {
-      var strv;
-      if ( v instanceof Array ) 
-      {
-         strv = uneval(v) + ", length = " + v.length;
-      }
-      if ( v instanceof Date ) 
-      {
-         strv = v.toString() + ", timestamp = " + v.getTime();
-      }
-      else if ( typeof(v) === "object" ) 
-      {
-         strv = uneval(v);
-      }
-      else if ( v === undefined )
-      {
-         strv = "undefined";
-      }
-      else
-      {
-         strv = v.toString();
-      }
-      return strv;
-   }
-
-   //-----------------------------------------------------------------
    var str = "", i;
    for ( i = 0; i+1 < arguments.length; i+=2 )
    {
