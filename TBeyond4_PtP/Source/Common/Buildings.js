@@ -28,21 +28,78 @@ function getBuildingIdByGid(b, gid)
 }
 
 //////////////////////////////////////////////////////////////////////
-// return array [lumber,clay,iron,crop] with sum of base production 
-// of all fields
+// return array of {id, produce, pph} for all resource fields
 function getFieldsBasePpH(b)
 {
-   var prod = [0, 0, 0, 0];
+   var fields = [];
    var id; 
    for ( id = 1; id <= 18; ++id )
    {
       if ( b[id] ) 
       {
          var info = getFieldBasePpH(b[id][0], b[id][1]);
-         prod[info.produce] += info.pph;
+         if ( info.pph )
+         {
+            info.id = id;
+            fields.push(info);
+         }
       }
    }
+   return fields;
+}
+
+//////////////////////////////////////////////////////////////////////
+// return array [lumber,clay,iron,crop] with sum of base production 
+// of all fields
+function getFieldsTotalBasePpH(b)
+{
+   var prod = [0, 0, 0, 0];
+
+   var fields = getFieldsBasePpH(b);
+   var i; 
+   for ( i = 0; i < fields.length; ++i )
+   {
+      var fieldInfo = fields[i];
+      prod[fieldInfo.produce] += fieldInfo.pph;
+   }
    return prod;
+}
+
+//////////////////////////////////////////////////////////////////////
+// returns the percentage boost for the resource production of type @ri 
+// obtained by the corresponding factories. 0 if no such factories present.
+function getFactoriesTotalBoost(b, ri)
+{
+   function getPPB(gid)
+   {
+      var buildingInfo = getBuildingInfoByGid(b, gid);
+      if ( buildingInfo )
+      {
+         return getFactoryPPB(buildingInfo.gid, buildingInfo.lvl).ppb;
+      }
+      return 0;
+   }
+
+   var ppb = 0; 
+
+   if ( ri === RI_LUMBER )
+   {
+      ppb = getPPB(GID_SAWMILL);
+   }
+   else if ( ri === RI_CLAY )
+   {
+      ppb = getPPB(GID_BRICKYARD);
+   }
+   else if ( ri === RI_IRON )
+   {
+      ppb = getPPB(GID_IRON_FOUNDRY);
+   }
+   else if ( ri === RI_CROP )
+   {
+      ppb = getPPB(GID_GRAIN_MILL) + getPPB(GID_BAKERY);
+   }
+
+   return ppb;
 }
 
 //////////////////////////////////////////////////////////////////////

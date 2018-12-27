@@ -69,7 +69,7 @@ function calculateBuildProfit(gid, new_production, prev_production /*opt*/)
    // profit in percents?
    if ( bInfo.upg_type === 1 )
    {
-      var PpH = getFieldsBasePpH(TB3O.ActiveVillageInfo.csi.b)[bInfo.produce];
+      var PpH = getFieldsTotalBasePpH(TB3O.ActiveVillageInfo.csi.b)[bInfo.produce];
       __DUMP__(PpH)
       // slightly incorrect because need to round a production of each building 
       // exact formula:
@@ -82,7 +82,7 @@ function calculateBuildProfit(gid, new_production, prev_production /*opt*/)
 
       if ( TB3O.VillageOases )
       {
-         var oi, ri;
+         var oi, ri, fi;
          var normalBoost = [];
          for (oi = 0; oi < TB3O.VillageOases.length; ++oi)
          {
@@ -91,14 +91,26 @@ function calculateBuildProfit(gid, new_production, prev_production /*opt*/)
 
          var currentCumBoost = getIncreasedCumulativeOasesBoost(normalBoost, prev_production/100);
          var possibleCumBoost = getIncreasedCumulativeOasesBoost(normalBoost, new_production/100);
-
-         var newPpH = getFieldsBasePpH(TB3O.ActiveVillageInfo.csi.b);
-
-         __DUMP__(normalBoost, currentCumBoost, possibleCumBoost, newPpH)
+         var b = TB3O.ActiveVillageInfo.csi.b;
+         var factoriesBoost = [0,0,0,0];
 
          for ( ri = 0; ri < 4; ++ri )
          {
-            profit += Math.floor(newPpH[ri] * (possibleCumBoost[ri] - currentCumBoost[ri])/100);
+            factoriesBoost[ri] = getFactoriesTotalBoost(b, ri);
+         }
+
+         __DUMP__(factoriesBoost, normalBoost, currentCumBoost, possibleCumBoost)
+
+         var fields = getFieldsBasePpH(b);
+         //__DUMP__(fields)
+
+         for ( fi = 0; fi < fields.length; ++fi )
+         {
+            var fieldInfo = fields[fi];
+            ri = fieldInfo.produce;
+            var currentBoostPpH = Math.round(fieldInfo.pph * (factoriesBoost[ri] + currentCumBoost[ri])/100);
+            var possibleBoostPpH = Math.round(fieldInfo.pph * (factoriesBoost[ri] + possibleCumBoost[ri])/100);
+            profit += possibleBoostPpH - currentBoostPpH;
          }
       }
    }
