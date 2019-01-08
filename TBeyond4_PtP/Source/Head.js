@@ -1,4 +1,4 @@
-﻿// ==UserScript==
+// ==UserScript==
 // @name 	VES_NAME
 // @version 	4.VER_MAJOR.VER_MINOR.VES_REVISION
 // @author	npocmu (Black_Cat, ms99, Nux, Lux, onetmt, Velonis Petros, Richard Laffers, Szabka, Victor Garcia-aka Croc-)
@@ -6,7 +6,7 @@
 // @description	VES_COMMENT M4_DEBUG({{DEBUG build}})
 // @source 	http://userscripts.org/scripts/show/TB_USO_NO
 // @identifier 	http://userscripts.org/scripts/show/TB_USO_NO.user.js
-// @copyright	© npocmu 2011-2013,2018, © Black_Cat 2010 © ms99, 2008-2010 (parts of this script © Nux, Lux, onetmt, Velonis Petros, Richard Laffers, Szabka, Victor Garcia-aka Croc-)
+// @copyright	© npocmu 2011-2013,2018-2019, © Black_Cat 2010 © ms99, 2008-2010 (parts of this script © Nux, Lux, onetmt, Velonis Petros, Richard Laffers, Szabka, Victor Garcia-aka Croc-)
 // @license 	Creative Commons Attribution-Noncommercial-Share Alike 3.0 Germany License
 // @grant 	GM_getValue
 // @grant 	GM_setValue
@@ -15,6 +15,7 @@
 // @grant 	GM_addStyle
 // @grant 	GM_xmlhttpRequest
 // @grant       unsafeWindow
+// @run-at      document-end
 // @include 	*://*.travian*.*/*.php*
 // @exclude 	*://*.travian*.*/
 // @exclude 	*://*.travian*.*/hilfe.php*
@@ -61,7 +62,7 @@
 *An English translation of the "Creative Commons Attribution-Noncomercial-Share Alike 3.0 License"
 *can be found here http://creativecommons.org/licenses/by-nc-sa/3.0/deed.en
 /*****************************************************************************
-*Copyright © npocmu 2011-2013,2018
+*Copyright © npocmu 2011-2013,2018-2019
 *Copyright © ms99, 2008-2010
 *Parts of this script Copyright © Nux, 2008
 *Setup page behavior Copyright © Lux, 2008
