@@ -47,7 +47,7 @@ function getRace()
 
       if ( imgBig )
       {
-         if ( hasClass(imgBig,new RegExp(prefix + "(\d+)")) )
+         if ( hasClass(imgBig,new RegExp(prefix + "(\\d+)")) )
          { 
             racex = parseInt10(RegExp.$1) - 1; 
             race = TB3O.KnownRaces[racex];
