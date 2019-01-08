@@ -340,9 +340,9 @@ function uiModifyMap()
       }
    }
 
-   if ( window.wrappedJSObject && window.wrappedJSObject.Travian )
+   if ( unsafeWindow && unsafeWindow.Travian )
    {
-      var translation = window.wrappedJSObject.Travian.Translation;
+      var translation = unsafeWindow.Travian.Translation;
       if ( translation && isFunction(translation.translate) )
       {
          translateDict = translation;

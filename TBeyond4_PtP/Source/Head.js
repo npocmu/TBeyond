@@ -1,4 +1,4 @@
-// ==UserScript==
+﻿// ==UserScript==
 // @name 	VES_NAME
 // @version 	4.VER_MAJOR.VER_MINOR.VES_REVISION
 // @author	npocmu (Black_Cat, ms99, Nux, Lux, onetmt, Velonis Petros, Richard Laffers, Szabka, Victor Garcia-aka Croc-)
@@ -14,6 +14,7 @@
 // @grant 	GM_log
 // @grant 	GM_addStyle
 // @grant 	GM_xmlhttpRequest
+// @grant       unsafeWindow
 // @include 	*://*.travian*.*/*.php*
 // @exclude 	*://*.travian*.*/
 // @exclude 	*://*.travian*.*/hilfe.php*

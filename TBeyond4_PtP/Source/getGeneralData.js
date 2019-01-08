@@ -123,19 +123,20 @@ function detectTravianVersion()
 
    if ( serverInfo )
    {
+      if ( $qf("#logo.pathToPandora") )
+      {
+         serverInfo.features.path_to_pandora = true;
+      }
+
       try 
       {
-         serverInfo.speed = window.wrappedJSObject.Travian.Game.speed;
-         var version = parseFloat(window.wrappedJSObject.Travian.Game.version);
+         serverInfo.speed = unsafeWindow.Travian.Game.speed;
+         var version = parseFloat(unsafeWindow.Travian.Game.version);
          if ( !isNaN(version) )
          {
             serverInfo.version = version;
          }
 
-         if ( $qf("#logo.pathToPandora") )
-         {
-            serverInfo.features.path_to_pandora = true;
-         }
       } 
       catch(e) 
       {
