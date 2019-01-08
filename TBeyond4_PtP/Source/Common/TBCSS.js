@@ -21,7 +21,7 @@ function setTBStyles()
    'tr.tb3rhb		{background-color:#ECECEC; text-align:center; border:1px solid silver; font-weight:bold;}' +
    'tr.tb3rhnb		{background-color:#ECECEC; text-align:center;}' +
    'tr.tb3r 		{border-collapse:collapse; border:1px solid silver; text-align:center;}' +
-   'tr.tb3rnb		{border-collapse:collapse; border:0px none white; text-align:center; white-space:nowrap;}' +
+   'tr.tb3rnb		{border-collapse:collapse; border:0px none white; text-align:center;}' +
    'tr.cbgx td, td.cbgx, th.cbgx {background-color:#FFFFC0; border-collapse:collapse; border:1px solid silver; padding:2px; text-align:center;}' +
    'td.tb3chbb		{border:1px solid silver; background-color:#ECECEC; padding:2px; font-weight:bold; font-size:10pt;}' +
    'td.tb3chb		{border:1px solid silver; background-color:#ECECEC; padding:2px; font-weight:bold;}' +
