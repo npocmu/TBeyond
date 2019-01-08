@@ -102,9 +102,10 @@ function loadPlayerInfo()
 
       setRace(race);
 
-      if ( TBU_RACE === '' && bFirstTry ) 
+      if ( TBU_RACE === '' && bFirstTry && !TB3O.ServerInfo.features.path_to_pandora ) 
       {
          getRaceFromBarracks();
+         bResult = false;
       }
    }
 
@@ -112,12 +113,7 @@ function loadPlayerInfo()
    // for first run just shedule required ajax requests and stop normal execution
    if ( TBU_NAME === '' || TBU_RACE_LOCAL === '' || TBU_CAPITAL_NAME === '' || TBU_CAPITAL_MAPID === '' || TBU_CAPITAL_XY === '' ) 
    {
-      ajaxLoadDocument(spLnk, 
-         function (xhr_doc)
-         {
-            getCommonPlayerProfileInfo(xhr_doc);
-         }
-      );
+      ajaxLoadDocument(spLnk, getCommonPlayerProfileInfo);
       bResult = false;
    }
 
