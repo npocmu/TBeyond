@@ -9,7 +9,7 @@ function getCommonPlayerProfileInfo(aDoc)
          var aVal = $nth_tag(aSpan.parentNode,'a',0);
          if ( aVal )
          {
-            saveCapitalInfo(parseUri(aVal.href).queryKey.d, aVal.textContent);
+            saveCapitalInfo(parseUri(aVal.getAttribute('href')).queryKey.d, aVal.textContent);
             return;
          }
       }

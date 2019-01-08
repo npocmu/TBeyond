@@ -60,7 +60,7 @@ function parsePlayerProfileVillagesTable(uTb)
       vLnk = __TEST__($qf("td.name a",'f',aRow));
       if ( vLnk )
       {
-         mapId = parseInt10(parseUri(vLnk.href).queryKey.d);
+         mapId = parseInt10(parseUri(vLnk.getAttribute('href')).queryKey.d);
          vName = vLnk.textContent;
       }
 

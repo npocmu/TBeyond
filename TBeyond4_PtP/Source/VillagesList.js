@@ -76,7 +76,7 @@ function parseCoords(str)
    getCoord(parseCoords.re.exec(str));
    getCoord(parseCoords.re.exec(str));
 
-   __ASSERT__( isIntValid(x) && isIntValid(y), "Can't detect village coords from string " + str)
+   __ASSERT__( isIntValid(x) && isIntValid(y), "Can't detect village coords from string '" + str + "'")
 
    return [x,y];
 }
