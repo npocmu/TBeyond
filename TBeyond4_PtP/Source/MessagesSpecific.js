@@ -45,7 +45,7 @@ function uiAddKeyboardNavigation()
       {
          if ( hasClass(navLinks.snapshotItem(i), cls) ) 
          {
-            location.href = navLinks.snapshotItem(i).href;
+            location.href = navLinks.snapshotItem(i).getAttribute("href");
             break;
          }
       }

@@ -18,7 +18,7 @@ function getMemberTitles(aTb)
          var uLink = $nth_tag(aTb.rows[i].cells[1],"a",0);
          if ( uLink )
          {
-            uid = parseUri(uLink.href).queryKey.uid;
+            uid = parseUri(uLink.getAttribute("href")).queryKey.uid;
          }
          if ( post && uid )
          {
@@ -52,7 +52,7 @@ function uiModifyAllianceMembersTable(aTb, memberTitles)
          var uLink = $nth_tag(cells[COL_PNAME],"a");
          if ( uLink )
          {
-            var uid = parseUri(uLink.href).queryKey.uid;
+            var uid = parseUri(uLink.getAttribute("href")).queryKey.uid;
             if ( TB3O.UserID == uid )
             {
                addClass(aTb.rows[i],"hl");

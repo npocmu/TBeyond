@@ -196,10 +196,10 @@ function getMerchantsUnderwayGroup(MUInfo, villageInfo, aDoc, aGroupHeader, bInc
          //this is a table for incoming/outgoing/returning merchants
          var userLink = $nth_tag(aRows[0].cells[0],"a");
          var userName = userLink.textContent;
-         var userId = parseUri(userLink.href).queryKey.uid;
+         var userId = parseUri(userLink.getAttribute("href")).queryKey.uid;
 
          var pointLink = $nth_tag(aRows[0].cells[1],"a");
-         var point = parseUri(pointLink.href).queryKey.d;
+         var point = parseUri(pointLink.getAttribute("href")).queryKey.d;
 
          var timerNode = $nth_tag(aRows[1].cells[1],"span");
          var timeSpan = toSeconds(timerNode.textContent);

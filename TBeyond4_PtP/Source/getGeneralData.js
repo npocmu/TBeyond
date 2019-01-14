@@ -93,7 +93,7 @@ function detectTravianVersion()
       for ( i = 0; i < extLinks.length; i++ )
       {
          aLink = extLinks[i];
-         if ( aLink.rel === "stylesheet" && aLink.href.search(/gpack\/.*_([a-zA-Z]+)\/lang/) !== -1 )
+         if ( aLink.rel === "stylesheet" && aLink.getAttribute("href").search(/gpack\/.*_([a-zA-Z]+)\/lang/) !== -1 )
          {
             mod = RegExp.$1;
             break;

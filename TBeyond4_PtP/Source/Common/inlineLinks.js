@@ -153,7 +153,7 @@ function uiModifyLinks(parent, options)
          aLink = aL[i];
 
          if ( hasClass(aLink,"tbInject") ) { continue; }
-         url = parseUri(aLink.href);
+         url = parseUri(aLink.getAttribute("href"));
 
          // a player link
          if ( url.path === "/spieler.php" )

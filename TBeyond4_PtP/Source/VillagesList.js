@@ -111,7 +111,7 @@ function getVillagesList()
          var vLinkNode = __TEST__($nth_tag(vEntryNode,"a"));
          if ( vLinkNode )
          {
-            var vLink = vLinkNode.href;
+            var vLink = vLinkNode.getAttribute("href");
             var vUrl = parseUri(vLink);
             villageId = vUrl.queryKey.newdid;
 

@@ -31,7 +31,7 @@ function scanOuterBuildings(aDoc,vType)
             if ( reRes.exec(aNode.alt) )
             {
                crtLevel = parseInt10(RegExp.$1);
-               id = parseInt10(parseUri(aNode.href).queryKey.id);
+               id = parseInt10(parseUri(aNode.getAttribute("href")).queryKey.id);
                if ( isIntValid(id) )
                {
                   gid = dist[id - 1];

@@ -54,7 +54,7 @@ function parseTroopDetails(troopDetailsTb, aDoc, ttServer, oasisMapId, bKeepId)
       node = $nth_tag(troopDetailsTb.rows[0].cells[0],"a");
       if ( node )
       {
-         url = parseUri(node.href);
+         url = parseUri(node.getAttribute("href"));
          if ( url.queryKey.hasOwnProperty("d") )
          {
             hostMapId = parseInt10(url.queryKey.d);
@@ -65,7 +65,7 @@ function parseTroopDetails(troopDetailsTb, aDoc, ttServer, oasisMapId, bKeepId)
       node = $xf(".//a[not(" + $xClass('markAttack') + ")]", 'f', troopDetailsTb.rows[0].cells[1], aDoc);
       if ( node )
       {
-         url = parseUri(node.href);
+         url = parseUri(node.getAttribute("href"));
          if ( url.queryKey.hasOwnProperty("d") )
          {
             targetMapId = parseInt10(url.queryKey.d);
@@ -116,7 +116,7 @@ function parseTroopDetails(troopDetailsTb, aDoc, ttServer, oasisMapId, bKeepId)
       node = $xf(".//div[@class='sback']/a", 'f', troopDetailsTb, aDoc);
       if ( node )
       {
-         backhref = node.href;
+         backhref = node.getAttribute("href");
       }
 
       if ( grcmd[0] === undefined ) 
@@ -172,7 +172,7 @@ function scanRallyPointInfo(rallyPointInfo, groupNo, villageId, aDoc, ttServer, 
             node = $nth_tag(node,"a");
             if ( node )
             {
-               var url = parseUri(node.href);
+               var url = parseUri(node.getAttribute("href"));
                if ( url.queryKey.hasOwnProperty("d") )
                {
                   oasisMapId = parseInt10(url.queryKey.d);

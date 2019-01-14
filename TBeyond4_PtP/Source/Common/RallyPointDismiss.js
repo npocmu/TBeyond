@@ -193,7 +193,7 @@ function uiModifyRallyPointDismiss()
       var aLink = __TEST__($nth_tag(dismissTable.rows[0].cells[0],"a",0));
       if ( aLink )
       {
-         var mapId = __TEST__(parseUri(aLink.href).queryKey.d);
+         var mapId = __TEST__(parseUri(aLink.getAttribute("href")).queryKey.d);
          if ( mapId )
          {
             var tRace = TBU_RACE;

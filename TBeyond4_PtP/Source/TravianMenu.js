@@ -16,7 +16,7 @@ function __searchAndParseMenu(aDoc,cls)
       var goldItem = hasClass(aElem,"gold");
       if ( goldItem ) { ++goldItemsTotal; }
       var aLink = $nth_tag(aElem,"a");
-      var href = ( aLink ) ? aLink.href : ""; 
+      var href = ( aLink ) ? aLink.getAttribute("href") : ""; 
 
       var aSpan = $nth_tag(aElem,"span");
       if ( aSpan )

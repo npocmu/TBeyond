@@ -368,7 +368,7 @@ function getNewdidFromChild(aParent)
 
    if ( vLinkNodes.length )
    {
-      vNewdid = getNewdidFromLink(vLinkNodes[0].href);
+      vNewdid = getNewdidFromLink(vLinkNodes[0].getAttribute("href"));
    }
    return vNewdid;
 }

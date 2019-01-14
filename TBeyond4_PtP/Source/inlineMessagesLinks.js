@@ -39,7 +39,7 @@ function insertMsgRptPopupLink(aNode)
          }
       }
 
-      ajaxLoadDocument(aNode.href, uiCreateMsgRptPopup);
+      ajaxLoadDocument(aNode.getAttribute("href"), uiCreateMsgRptPopup);
    }
 
    function uiCreateMsgRptPopup(aDoc)

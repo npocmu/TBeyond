@@ -28,7 +28,7 @@ function getStatisticsMenu(aDoc)
          for ( i = 0; i < tM.snapshotLength; i++)
          {
             var aNode = tM.snapshotItem(i);
-            var url = parseUri(aNode.href);
+            var url = parseUri(aNode.getAttribute("href"));
             var arS = [aNode.text, url.relative];
             var im = ( url.queryKey.id === undefined ) ? 1 : parseInt10(url.queryKey.id);
             statMenu[im] = arS;
