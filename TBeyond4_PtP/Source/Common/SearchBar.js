@@ -1,14 +1,26 @@
 /////////////////////////////////////////////////////////////////////
-function setDefaultStatisticsMenu()
+function getDefaultStatisticsMenu()
 {
    var statMenu = 
    { 
-      1: ["Players",""],
-      2: ["Villages",""],
-      4: ["Alliances",""],
+      0: "Players",
+      1: "Alliances",
+      2: "Villages",
+      3: "Heroes",
    };
 
-   setGMcookieV2('statistics', statMenu); 
+   if ( TB3O.ServerInfo.features.path_to_pandora )
+   {
+      statMenu[7] = 'Regions';
+   }
+
+   return statMenu;
+}
+
+/////////////////////////////////////////////////////////////////////
+function setDefaultStatisticsMenu()
+{
+   savePersistentUserObject('statistics', getDefaultStatisticsMenu());
 }
 
 /////////////////////////////////////////////////////////////////////
@@ -18,8 +30,9 @@ function uiCreateSearchBarWidget()
 
    if ( TBO_SHOW_SEARCHBAR === "1" )
    {
-      var sbc = getGMcookieV2('statistics');
-      if ( sbc && sbc[1] )
+      var sbc = loadPersistentUserObject('statistics', getDefaultStatisticsMenu());
+      
+      if ( Object.getOwnPropertyNames(sbc).length > 0 )
       {
          var aForm = uiCreateSearchForm(sbc);
          if ( aForm )
@@ -35,7 +48,7 @@ function uiCreateSearchBarWidget()
             else }})
             {
                var xy = TBO_SEARCHBAR_XY.split("|");
-               $df(300, xy[0], xy[1], "?", "searchbar", "searchbarTT", true, aForm);
+               $df(230, xy[0], xy[1], "?", "searchbar", "searchbarTT", true, aForm);
                if ( TBO_SEARCHBAR_STATE !== "1" ) { aForm.style.display = 'none'; }
             }
          }
@@ -48,35 +61,11 @@ function uiCreateSearchBarWidget()
 /////////////////////////////////////////////////////////////////////
 function uiCreateSearchForm(sbc)
 {
-   var aSF = $e("form", [['id', 'searchform'], 
-                         ['action', 'statistiken.php?id=' + TBO_SEARCHBAR_TYPE], 
-                         ['method', 'POST']]);
-   var i1 = $e("input", [['id', 'searchopt'], ['type', 'hidden'], ['value', TBO_SEARCHBAR_TYPE]]);
-   var i2 = $e("input", [['type', 'text'], ['maxlength', '20'], ['size', '10'], ['value', '']]);
-   var i3 = $e("input", [['type', 'submit'], ['name', 'submit'], ['value', '?']]);
-
-   i2.name = 'name';
-   i2.className = 'text name';
-
-   var s1 = $e("select", [['id', 'searchtype']]);
-   addOption(s1,sbc,1);
-   addOption(s1,sbc,2);
-   addOption(s1,sbc,4);
-   addOption(s1,sbc,31);
-   addOption(s1,sbc,32);
-   IF_TB3({{ if ( TB3O.T35 ) }}) { addOption(s1,sbc,8); } 
-   s1.addEventListener('change', setSearchBarOption, false);
-   aSF.appendChild(i1);
-   aSF.appendChild(i2);
-   aSF.appendChild(s1);
-   aSF.appendChild(i3);
-   return aSF;
-
-   function addOption(sel,sbc,id)
+   function addOption(sel, sbc, id)
    {
       if ( sbc[id] )
       {
-         sel.add(new Option(sbc[id][0], id, false, (id === parseInt10(TBO_SEARCHBAR_TYPE))),null);
+         sel.add(new Option(sbc[id], id, false, (id === parseInt10(TBO_SEARCHBAR_TYPE))), null);
       }
    }
 
@@ -90,4 +79,25 @@ function uiCreateSearchForm(sbc)
       var aSF = $g("searchform");
       if ( aSF ) { aSF.action = 'statistiken.php?id=' + searchType; }
    }
+
+   var aSF = $e("form", [['id', 'searchform'], 
+                         ['action', 'statistiken.php?id=' + TBO_SEARCHBAR_TYPE], 
+                         ['method', 'POST']]);
+   var i1 = $e("input", [['id', 'searchopt'], ['type', 'hidden'], ['value', TBO_SEARCHBAR_TYPE]]);
+   var i2 = $e("input", [['type', 'text'], ['name', 'name'], ['class','text name'], ['maxlength', '20'], ['size', '10'], ['value', '']]);
+   var i3 = $e("input", [['type', 'submit'], ['name', 'submit'], ['value', '?']]);
+   var s1 = $e("select", [['id', 'searchtype'], ['change', setSearchBarOption, false]]);
+
+   addOption(s1, sbc, 0);
+   addOption(s1, sbc, 1);
+   addOption(s1, sbc, 2);
+   addOption(s1, sbc, 3);
+   addOption(s1, sbc, 7);
+
+   aSF.appendChild(i1);
+   aSF.appendChild(i2);
+   aSF.appendChild(s1);
+   aSF.appendChild(i3);
+
+   return aSF;
 }
