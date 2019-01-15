@@ -231,7 +231,7 @@ function VillagesList2()
       show_bip_att:               TBO_SHOW_BIP_ATT_VL2 === "1",
       show_send_troops_resources: TBO_SHOW_SEND_TROOPS_RESOURCES_VL2 === "1",
       show_distance:              TBO_SHOW_DISTANCE_VL2 === "1" &&
-                                  ( isSomeOf(TB3O.pageSelector, "map","position_details","market_send","market_routes_edit","rally_point_send") )
+                                  ( isSomeOf(TB3O.pageSelector, "map","position_details","market_send","market_routes_edit","rally_point_send","rally_point_send_foreign") )
    };
 
    this.maxVCols = parseInt10(TBO_COLUMNS_VL2) + 1;

@@ -181,9 +181,18 @@ function doPage()
                                                                               "99","rally_point_club", "");
                      if ( TB3O.pageSelector === "rally_point_send" )
                      {
+                        if ( crtUrl.queryKey.hasOwnProperty("f") ) 
+                        { 
+                           TB3O.pageSelector = "rally_point_send_foreign";
+                        }
+
                         if ( crtUrl.queryKey.hasOwnProperty("d") ) 
                         { 
                            TB3O.pageSelector = "rally_point_dismiss";
+                        }
+                        else if ( crtUrl.queryKey.hasOwnProperty("m") ) 
+                        { 
+                           TB3O.pageSelector = "rally_point_integrate";
                         }
                         // Rally point send/confirm has same url.
                         // We may distinguish between them only by content.
@@ -351,7 +360,9 @@ function doPage()
             uiModifyRallyPointOverview()
             break;
 
-         case "rally_point_send":         uiModifyRallyPointSend();        break;
+         case "rally_point_send":         
+         case "rally_point_send_foreign": uiModifyRallyPointSend();        break;
+
          case "rally_point_send_confirm": uiModifyRallyPointSendConfirm(); break;
          case "rally_point_dismiss":      uiModifyRallyPointDismiss();     break;
       }

@@ -356,8 +356,12 @@ function uiModifyRallyPointSend()
       var aTb = $t([["class", "tb3tbnb tbSendTroopsMenu"]]);
       insertBefore(sendContainer, aTb); // add to DOM very first for uiAddBuiltinUpDownControl
       uiAddSelectAllLink(aTb);
-      uiAddSelectScoutLink(aTb);
-      uiAddSelectFakeLink(aTb);
+
+      if ( TB3O.pageSelector === "rally_point_send" )
+      {
+         uiAddSelectScoutLink(aTb);
+         uiAddSelectFakeLink(aTb);
+      }
    }
 
    //-------------------------------------------------------------
