@@ -120,6 +120,7 @@ function insertAttSendResLinks(strType, aNode, mapId)
 //    add_send_res, 
 //    add_center_map,
 //    add_coord_dist_tip
+//    add_report_popup (true by default)
 // }
 function uiModifyLinks(parent, options)
 {
@@ -132,6 +133,7 @@ function uiModifyLinks(parent, options)
    var bAddCoordAndDistTT  = (options.add_coord_dist_tip === undefined) ?  ( TBO_SHOW_DIST_TOOLTIPS === '1' ) : !!options.add_coord_dist_tip;
    var bAddCenterMapLinks  = !!options.add_center_map;
    var bAddAttSendResLinksForCenterMapLink = ( TBO_SHOW_SEND_TROOPS_RESOURCES === '1' ) && !!options.add_send_troops2;
+   var bAddReportPopup =  (options.add_report_popup === undefined) ? true : !!options.add_report_popup;
    var bIsRallyPoint = ( TB3O.pageSelector === "rally_point_overview" );
 
    __ENTER__
@@ -231,13 +233,24 @@ function uiModifyLinks(parent, options)
             }
          }
          //a message link (ignore IGM links)
-         else if ( (url.path === "/messages.php" && (url.queryKey.t === undefined || url.queryKey.t === "0" || url.queryKey.t === "2") ) || 
-                   (url.path === "/berichte.php") ) 
+         else if ( url.path === "/messages.php" && (url.queryKey.t === undefined || url.queryKey.t === "0" || url.queryKey.t === "2") )
          {
             if ( TBO_SHOW_MES_OPEN_LINKS === "1" && url.queryKey.id !== undefined && 
                                                     url.queryKey.toggleState === undefined )
             {
-               if ( aLink.textContent !== '' ) // avoid aditional link for icons
+               if ( trimWhitespaces(aLink.textContent) !== '' ) // avoid aditional link for icons
+               {
+                  insertMsgRptPopupLink(aLink);
+               }
+            }
+         }
+         //a report link
+         else if ( url.path === "/berichte.php" ) 
+         {
+            if ( TBO_SHOW_MES_OPEN_LINKS === "1" && url.queryKey.id !== undefined && 
+                                                    url.queryKey.toggleState === undefined )
+            {
+               if ( bAddReportPopup && !hasClass(aLink,"reportQuickNavigation") && trimWhitespaces(aLink.textContent) !== '' ) // avoid aditional link for icons
                {
                   insertMsgRptPopupLink(aLink);
                }

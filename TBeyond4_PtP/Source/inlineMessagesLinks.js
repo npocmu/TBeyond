@@ -77,7 +77,13 @@ function insertMsgRptPopupLink(aNode)
          //process message
          uiModifyMessage(true);
          uiModifyReport(true);
-         uiModifyLinks(msgNode,{ add_send_troops2:true } );
+
+         var options = { add_send_troops2:true };
+         if ( msgNode.className === "reports")
+         {
+            options.add_report_popup = false;
+         }
+         uiModifyLinks(msgNode ,options);
          if ( TBO_SHOW_TROOP_INFO_TOOLTIPS === "1" ) { uiAddTroopInfoTooltips(msgNode); }
       }
       __EXIT__
