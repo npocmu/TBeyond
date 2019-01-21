@@ -88,8 +88,6 @@ function insertAllyLinks(aNode, aid, strName)
 /////////////////////////////////////////////////////////////////////
 function insertUserLinks(aNode, uid, strName)
 {
-   if ( uid > 0 && TB3O.UserID != uid &&
-        TBO_SHOW_TRADE_BALANCE_LINKS === "1" ) { insertTradeBalanceLink(aNode, uid); }
    if ( uid > 0 && TBO_SHOW_MAP_USER_LINKS === "1" ) { insertMapLink(aNode, "user", uid, strName); }
    if ( uid > 0 && TBO_SHOW_STAT_LINKS === "1" ) { insertWALink(aNode, "user", uid); }
    if ( uid !== 1 && 

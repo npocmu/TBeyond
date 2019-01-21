@@ -264,7 +264,6 @@ t['CROPFINDER'] = "Crop finder";
 t['CROPFINDER.TT'] = "Search for crop";
 t['ERRUPDATE'] = "Script update failed!";
 t['TRADEBAL.TT'] = "Get a trade balance for this player";
-t['100'] = "Show links to get trade balance for players";
 t['101'] = "Color upgrade not possible (not enough capacity of granaries/warehouses)<br>(Default = Empty)";
 t['102'] = "Show number of resource fields in 'Resource Bar'";
 t['RESNEED'] = "Need for normal extension:";
