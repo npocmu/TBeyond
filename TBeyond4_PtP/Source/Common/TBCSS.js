@@ -100,6 +100,7 @@ IF_TB3({{
    'table#userbookmarks td {border:0px none transparent; background-color:' + TB3O.DFc[1] + '; text-align:' + docDir[0] + '; font-size:13px; font-weight:normal; color:black; padding:2px; vertical-align:middle;}' +
    'table#userbookmarks td.noact {width:10px;}' +
    'table#userbookmarks td.act {width:10px; color:#FF8000;}' +
+   'table#userbookmarks td.tb3sep hr {width:100%; color:darkgrey; margin:2px 0px;}' +
    'table#userbookmarks img {cursor:pointer;}' +
    'table#userbookmarks span {padding:0 0 0 4px;}' +
 
@@ -361,6 +362,7 @@ IF_TB3({{
    'table.tbTrainingSummary td.desc img {margin-' + docDir[0] + ':5px;}' +
    }})
 
+   // setup dialog
    'table#TB3S {width:801px; border-collapse:collapse; border:1px solid silver; IF_TB3(font-size:8pt; )text-align:center; background-color:' + TB3O.DFc[1] + '; padding:2px; }' +
    'table#TB3S tr.srh {background-color:#ECECEC; text-align:center; border:1px solid silver;}' +
    'table#TB3S td {border:1px solid silver; background-color:transparent; padding:2px; border-collapse:collapse; text-align:' + docDir[0] + ';IF_TB3(font-size:8pt;)}' +

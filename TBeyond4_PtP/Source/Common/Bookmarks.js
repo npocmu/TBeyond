@@ -1,7 +1,57 @@
+//////////////////////////////////////////////////////////////////////
 //Bookmarks on the right side
 function showUserBookmarks()
 {
+   //-----------------------------------------------------------------
+   function Bookmarks()
+   {
+      this._ = [];
+   }
+
+   //-----------------------------------------------------------------
+   Bookmarks.prototype.remove = function remove(idx) 
+   {
+      this._.splice(idx,1);
+
+      return this;
+   };
+
+   //-----------------------------------------------------------------
+   Bookmarks.prototype.swap = function swap(idx1, idx2) 
+   {
+      var tmp = this._[idx2];
+      this._[idx2] = this._[idx1];
+      this._[idx1] = tmp;
+
+      return this;
+   };
+
+   //-----------------------------------------------------------------
+   Bookmarks.prototype.load = function load() 
+   {
+      //bookmarks string
+      var strBM = loadPersistentUserValue("marcadores", "");
+
+      if ( strBM !== "" )
+      {
+         var i, records = strBM.split("$$");
+         for (var i = 0; i < records.length; i++)
+         { 
+            this._[i] = records[i].split("$");
+         }
+      }
+   };
+
+   //-----------------------------------------------------------------
+   Bookmarks.prototype.save = function save() 
+   {
+      var strBM = this._.map(function f(rec) { return rec.join("$"); }).join("$$");
+      savePersistentUserValue("marcadores", strBM);
+   };
+
+   //-----------------------------------------------------------------
    var aTb, parBM, ubXY;
+   var bookmarks = new Bookmarks();
 
    __ENTER__
 
@@ -9,6 +59,9 @@ function showUserBookmarks()
    {
        removeElement($g("userbookmarksTT"));
        removeElement($g("userbookmarks"));
+
+       bookmarks.load();
+       //__DUMP__(bookmarks)
 
        aTb = uiCreateUserBookmarksTable();
        uiModifyLinks(aTb, { add_send_troops2:true });
@@ -36,98 +89,121 @@ function showUserBookmarks()
    ///////////////////////////////////////////////////////////////////
    function uiCreateUserBookmarksTable()
    {
-      var aTb = $t([['id', 'userbookmarks']]);
-      //header row
-      var uHr = $r();
-      uHr.appendChild(uiCreateUserBookmarksHeader());
-      aTb.appendChild(uHr);
-      //bookmarks string
-      var strBM = getGMcookie("marcadores", false);
-      if (strBM == "false")
-      {
-         setGMcookie("marcadores", '', false);
-         strBM = '';
-      }
+      var aTb = $t([['id', 'userbookmarks']], $r(uiCreateUserBookmarksHeader()));
 
-      if (strBM != '')
+      for (var i = 0; i < bookmarks._.length; i++)
       {
-         marcadores = new Array();
-         strBM = strBM.split("$$");
-         for (var i = 0; i < strBM.length; i++) marcadores[i] = strBM[i].split("$");
-         for (var i = 0; i < marcadores.length; i++)
+         var aC, iL;
+         var bmRow = $r();
+         var strBookmark = bookmarks._[i][0];
+         var lnkBookmark = bookmarks._[i][1];
+
+         var bIsSeparator = ( !isStrValid(lnkBookmark) || lnkBookmark === "#" );
+
+         if ( TBO_LOCK_BOOKMARKS !== "1" )
          {
-            bmRow = $r();
-            strBookmark = marcadores[i][0];
-            if ( TBO_LOCK_BOOKMARKS != "1")
+            aC = $td(uiCreateTool("del", null, bind(deleteUserBookmark,[i])));
+            bmRow.appendChild(aC);
+
+            aC = $td();
+            if ( i > 0 )
             {
-               var aDel = $a(gIc["del"], [['href', jsVoid]]);
-               aDel.addEventListener("click", removeGMcookieValue("marcadores", i, false, showUserBookmarks, false), 0);
-               aC = $td();
-               aC.appendChild(aDel);
-               bmRow.appendChild(aC);
-
-               bmRow.appendChild($td("&nbsp;"));
-
-               upC = $td();
-               if (i > 0)
-               {
-                  aUp = $a("", [['href', jsVoid]]);
-                  aUp.appendChild($img([['src', image["aup"]]]));
-                  aUp.addEventListener("click", moveUserBookmark(i, -1), false);
-                  upC.appendChild(aUp);
-               }
-               bmRow.appendChild(upC);
-
-               downC = $td();
-               if (i < marcadores.length - 1)
-               {
-                  var aDown = $a("", [['href', jsVoid]]);
-                  aDown.appendChild($img([['src', image["adn"]]]));
-                  aDown.addEventListener("click", moveUserBookmark(i, 1), false);
-                  downC.appendChild(aDown);
-               }
-               bmRow.appendChild(downC);
-
-               bmRow.appendChild($td("&nbsp;"));
-               eC = $td();
-               aEdit = $a("", [['href', jsVoid]]);
-               aEdit.appendChild($img([['src', image["editbookmark"]], ['title', T('EDIT')]]));
-               aEdit.addEventListener("click", editUserBookmark(i), false);
-               eC.appendChild(aEdit);
-               bmRow.appendChild(eC);
-               bmRow.appendChild($td("&nbsp;"));
+               var aUp = uiCreateTool("aup", null, bind(moveUserBookmark,[i,-1]));
+               aC.appendChild(aUp);
             }
-            else
+            bmRow.appendChild(aC);
+
+            aC = $td();
+            if ( i < bookmarks._.length - 1 )
             {
-               aCl = 'noact';
-               if (marcadores[i][1] == crtPage) aCl = 'act';
-               var aC = $td([['class', aCl]], "<span>&#8226;&nbsp;&nbsp;</span>");
-               bmRow.appendChild(aC);
+               var aDown = uiCreateTool("adn", null, bind(moveUserBookmark,[i,1]));
+               aC.appendChild(aDown);
             }
-            //fr3nchlover
-            if (marcadores[i][1].indexOf("*") != -1)
+            bmRow.appendChild(aC);
+
+            aC = $td(uiCreateTool("editbookmark", ['title', T('EDIT')], bind(editUserBookmark,[i])));
+            bmRow.appendChild(aC);
+         }
+         else if ( !bIsSeparator )
+         {
+            aC = $td([['class', ( lnkBookmark === crtPage) ? 'act' : 'noact']], $span("&#8226"));
+            bmRow.appendChild(aC);
+         }
+         
+         aC = $td();
+         if ( bIsSeparator )
+         {
+            $at(aC, [['colspan','2'],['class','tb3sep']]);
+            iL = $e("hr");
+         }
+         else
+         {
+            if ( lnkBookmark.indexOf("*") !== -1 )
             {
-               iL = $a(strBookmark + " ", [['href', marcadores[i][1].substring(0, marcadores[i][1].length - 1)], ['target', '_blank']]);
+               iL = $lnk([['href', lnkBookmark.substring(0, lnkBookmark.length - 1)], 
+                          ['target', '_blank']], strBookmark + " ");
                iL.appendChild($img([['src', image["external"]]]));
             }
             else
             {
-               iL = $a(strBookmark);
-               if (marcadores[i][1] != "#") $at(iL, [['href', marcadores[i][1].substring(0, marcadores[i][1].length)]]);
+               iL = $lnk(['href', lnkBookmark], strBookmark);
             }
-            bmC = $td(iL);
-            bmRow.appendChild(bmC);
-            aTb.appendChild(bmRow);
          }
+
+         aC.appendChild(iL);
+         bmRow.appendChild(aC);
+         aTb.appendChild(bmRow);
       }
       return aTb;
+
+      ////////////////////////////////////////////////////////////////
+      function deleteUserBookmark(idx)
+      {
+         bookmarks.remove(idx);
+         bookmarks.save();
+         showUserBookmarks();
+      }
+
+      ////////////////////////////////////////////////////////////////
+      function moveUserBookmark(idx, updown)
+      {
+         bookmarks.swap(idx, idx + updown);
+         bookmarks.save();
+         showUserBookmarks();
+      }
+
+      ////////////////////////////////////////////////////////////////
+      function editUserBookmark(idx)
+      {
+         var oldLabel = bookmarks._[idx][0];
+         var oldURL   = bookmarks._[idx][1];
+
+         var ubLabel = prompt(T('UBT'), oldLabel);
+         if ( isStrValid(ubLabel) )
+         {
+
+            var ubURL = prompt(T('UBU'), oldURL);
+            if ( !isStrValid(ubURL) )
+            {
+               ubURL = oldURL;
+            }
+
+            if ( ubLabel !== oldLabel || ubURL !== oldURL )
+            {
+               bookmarks._[idx] = [ubLabel, ubURL];
+               bookmarks.save();
+               showUserBookmarks();
+            }
+         }
+      }
 
       ////////////////////////////////////////////////////////////////
       function uiCreateUserBookmarksHeader()
       {
          var hText = $e("B", T('MARCADORES') + ':&nbsp;&nbsp;');
-         var dI = (TB3O.O[82] != "1" ? ["unlocked" + docDir[0].substring(0, 1), '82.L', "1", '8'] : 
-                                       ["locked", '82.U', "0", '2']);
+         var dI = (TBO_LOCK_BOOKMARKS != "1" ) ? 
+                     ["unlocked" + docDir[0].substring(0, 1), '82.L', "1", '8'] : 
+                     ["locked",                               '82.U', "0", '2'];
          var toolbar = uiToolbar_Create(null,
                        [
                           uiCreateTool("addbookmark",  T('ANYADIR'),   onAddBookmark),
@@ -156,75 +232,34 @@ function showUserBookmarks()
          /////////////////////////////////////////////////////////////
          function onSeparator() 
          {
-            addGMcookieValue("marcadores", ["<hr size='2' width='100%' noshade color=darkgrey>", "#"], false);
+            bookmarks._.push(["#", "#"]);
+            bookmarks.save();
             showUserBookmarks();
          }
 
          /////////////////////////////////////////////////////////////
          function onLockUnlock() 
          {
-            TB3O.O[82] = dI[2];
+            TBO_LOCK_BOOKMARKS = dI[2];
             saveTBOptions();
             showUserBookmarks();
          }
       }
    }
 
+   //-----------------------------------------------------------------
    function addUserBookmark(ubURL)
    {
-      if (!ubURL)
+      if ( !ubURL )
       {
          ubURL = prompt(T('UBU'), TB3O.crtBrT);
-         if (!ubURL || ubURL == '') return;
+         if ( !isStrValid(ubURL) ) return;
       }
       var ubL = prompt(T('UBT'), TB3O.crtBrT);
-      if (!ubL || ubL == '') return;
-      addGMcookieValue("marcadores", [ubL, ubURL], false);
+      if ( !isStrValid(ubL) ) return;
+
+      bookmarks._.push([ubL, ubURL]);
+      bookmarks.save();
       showUserBookmarks();
-      ubL = null;
-   }
-
-   function moveUserBookmark(i, updown)
-   {
-      return function ()
-      {
-         var ubC = getGMcookie("marcadores", false);
-         var arrUbC = ubC.split("$$");
-         var tmpUb = arrUbC[i + updown];
-         arrUbC[i + updown] = arrUbC[i];
-         arrUbC[i] = tmpUb;
-         ubC = arrUbC.join("$$");
-         setGMcookie("marcadores", ubC, false);
-         showUserBookmarks();
-         ubC = null;
-         arrUbC = null;
-         tmpUb = null;
-      }
-   }
-
-   function editUserBookmark(i)
-   {
-      return function ()
-      {
-         var ubC = getGMcookie("marcadores", false);
-         var arrUbC = ubC.split("$$");
-         var tmpUb = arrUbC[i].split("$");
-         var ubLabel = prompt(T('UBT'), tmpUb[0]);
-         var ubURL = null;
-         if (ubLabel != '') ubURL = prompt(T('UBU'), tmpUb[1]);
-         if (!ubLabel) ubLabel = tmpUb[0];
-         if (!ubURL) ubURL = tmpUb[1];
-         if (ubLabel != '' && ubURL != '' && (ubLabel != tmpUb[0] || ubURL != tmpUb[1]))
-         {
-            arrUbC[i] = ubLabel + "$" + ubURL;
-            ubC = arrUbC.join("$$");
-            setGMcookie("marcadores", ubC, false);
-            showUserBookmarks();
-         }
-         ubC = null;
-         arrUbC = null;
-         utLabel = null;
-         ubURL = null;
-      }
    }
 }

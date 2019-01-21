@@ -60,7 +60,7 @@ aTBS[i] - array about dialog table row with given index
 aTBS[i][0] - type of record:
   1 - section header row descriptor, array[5]
       [0] - always 1 
-      [1] - text label name 
+      [1] - text label name (in uppercase)
       [2] - header type
             "TR" - ordinary header row 
             "RD" - header row with checkbox that open/hide subsection with settings
@@ -68,10 +68,11 @@ aTBS[i][0] - type of record:
       [4] - unused for "TR" type, setup setting descriptor if row type is "RD" 
   2 - setup setting descriptor, array[5]
       [0] - always 2 
-      [1] - setting name / text label name  (in uppercase)
+      [1] - text label name  (in uppercase)
       [2] - control type ("CB" - checkbox, "T" - input text, "SEL" - select, "SP" - read only text)
       [3] - array of available options when the control type is the select control or null 
-      [4] - setting index for options from TB3O.O/TB3O.U or -1 for others
+      [4] - if number then setting index for options from TB3O.O/TB3O.U or -1 for others
+            if string then setting name for loadPersistentUserObject/savePersistentUserObject
 ------------------------------------------------------------M4_ECHO_ON
 
    //TB3 Setup parameters
@@ -79,22 +80,22 @@ aTBS[i][0] - type of record:
    [
          [1, "0", "TR", "", -1],
              [2, "0", "SEL", arAvLang, 0],
-         [1, "accinfo", "TR", "SH1", -1],
+         [1, "ACCINFO", "TR", "SH1", -1],
              [2, "U.3", "SP", "", 3],
              [2, "U.6", "SP", "", 6],
              [2, "U.2", "SP", "", 2],
-IF_TB3({{[1, "bic", "TR", "", -1],}})
+IF_TB3({{[1, "BIC", "TR", "", -1],}})
     IF_TB3({{[2, "4", "CB", "", 4],}})
     IF_TB3({{[2, "5", "CB", "", 5],}})
     IF_TB3({{[2, "6", "CB", "", 6],}})
     IF_TB3({{[2, "7", "CB", "", 7],}})
     IF_TB3({{[2, "alfl", "T", "", -1],}})
-IF_TB3({{[1, "mnul", "TR", "", -1],}})
+IF_TB3({{[1, "MNUL", "TR", "", -1],}})
     IF_TB3({{[2, "9", "CB", "", 9],}})
     IF_TB3({{[2, "10", "SEL", [T('WSIMO1'), T('WSIMO2')], 10],}})
     IF_TB3({{[2, "11", "SEL", [], 11],}})
 IF_TB3({{// Main village list
-         [1, "vgl", "TR", "", -1],
+         [1, "VGL", "TR", "", -1],
              [2, "17", "CB", "", 17],
              [2, "114","CB", "", 115],
              [2, "15", "CB", "", 15],
@@ -106,7 +107,7 @@ IF_TB3({{// Main village list
              [2, "112","CB", "", 113],
              [2, "91", "CB", "", 91],}})
          // Additional village list
-         [1, "vgl2","RD", "", [2, "18", "CB", "", 18]],
+         [1, "VGL2","RD", "", [2, "18", "CB", "", 18]],
              [2, "117","SEL", ["1", "2", "3", "4"], 117],
              [2, "17", "CB", "", 110],
              [2, "114","CB", "", 114],
@@ -119,45 +120,40 @@ IF_TB3({{// Main village list
              [2, "112","CB", "", 112],
 //    IF_TB4({{[2, "91", "CB", "", 91],}})
          // Bookmarks section
-         [1, "marcadores", "RD", "", [2, IIF_TB3("20","21"), "CB", null, 20]],
-    IF_TB3({{[2, "21", "CB", "", 21],}})
-             [2, "marcadores", "T", "", -1],
+         [1, "MARCADORES", "RD", "", [2, "21", "CB", null, 20]],
+             [2, "MARCADORES", "T", "", "marcadores"],
          // Noteblock section
-         [1, "nbo", "RD", "",        [2, IIF_TB3("22","23"), "CB", null, 22]],
-    IF_TB3({{[2, "23", "CB", "", 23],}})
+         [1, "NBO", "RD", "",        [2, "23", "CB", null, 22]],
              [2, "24", "SEL", [T('NBSA'), T('NBSN'), T('NBSB')], 24],
              [2, "25", "SEL", [T('NBHK'), T('NBHAX')], 25],
          // Resource bar section
-         [1, "RBTT", "RD", "",       [2, IIF_TB3("39","40"), "CB", null, 39]],
-    IF_TB3({{[2, "40", "CB", "", 40],}})
+         [1, "RBTT", "RD", "",       [2, "40", "CB", null, 39]],
              [2,"102", "CB", "",102],
          // NPC Assistant section
-         [TB3O.bIsNPCAvailable ? 1: 0, "npco", "TR", "", -1],
+         [TB3O.bIsNPCAvailable ? 1: 0, "NPCO", "TR", "", -1],
              [TB3O.bIsNPCAvailable ? 2 : 0, "26", "CB", "", 26],
-         [1, "stat", "TR", "", -1],
+         [1, "STAT", "TR", "", -1],
              [2, "27", "SEL", [], 27],
              [2, "119","T",  "", 119],
              [2, "29", "SEL", [], 29],
-    IF_TB3({{[2, "100","CB", "", 100],}})
-             [2, "32", "CB", "", 32],
-    IF_TB3({{[2, "33", "CB", "", 33],}})
-         [1, "ttt", "TR", "", -1],
+             [2, "33", "CB", "", 32],
+         [1, "TTT", "TR", "", -1],
              [2, "53", "CB", "", 53],
              [2, "54", "CB", "", 54],
-         [1, "genlnk", "TR", "", -1],
+         [1, "GENLNK", "TR", "", -1],
              [2, "28", "CB", "", 28],
              [2, "30", "CB", "", 30],
              [2, "31", "CB", "", 31],
              [2, "85", "CB", "", 99],
-         [1, "upgtb", "TR", "", -1],
+         [1, "UPGTB", "TR", "", -1],
              [2, "34", "CB", "", 34],
              [2, "35", "CB", "", 35],
              [2, "36", "CB", "", 36],
              [TB3O.bIsNPCAvailable ? 2 : 0, "26", "CB", "", 103],
-         [1, "resf", "TR", "", -1],
+         [1, "RESF", "TR", "", -1],
              [2, "37", "CB", "", 37],
              [2, "38", "CB", "", 38],
-         [1, "vlc", "TR", "", -1],
+         [1, "VLC", "TR", "", -1],
              [2, "41", "CB", "", 41],
              [2, "42", "CB", "", 42],
              //[2, "43", "CB", "", 43],
@@ -169,7 +165,7 @@ IF_TB3({{// Main village list
              [2,  "46", "CB", "",  46],
     IF_TB3({{[2,  "47", "CB", "",  47],}})
     IF_TB3({{[2,  "48", "SEL", ["1", "2", "3", "4", "5"], 48],}})
-             [2, "VENTAS", "T", "", -1],
+             [2, "VENTAS", "T", "", "ventas"],
              [2,  "87", "CB", "",  87],
              [2, "120", "CB", "", 120],
          // rally point
@@ -316,30 +312,45 @@ IF_TB3({{// Main village list
    }
 
    //-------------------------------------------------------------
+   function getSettingValue(sn) 
+   {
+      var aValue = "";
+
+      if ( typeof(sn) === "number" )
+      { 
+         if ( sn !== -1 )
+         {
+            aValue = TB3O.O[sn];
+         }
+      } 
+      else if ( typeof(sn) === "string" )
+      {
+         aValue = loadPersistentUserValue(sn, "");
+      }
+      return aValue;
+   }
+
+   //-------------------------------------------------------------
+   function setSettingValue(name, value)
+   {
+      var aName = parseInt10(name);
+      if ( !isNaN(aName) ) 
+      {
+         TB3O.O[aName] = value;
+      }
+      else if ( typeof(name) === "string" )
+      {
+         savePersistentUserValue(name, value);
+      }
+   }
+
+   //-------------------------------------------------------------
    function createSettingControl(rd) 
    {
-      var aName, aValue, sVal, pS;
-    
-      if ( rd[4] !== -1 ) 
-      {
-         aName = rd[4].toString();
-         aValue = TB3O.O[rd[4]];
-      }
-      else 
-      {
-         aName = rd[1];
-         // !!!Temp
-         if ( aName === "ventas" )
-         {
-            aValue = loadPersistentUserValue("ventas", "");
-         }
-         else
-         {
-            aValue = getGMcookie(aName, false);
-         }
-      }
+      var pS;
 
-      sVal = (aValue !== "false") ? aValue : "";
+      var aName = rd[1];
+      var sVal = getSettingValue(rd[4]);
 
       switch ( rd[2] )
       {
@@ -367,7 +378,7 @@ IF_TB3({{// Main village list
             pS = $span(TB3O.U[rd[4]]);
             break;
       }
-      pS.name = aName;
+      pS.name = aName.toLowerCase();
 
       return pS;
    }
@@ -381,27 +392,6 @@ IF_TB3({{// Main village list
    //-------------------------------------------------------------
    function TB3SetupSave()
    {
-      function setSetting(name,value)
-      {
-         var aName = parseInt10(name);
-         if ( !isNaN(aName) ) 
-         {
-            TB3O.O[aName] = value;
-         }
-         else
-         {
-            // !!! Temp
-            if ( name === "ventas" )
-            {
-               savePersistentUserValue("ventas", value);
-            }
-            else
-            {
-               setGMcookie(name, value, false);
-            }
-         }
-      }
-
       var i;
       var crtValue;
       var setupTb = $g("TB3S");
@@ -409,7 +399,7 @@ IF_TB3({{// Main village list
       for ( i = 0; i < aS.length; i++ )
       {
          crtValue = aS[i].value;
-         setSetting(aS[i].name, crtValue === "" ? "0" : crtValue);
+         setSettingValue(aS[i].name, crtValue === "" ? "0" : crtValue);
       }
 
       aS = setupTb.getElementsByTagName("INPUT");
@@ -417,7 +407,7 @@ IF_TB3({{// Main village list
       {
          if ( aS[i].type === 'checkbox' ) { crtValue = (aS[i].checked ? '1' : '0'); }
          else { crtValue = aS[i].value; }
-         setSetting(aS[i].name, crtValue);
+         setSettingValue(aS[i].name, crtValue);
       }
       
       saveTBOptions();
