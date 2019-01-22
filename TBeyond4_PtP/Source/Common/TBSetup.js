@@ -179,27 +179,27 @@ IF_TB3({{// Main village list
              [2, "85", "CB", "", 85],
              [2, "86", "CB", "", 86],
          // map (only work on old style maps)
-         [1, "mapo", "TR", "", -1],
+         [1, "MAPO", "TR", "", -1],
              [2, "56", "CB", "", 56],
              [2, "118","CB", "",118],
              [2, "57", "CB", "", 57],
              [2, "58", "CB", "", 58],
          // Reports & Messages
-         [1, "mereo", "TR", "", -1],
+         [1, "MEREO", "TR", "", -1],
              //[2, "59", "SEL", ["1", "2", "3", "4", "5"], 59],
              [2, "60", "CB", "", 60],
              [2, "61", "CB", "", 61],
              [2, "62", "CB", "", 62],
              //[2, "63", "CB", "", 63],
              //[2, "64", "CB", "", 64],
-         [1, "colo", "TR", "SH2", -1],
+         [1, "COLO", "TR", "SH2", -1],
              [2,  "65", "T", "",  65],
              [2,  "66", "T", "",  66],
              [2,  "67", "T", "",  67],
              [2, "101", "T", "", 101],
              [2,  "68", "T", "",  68],
          M4_DEBUG({{
-         [1, "dbgo", "TR", "", -1],
+         [1, "DBGO", "TR", "", -1],
              [2, "69", "SEL", ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"], 69],
          }})
    ];
@@ -349,7 +349,6 @@ IF_TB3({{// Main village list
    {
       var pS;
 
-      var aName = rd[1];
       var sVal = getSettingValue(rd[4]);
 
       switch ( rd[2] )
@@ -378,7 +377,7 @@ IF_TB3({{// Main village list
             pS = $span(TB3O.U[rd[4]]);
             break;
       }
-      pS.name = aName.toLowerCase();
+      pS.name = String(rd[4]).toLowerCase();
 
       return pS;
    }
@@ -413,7 +412,7 @@ IF_TB3({{// Main village list
       saveTBOptions();
 
       var nbnotes = $g('noteblockcontent');
-      if ( nbnotes ) { setGMcookie('notas', nbnotes.value, false); }
+      if ( nbnotes ) { savePersistentUserValue("notas", nbnotes.value); }
 
       alert(T('SAVED') + ".");
       window.location.reload(false);
