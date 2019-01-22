@@ -40,7 +40,7 @@ COPY Source\Main0.js + ^
      Source\TravianCSS.js + Source\Common\TBCSS.js + Source\Common\Log.js + ^
      Source\Common\Lib\Util.js + Source\Common\Lib\DOM.js + Source\Common\Lib\AJAX.js + ^
      Source\Common\Lib\Persistence.js + ^
-     Source\Common\Cookies.js + Source\Common\CookiesV2.js + ^
+     Source\Common\CookiesV2.js + ^
      Source\Common\TBCommon.js + Source\Common\Common.js + ^
      Source\Common\Objects\Persistent\ConstructionInfo.js + ^
      Source\Common\Objects\Persistent\MerchantsUnderwayInfo.js + Source\Common\Objects\MerchantsUnderwayDOMInfo.js + ^

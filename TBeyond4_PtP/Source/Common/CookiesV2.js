@@ -1,29 +1,4 @@
 //////////////////////////////////////////////////////////////////////
-// FireFox+GM specific
-/*
-var persistence = new Persistence(
-   {   
-      serialize: uneval, 
-      deserialize: function (str) { return eval(str);} 
-   },
-   {
-      getItem: function(key) { var val = GM_getValue(key); return (val===undefined) ? null : val;},
-      setItem: GM_setValue,
-      removeItem: GM_deleteValue
-   }
-);
-
-//////////////////////////////////////////////////////////////////////
-persistence.getUserSpecificNS = function()
-{
-   return TB3O.gServer + '_' + TB3O.UserID;
-};
-*/
-
-
-//////////////////////////////////////////////////////////////////////
-// standard way
-// current problem: date deserialization
 var persistence = new Persistence({serialize: JSON.stringify, deserialize: JSON.parse },
    {
       common_prefix: "userscripts.VES_NAME.",
@@ -38,7 +13,6 @@ persistence.getUserSpecificNS = function()
 {
    return TB3O.UserID;
 };
-
 
 //////////////////////////////////////////////////////////////////////
 persistence.getVillageSpecificNS = function(villageId /*opt*/)
