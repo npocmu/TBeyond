@@ -102,10 +102,10 @@ function showUserBookmarks()
 
          if ( TBO_LOCK_BOOKMARKS !== "1" )
          {
-            aC = $td(uiCreateTool("del", null, bind(deleteUserBookmark,[i])));
+            aC = $td(['class', 'tbDel'], uiCreateTool("del", null, bind(deleteUserBookmark,[i])));
             bmRow.appendChild(aC);
 
-            aC = $td();
+            aC = $td(['class', 'tbMoveUp']);
             if ( i > 0 )
             {
                var aUp = uiCreateTool("tbiArrowUp", null, bind(moveUserBookmark,[i,-1]));
@@ -113,7 +113,7 @@ function showUserBookmarks()
             }
             bmRow.appendChild(aC);
 
-            aC = $td();
+            aC = $td(['class', 'tbMoveDown']);
             if ( i < bookmarks._.length - 1 )
             {
                var aDown = uiCreateTool("tbiArrowDown", null, bind(moveUserBookmark,[i,1]));
@@ -121,7 +121,7 @@ function showUserBookmarks()
             }
             bmRow.appendChild(aC);
 
-            aC = $td(uiCreateTool("tbiOptions", ['title', T('EDIT')], bind(editUserBookmark,[i])));
+            aC = $td(['class', 'tbEdit'], uiCreateTool("tbiOptions", ['title', T('EDIT')], bind(editUserBookmark,[i])));
             bmRow.appendChild(aC);
          }
          else if ( !bIsSeparator )
@@ -202,14 +202,14 @@ function showUserBookmarks()
       {
          var hText = $e("B", T('MARCADORES') + ':&nbsp;&nbsp;');
          var dI = (TBO_LOCK_BOOKMARKS != "1" ) ? 
-                     ["unlocked" + docDir[0].substring(0, 1), '82.L', "1", '8'] : 
-                     ["locked",                               '82.U', "0", '2'];
+                     ["tbiUnlocked", '82.L', "1", '8'] : 
+                     ["tbiLocked",   '82.U', "0", '2'];
          var toolbar = uiToolbar_Create(null,
                        [
-                          uiCreateTool("addbookmark",  T('ANYADIR'),   onAddBookmark),
-                          uiCreateTool("addbmthispage",T('ADDCRTPAGE'),onAddCurrentBookmark),
-                          uiCreateTool("addbmspacer",  T('SPACER'),    onSeparator),
-                          uiCreateTool(dI[0],          T(dI[1]),       onLockUnlock)
+                          uiCreateTool("tbiAddBookmark",     T('ANYADIR'),   onAddBookmark),
+                          uiCreateTool("tbiAddBookmarkThis", T('ADDCRTPAGE'),onAddCurrentBookmark),
+                          uiCreateTool("tbiAddBookmarkSep",  T('SPACER'),    onSeparator),
+                          uiCreateTool(dI[0],                T(dI[1]),       onLockUnlock)
                        ]);
 
          var hCell = $td([['colspan', dI[3]]]);

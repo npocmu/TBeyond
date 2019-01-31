@@ -95,13 +95,17 @@ IF_TB3({{
 
    'div#updDiv {position:absolute; top:200px; ' + docDir[0] + ':120px; display:block; padding:16px 4px; z-index:50; clear:both; border:2px solid #C0C0C0; background-color:black; color:yellow; font-weight:bold;}' +
 
+   // User bookmarks widget
    'table#userbookmarks {border-collapse:collapse; border:0px none transparent; background-color:' + TB3O.DFc[1] + '; line-height:16px;}' +
    'table#userbookmarks tr {text-align:' + docDir[0] + '; vertical-align:middle; padding:0 0 0 2px; margin:0px; white-space:nowrap; border-collapse:collapse; border:0px none transparent;}' +	
    'table#userbookmarks td {border:0px none transparent; background-color:' + TB3O.DFc[1] + '; text-align:' + docDir[0] + '; font-size:13px; font-weight:normal; color:black; padding:2px; vertical-align:middle;}' +
-   'table#userbookmarks td.noact {width:10px;}' +
-   'table#userbookmarks td.act {width:10px; color:#FF8000;}' +
+   'table#userbookmarks td.noact, table#userbookmarks td.act {width:10px;}' +
+   'table#userbookmarks td.act {color:#FF8000;}' +
+   'table#userbookmarks td.tbDel {width:8px;}' +
+   'table#userbookmarks td.tbMoveUp, table#userbookmarks td.tbMoveDown, table#userbookmarks td.tbEdit {width:16px;}' +
+   'table#userbookmarks td.tbEdit {padding-' + docDir[1] + ':8px;}' +
    'table#userbookmarks td.tb3sep hr {width:100%; color:darkgrey; margin:2px 0px;}' +
-   'table#userbookmarks img {cursor:pointer;}' +
+   'table#userbookmarks .tbTool img {cursor:pointer;}' +
    'table#userbookmarks span {padding:0 0 0 4px;}' +
 
    'table#mkls {width:100%; border-collapse:collapse; border:1px solid silver; font-size:8pt; text-align:center; background-color:' + TB3O.DFc[1] + '; padding:2px; margin:1px; line-height:18px;}' +
@@ -608,6 +612,11 @@ M4_ECHO_ON
    'img.tbiInfo     {width:12px; height:12px; background-image: url(' + image['info'] + ');}' +
    'img.tbiDup      {width:16px; height:16px; background-image: url(' + image['dup'] + ');}' +
    'img.tbiOptions  {width:16px; height:16px; background-image: url(' + image['editbookmark'] + ');}' +
+   'img.tbiLocked   {width:12px; height:16px; background-image: url(' + image['locked'] + ');}' +
+   'img.tbiUnlocked {width:19px; height:16px; background-image: url(' + image['unlocked' + docDir[0].substring(0, 1)] + ');}' +
+   'img.tbiAddBookmark     {width:16px; height:16px; background-image: url(' + image['addbookmark'] + ');}' +
+   'img.tbiAddBookmarkThis {width:23px; height:16px; background-image: url(' + image['addbmthispage'] + ');}' +
+   'img.tbiAddBookmarkSep  {width:19px; height:16px; background-image: url(' + image['addbmspacer'] + ');}' +
    'img.tbiUp,   img.tbiArrowUp   {background-image: url(' + image['aup'] + ');}' +
    'img.tbiDown, img.tbiArrowDown {background-image: url(' + image['adn'] + ');}' +
    'img.tbiUp   {width:8px; height:8px; background-size:8px 8px;}' +
