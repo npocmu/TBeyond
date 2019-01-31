@@ -96,7 +96,7 @@ function $toStr(v)
    var strv;
    if ( v instanceof Array ) 
    {
-      strv = uneval(v) + ", length = " + v.length;
+      strv = JSON.stringify(v) + ", length = " + v.length;
    }
    if ( v instanceof Date ) 
    {
@@ -104,7 +104,7 @@ function $toStr(v)
    }
    else if ( typeof(v) === "object" ) 
    {
-      strv = uneval(v);
+      strv = JSON.stringify(v);
    }
    else if ( v === undefined )
    {

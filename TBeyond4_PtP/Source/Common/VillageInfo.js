@@ -67,7 +67,7 @@ function getVillageInfoView(info)
          }
          else
          {
-            str += i + " = " + uneval(info[i]) + "\n";
+            str += i + " = " + $toStr(info[i]) + "\n";
          }
       }
    }
