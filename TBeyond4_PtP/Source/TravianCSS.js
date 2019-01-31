@@ -2,16 +2,27 @@ function setTravianStyles()
 {
    var acss = '';
 
-   var bIsFirefox = false;
+   var browser = ''
    var browserVersion = 0;
 
    var match = window.navigator.userAgent.match(/Firefox\/([0-9]+)\./);
 
    if ( match ) 
    {
-      bIsFirefox = true;
+      browser = 'Firefox';
       browserVersion = parseInt10(match[1]);
    }
+   else
+   {
+      match = window.navigator.userAgent.match(/Chrome\/([0-9]+)\./);
+      if ( match ) 
+      {
+         browser = 'Chrome';
+         browserVersion = parseInt10(match[1]);
+      }
+   } 
+
+   __DUMP__(browser, browserVersion)
 
    var levelCSS = 
      '{font-family:Arial, Helvetica, Verdana, sans-serif !important; font-size:12px !important; font-weight:bold !important;' +
@@ -59,7 +70,8 @@ function setTravianStyles()
    '#ingameManual {width:85px !important; height:100px !important;}' +
    '#mapContainer .ruler, #mapContainer .toolbar {z-index: 998;}';
    
-   if ( bIsFirefox && browserVersion < 52 )
+   if ( (browser === 'Firefox' && browserVersion < 52) ||
+        (browser === 'Chrome' && browserVersion < 57) )
    {
       // fix styles after 'hotdog' release 
       acss += 
