@@ -95,7 +95,7 @@ function uiFillVillagesListCells(vRow, nStartColumn, villageInfo, layout_options
          if ( villageInfo.BiP.length || villageInfo.TM.length || villageInfo.upi.evA.length 
              IF_TB3(|| villageInfo.upai.evA.length)) 
          {
-            replaceChildren(aCell, aIco = I("info"));
+            replaceChildren(aCell, aIco = I("tbiInfo"));
             uiAddTooltip(aIco,bind2(uiCreateBiPTMTooltip,[villageInfo.id]));
          }
          else

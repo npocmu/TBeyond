@@ -122,7 +122,7 @@ function uiAddAttDefInfoSign(tTable, aContainer, bMin)
 
       if ( troopsInfo )
       {
-         addChildren(aContainer,[" ",I("info")]);
+         addChildren(aContainer,[" ",I("tbiInfo")]);
          uiAddTooltip(aContainer,bind(uiCreateTroopsAttDefTable4Tip,[troopsInfo,bMin]));
       }
    }

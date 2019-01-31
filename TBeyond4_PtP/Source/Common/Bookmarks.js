@@ -108,7 +108,7 @@ function showUserBookmarks()
             aC = $td();
             if ( i > 0 )
             {
-               var aUp = uiCreateTool("aup", null, bind(moveUserBookmark,[i,-1]));
+               var aUp = uiCreateTool("tbiArrowUp", null, bind(moveUserBookmark,[i,-1]));
                aC.appendChild(aUp);
             }
             bmRow.appendChild(aC);
@@ -116,12 +116,12 @@ function showUserBookmarks()
             aC = $td();
             if ( i < bookmarks._.length - 1 )
             {
-               var aDown = uiCreateTool("adn", null, bind(moveUserBookmark,[i,1]));
+               var aDown = uiCreateTool("tbiArrowDown", null, bind(moveUserBookmark,[i,1]));
                aC.appendChild(aDown);
             }
             bmRow.appendChild(aC);
 
-            aC = $td(uiCreateTool("editbookmark", ['title', T('EDIT')], bind(editUserBookmark,[i])));
+            aC = $td(uiCreateTool("tbiOptions", ['title', T('EDIT')], bind(editUserBookmark,[i])));
             bmRow.appendChild(aC);
          }
          else if ( !bIsSeparator )
