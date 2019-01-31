@@ -138,10 +138,7 @@ function detectTravianVersion()
          }
 
       } 
-      catch(e) 
-      {
-         __DUMP__(e)
-      }
+      __CATCH__
    }
 
 
@@ -188,13 +185,13 @@ function getGeneralData()
 
       TB3O.iLayoutMinWidth = parseInt10(window.getComputedStyle($g(ID_MID),null).getPropertyValue("min-width"));
 
-      TB3O.UserID = getPlayerId(document);
+      getCrtServer();
+
+      TB3O.UserID = getPlayerId();
       __DUMP__(TB3O.UserID)
       if ( !TB3O.UserID ) { break; }
 
       spLnk = 'spieler.php?uid=' + TB3O.UserID;
-
-      getCrtServer();
 
       // must be called AFTER userId and server detection
       bFirstRun = !loadTBOptions();

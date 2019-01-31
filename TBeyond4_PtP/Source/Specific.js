@@ -1,5 +1,6 @@
 /////////////////////////////////////////////////////////////////////
-function getPlayerId(aDoc)
+// work fo old versions of Travian
+function _getPlayerId(aDoc)
 {
    var uid;
    var img = $xf("//div[contains(@class,'sideInfoHero') or contains(@id,'sidebarBoxHero')]//img[contains(@class,'heroImage')]", 'f', aDoc, aDoc);
@@ -7,6 +8,62 @@ function getPlayerId(aDoc)
    if ( img )
    {
       uid = parseUri(img.src).queryKey.uid;
+   }
+
+   return uid;
+}
+
+/////////////////////////////////////////////////////////////////////
+function getPlayerId()
+{
+   var player_uuid;
+   var uid = _getPlayerId(document);
+
+   //-----------------------------------------------------------------
+   function _getPlayerIdFromStatPage(aDoc)
+   {
+      __ENTER__
+
+      var aLink = __TEST__({{$qf("#player .hl .pla a",'f', aDoc, aDoc)}});
+
+      if ( aLink )
+      {
+         uid = parseUri(aLink.getAttribute("href")).queryKey.uid;
+
+         if ( isStrValid(uid) )
+         {
+            __DUMP__(player_uuid, uid)
+            persistence.saveObject(null, "uuid", uid, player_uuid);
+         }
+      }
+       __EXIT__
+   }
+
+
+   //-----------------------------------------------------------------
+   // if can't get the player uid from any page then try to get it once from statistiken.php
+   // and store it in the local storage using the player_uuid as key
+   if ( !isStrValid(uid) )
+   {
+      try 
+      {
+         player_uuid = unsafeWindow._player_uuid;
+         if ( isStrValid(player_uuid) )
+         {
+            player_uuid = player_uuid.toUpperCase();
+
+            var uuidMap = persistence.loadObject(null, "uuid");
+            if  ( uuidMap.hasOwnProperty(player_uuid) )
+            {
+               uid = uuidMap[player_uuid];
+            }
+            else
+            {
+               ajaxLoadDocument("statistiken.php", _getPlayerIdFromStatPage);
+            }
+         }
+      }
+      __CATCH__
    }
 
    return uid;

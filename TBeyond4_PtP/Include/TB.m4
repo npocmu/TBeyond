@@ -36,6 +36,8 @@ m4_define({{__DUMP_EVENT__}}, {{M4_DEBUG($log_event(8,TPL_STR_QUOTE({{$1}}),{{$1
 
 m4_define({{__TEST__}}, {{M4_IIF_DEBUG({{$test(TPL_STR_QUOTE({{$1}}),$1)}},{{$1}})}})m4_dnl
 
+m4_define({{__CATCH__}}, {{M4_IIF_DEBUG({{catch(e){$log(3, "Exception happen! Error is: '" + e + "'");} }},{{catch(){} }})}})m4_dnl
+
 m4_define({{__ASSERT__}}, {{M4_DEBUG({{if ( !({{$1}}) ) { $log(3,"Assertion (" + TPL_STR_QUOTE({{$1}}) + ") failed! " m4_ifelse({{$2}},,,+ {{$2}}));} }})}})m4_dnl
 m4_define({{__ERROR__}},  {{M4_DEBUG($log(3, "Error! " + $1);)}})m4_dnl
 
