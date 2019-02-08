@@ -44,7 +44,7 @@ function uiModifyAllianceMembersTable(aTb, memberTitles)
       var totalBullets = [[0, ""], [0, ""], [0, ""], [0, ""], [0, ""]]; //blue, green, yellow, red, grey
       var boolIsMyAlly = true;
 
-      __DUMP__(playersCount,columns,memberTitles)
+      __DUMP__(playersCount, columns, memberTitles)
 
       for ( i = 1; i < aTb.rows.length; i++ )
       {
@@ -144,7 +144,7 @@ function uiModifyAllianceMembersTable(aTb, memberTitles)
       trT.appendChild($td([['class', 'tb3chnb'], ["colspan", "COL_POP"]], T('TOTAL')));
       trT.appendChild($td([['class', 'tb3chnb'], ['style', 'text-align:center']], totP));
       trT.appendChild($td([['class', 'tb3chnb'], ['style', 'text-align:center']], totV));
-      if ( columns > 4 ) { trT.appendChild($td([['class', 'tb3chnb'], ["colspan", columns-4]])); }
+      if ( columns > (COL_POP+2) ) { trT.appendChild($td([['class', 'tb3chnb'], ["colspan", columns-(COL_POP+2)]])); }
       aTb.appendChild(trT);
 
       //average population per member of aliance
@@ -152,14 +152,14 @@ function uiModifyAllianceMembersTable(aTb, memberTitles)
       trAv.appendChild($td([['class', 'tb3chnb'], ["colspan", "COL_POP"]], T('AVPPP')));
       trAv.appendChild($td([['class', 'tb3chnb'], ['style', 'text-align:center']], avgP));
       trAv.appendChild($td([['class', 'tb3chnb'], ['style', 'text-align:center']], avgV));
-      if ( columns > 4 ) { trAv.appendChild($td([['class', 'tb3chnb'], ["colspan", columns-4]])); }
+      if ( columns > (COL_POP+2) ) { trAv.appendChild($td([['class', 'tb3chnb'], ["colspan", columns-(COL_POP+2)]])); }
       aTb.appendChild(trAv);
 
       //average population per village
       trAv = $r(['class', 'tb3r']);
       trAv.appendChild($td([['class', 'tb3chnb'], ["colspan", "COL_POP"]], T('AVPPV')));
       trAv.appendChild($td([['class', 'tb3chnb'], ["colspan", "2"], ['style', 'text-align:center']], Math.round(totP / totV)));
-      if ( columns > 4 ) { trAv.appendChild($td([['class', 'tb3chnb'], ["colspan", columns-4]])); }
+      if ( columns > (COL_POP+2) ) { trAv.appendChild($td([['class', 'tb3chnb'], ["colspan", columns-(COL_POP+2)]])); }
       aTb.appendChild(trAv);
 
       //number of bullets by type

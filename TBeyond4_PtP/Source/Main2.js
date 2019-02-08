@@ -137,7 +137,8 @@ function doPage()
       {
          var alliSubMenu = searchAndParseSubMenu();
          var alliActiveUrl = ( alliSubMenu ) ? parseUri(alliSubMenu.items[alliSubMenu.active][1]) : crtUrl;
-         if ( alliActiveUrl.queryKey.s === "1" )
+         if ( alliActiveUrl.queryKey.s === "1" || 
+              ( alliActiveUrl.queryKey.aid !== undefined && alliActiveUrl.queryKey.s === undefined ) )
          {
             TB3O.pageSelector = "profile_alliance";
          }
