@@ -303,4 +303,5 @@ t['RES3'] = "Iron";
 t['RES4'] = "Crop";
 t['RES5'] = "Crop consumption";
 t['RET'] = "Return";
+t['SHMAP'] = "This settings works only for the old style map (when slow internet connection selected)";
 };
