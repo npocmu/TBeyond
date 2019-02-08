@@ -96,7 +96,7 @@ function uiCreateUpDownControl(buddy, delta)
                            ['click', bind(onClick,[-delta]), false],
                            ['mousedown', bind2(onMouseDown,[-delta]), false]]);
 
-   var ctrl = $div([['class','tbUpDown']], [up,down]);
+   var ctrl = $div(['class','tbBuiltin'], $div(['class','tbUpDown'],[up,down]));
 
    buddy.addEventListener('focus', onBuddyFocused, false);
    buddy.addEventListener('blur', onBuddyBlur, false);
@@ -107,27 +107,73 @@ function uiCreateUpDownControl(buddy, delta)
 //////////////////////////////////////////////////////////////////////
 function uiAddBuiltinUpDownControl(buddy, delta)
 {
-   var ctrl = uiCreateUpDownControl(buddy, delta);
-   ctrl.className += " tbBuiltin";
-   insertAfter(buddy,ctrl);
+   var container = null;
+   var bstyles = window.getComputedStyle(buddy, null);
+   var bposition = bstyles.position;
 
-   var styles = window.getComputedStyle(buddy,null);
-   ctrl.style.lineHeight = styles.lineHeight;
-   //ctrl.style.verticalAlign = styles.verticalAlign;
-   buddy.style['padding' + DOMdocDir[1]] = (parseInt10(styles['padding' + DOMdocDir[1]]) + 9) + 'px';
-   ctrl.style[docDir[0]] = (-9 - parseInt10(styles['border' + DOMdocDir[1] + 'Width']) - parseInt10(styles['margin' + DOMdocDir[1]])) + 'px';
-   /*
-   if ( styles.verticalAlign === 'baseline' ) 
+   if ( bposition === "static" || bposition === "relative" )
    {
-      ctrl.style.top = '-13px';
-   }
-   else
-   
-   {
-      ctrl.style.top = '-9px';
-   }
-   */
+      var offsetV = 0, offsetH = 0;
+      
+      container = uiCreateUpDownControl(buddy, delta);
+      insertAfter(buddy, container);
 
-   return ctrl;
+      var ctrl = container.querySelector(".tbUpDown");
+      var ctrlUp = ctrl.querySelector(".tbiUp");
+      var ctrlDown = ctrl.querySelector(".tbiDown");
+
+      var cstyles = window.getComputedStyle(ctrl, null);
+
+      var cborderSize  = parseFloat(cstyles['border' + DOMdocDir[0] + 'Width']);
+      var bpaddingSize = parseFloat(bstyles['padding' + DOMdocDir[1]]);
+      var bborderSize  = parseFloat(bstyles['border' + DOMdocDir[1] + 'Width']);
+      var bmarginSize  = parseFloat(bstyles['margin' + DOMdocDir[1]]);
+      var bborderTopWidth = parseFloat(bstyles.borderTopWidth);
+      var bmarginTop = parseFloat(bstyles.marginTop);
+      var borderColor = bstyles['border' + DOMdocDir[1] + 'Color'];
+
+      if ( bposition === "relative" )
+      {
+         offsetV = parseFloat(bstyles.top);
+         if ( isNaN(offsetV) )
+         {
+            offsetV = -parseFloat(bstyles.bottom);
+            if ( isNaN(offsetV) )
+            {
+               offsetV = 0;
+            }
+         }
+
+         offsetH = parseFloat(bstyles[docDir[0]]);
+         if ( isNaN(offsetH) )
+         {
+            offsetH = -parseFloat(bstyles[docDir[1]]);
+            if ( isNaN(offsetH) )
+            {
+               offsetH = 0;
+            }
+         }
+         console.log(offsetV,offsetH)
+      }
+
+      var h = buddy.clientHeight;
+      var seph = cborderSize; // button separator height
+      var buth = Math.floor((h - seph) / 2);  // button client height
+      var butw = ( buth < 10 ) ? 10 : buth; // button client width (min 10 px)
+      
+      buddy.style['padding' + DOMdocDir[1]] = (bpaddingSize + butw + cborderSize) + 'px';
+
+      ctrl.style.top = (offsetV + bmarginTop + bborderTopWidth) + 'px';
+      ctrl.style[docDir[0]] = offsetH - (butw + bborderSize + bmarginSize) + 'px';
+
+      ctrl.style.color = borderColor;
+      ctrl.style['border' + DOMdocDir[0] + 'Color'] = borderColor;
+
+      ctrl.style.height = h + 'px';
+      ctrl.style.width = butw + 'px';
+
+      ctrlDown.style.height = ctrlUp.style.height = buth + 'px';
+      ctrlDown.style.borderTopColor = borderColor;
+   }
+   return container;
 }
-

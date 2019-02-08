@@ -506,25 +506,18 @@ table tbody tr.hover:hover th, table tbody tr.hover:hover td {
    '.tbRollDown {cursor:pointer; width: 11px; height:11px; line-height:11px; font-size:8px; text-align:center; display: inline-block; color:#787878; background-color:#F0F0F0; border:1px solid #71D000; -moz-border-radius:2em; border-radius:2em;}' + 
    '.tbRollDown:hover {border-color:#787878; }' + 
 
-   '.tbUpDown {height:17px; width:8px; position:relative; display:inline;}' +
-   '.tbUpDown img {position:absolute !important; cursor:pointer; ' + docDir[0] + ':0px !important; margin:0px !important; padding: 0px !important;}' +
-   '.tbUpDown img.tbiUp   {top:0px !important;}' +
-   '.tbUpDown img.tbiDown {top:9px !important;}' +
+   // UpDown control
+   '.tbBuiltin {position:relative; overflow: visible !important; margin:0 !important; padding: 0 !important;}' +
+   '.tbBuiltin {width:0px; display:inline-block; vertical-align: top !important;}' +
 
-   '.tbUpDown.tbBuiltin {width:9px;}' +
-   '.tbUpDown.tbBuiltin {top:-9px;vertical-align:middle;}' +
-   '.tbUpDown.tbBuiltin img {border-color:IIF_TB4(#CCCCCC,#71D000); border-width:1px; border-' + docDir[0] + '-style:solid;}' +
-   '.tbUpDown.tbBuiltin img.tbiDown {top:8px !important; border-top-style:solid;}' +
+   '.tbBuiltin .tbUpDown {box-sizing: content-box; background-color: transparent; position:absolute !important;' +
+   '    margin: 0; border-left: solid 1px;}' +
 
-   '.control {box-sizing: content-box; background-color: transparent; display: inline-block;' +
-   '    position:absolute !important; overflow: hidden; margin: 0; border-' + docDir[0] + ': solid 1px; font-family: Courier, monospace;}' +
-
-   '.control .up, .control .down  { position:absolute !important;  background-color: inherit; ' +
-   '   width: 100%; cursor: pointer;  margin:0px !important;  padding: 0px !important; text-align: center !important;' +
-   '   vertical-align: middle; display: table-cell;' +
-   '   user-select: none; -moz-user-select: none; -ms-user-select: none; -webkit-user-select: none; }'+
-
-   '.control .down  { border-top: solid 1px; }' +  
+   '.tbBuiltin .tbUpDown img {cursor:pointer; position:absolute !important; width: 100%;'+
+   '             left:0px !important; margin:0px !important; padding: 0px !important;' +
+   '             background-size: 70%;  background-repeat: no-repeat; background-position: center;}' +
+   '.tbBuiltin .tbUpDown img.tbiUp   {top:0px !important;}' +
+   '.tbBuiltin .tbUpDown img.tbiDown {bottom:0px !important; border-top: solid 1px;}' +
 
    '.tbMeter {width: 100%; height: 100%; display: inline-block; position: relative; }' +
    '.tbMeterFill, tbMeterEmpty {display: inline-block; height: 100%;}' +
