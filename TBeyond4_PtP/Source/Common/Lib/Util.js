@@ -580,11 +580,14 @@ function combineUri(uri)
    if ( uri.anchor )   { uri.hash += uri.anchor; }
    if ( uri.hashbang ) { uri.hash += "!" + uri.hashbang; }
 
-   var str = uri.protocol;
-   if ( str ) { str += ":"; }
+   var str = "";
+   if ( uri.protocol )  { str += uri.protocol + ":"; }
    if ( uri.authority ) { str += "//" + uri.authority; }
+   if ( uri.path )      { str += uri.path; }
+   if ( uri.query )     { str += "?" + uri.query; }
+   if ( uri.hash )      { str += "#" + uri.hash; }
 
-   return str + uri.path + (uri.query ? "?" + uri.query : "") + (uri.hash ? "#" + uri.hash : "");
+   return str;
 }
 
 //////////////////////////////////////////////////////////////////////

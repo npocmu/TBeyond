@@ -1038,12 +1038,13 @@ function uiModifyMarketSend()
             var mapIdDict = getVillagesMapIdDict(TB3O.VillagesInfo);
             var srcMapId  = bReturning ? merchantUnderwayInfo.d_id : merchantUnderwayInfo.s_id;
             var destMapId = bReturning ? merchantUnderwayInfo.s_id : merchantUnderwayInfo.d_id;
-            var ri, hashbang = "xn=" + merchantUnderwayInfo.xn;
+            var ri, hashKey = { xn: merchantUnderwayInfo.xn };
+
             for ( ri = 0; ri < 4; ri++ )
             {
-               hashbang += "&r" + (ri+1) + "=" + merchantUnderwayInfo.Res[ri];
+               hashKey["r" + (ri+1)] = merchantUnderwayInfo.Res[ri];
             }
-            var href = getSendResHref(destMapId,mapIdDict[srcMapId],hashbang);
+            var href = getSendResHref(destMapId, mapIdDict[srcMapId], hashKey);
 
             insertAfter(parentNode, 
                $lnk([attrInject$, ['title',T("DUP_TRADERS_TT")], ['href',href]], I("dup")));

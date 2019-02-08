@@ -5,15 +5,17 @@ function getRPActionImageName(action)
 }
 
 //////////////////////////////////////////////////////////////////////
-function getSendResHref(mapId, newdid/*opt*/, hashbang/*opt*/)
+function getSendResHref(mapId, newdid/*opt*/, hashKey/*opt*/)
 {
    var url = "";
 
    if ( TB3O.pageSelector === "market_send" && (newdid === undefined || newdid == TB3O.ActiveVillageId ) )
    {
       var xy = id2xy(mapId);
-      url = "#!xn=1&x=" + xy[0] + "&y=" + xy[1];
-      if ( hashbang ) { url += "&" + hashbang; }
+      hashKey = hashKey || {};
+      hashKey.x = xy[0];
+      hashKey.y = xy[1];
+      url = combineUri({hashKey : hashKey});
    }
    else
    {
@@ -23,12 +25,10 @@ function getSendResHref(mapId, newdid/*opt*/, hashbang/*opt*/)
          url += "&newdid=" + newdid + "&";
       }
       url += "z=" + mapId + "&gid=17" + (TB3O.ServerInfo.features.new_link_style ? "&t=5" : "");
-      if ( hashbang ) { url += "#!" + hashbang; }
+      if ( hashKey ) { url += combineUri({hashKey : hashKey}); }
    }
 
    return url;
-
-//   return 'build.php?z=' + mapId + '&gid=17' + (TB3O.ServerInfo.features.new_link_style ? "&t=5" : "");
 }
 
 //////////////////////////////////////////////////////////////////////
