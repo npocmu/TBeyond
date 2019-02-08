@@ -37,14 +37,6 @@ function createMapLink(strType, aX, strName)
    return aLnk;
 }
 
-/////////////////////////////////////////////////////////////////////
-function insertTradeBalanceLink(aNode, uid)
-{
-   var linkNode = $lnk([['href', 'manual.php?typ=7&s=' + uid], ['target', '_blank'], ['class','tbInject tbTradeBal']],
-                      I("capacity",[['title', T('TRADEBAL.TT')]]));
-   insertAfter(aNode,linkNode);
-}	
-
 
 /////////////////////////////////////////////////////////////////////
 // Create and insert link for send message to player uid
