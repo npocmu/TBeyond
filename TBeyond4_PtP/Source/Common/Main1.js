@@ -16,17 +16,6 @@
 	function insertNPCHistoryLink() {var bname = getQueryParameters(urlNow, NPCbacklinkName); if (!bname) bname = "Go back"; var div = $g(ID_MID2); div.innerHTML += '<p>&nbsp;<a href="#" onclick="window.history.go(-2)"> &laquo; ' + bname + '</a></p>';};//insert the NPC assistant back link
 	function pauseScript(ms) {var ms1 = getRndTime(ms); var aDate = new Date(); var crtDate = new Date(); do {crtDate = new Date();} while (crtDate - aDate < ms1);};
 	
-	/**
-	 * Create the path of the image, taking into account a local GP
-	 * Params: ref Relative path of the image
-	 * Returns: Absolute path of the image
-	 */
-	function img(ref, ld) {
-		var imgPath = '';
-		if (TB3O.T35 == true) imgPath = (!ld ? TB3O.localGP + "img/" + ref : TB3O.localGP + "img/lang/" + TB3O.lng + '/' + ref); else imgPath = (!ld ? TB3O.localGP + "img/un/" + ref : TB3O.localGP + "img/" + TB3O.lng + '/' + ref);
-		return imgPath;
-	};
-
 	function getTroopsToBeTrained() {
 		var xp = $xf('//input[starts-with(@id, "inputTroopNo_")]', 'r');
 		if (xp.snapshotLength > 0) {

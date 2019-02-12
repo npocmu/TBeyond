@@ -169,20 +169,6 @@ function getGeneralData()
 
       __DUMP__(TB3O.AvailableRaces)
 
-      // OBSOLETE
-      //Path to the graphic pack (if available)
-      //empty graphics set support added
-      var cssDeclaration = $xf("//link[starts-with(@href, 'file') and @rel='stylesheet']");
-      if (cssDeclaration)
-      {
-         var csshr = cssDeclaration.href;
-         csshr.search(/^file:\/\/[^\/]*\/(.*\/)?(.*)\.css/);
-         TB3O.localGP = RegExp.$1;
-         TB3O.localGP = 'file://' + TB3O.localGP;
-      }
-
-      xGIF = (TB3O.localGP != '' ? img("a/x.gif") : "img/x.gif");
-
       TB3O.iLayoutMinWidth = parseInt10(window.getComputedStyle($g(ID_MID),null).getPropertyValue("min-width"));
 
       getCrtServer();

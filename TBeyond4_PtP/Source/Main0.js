@@ -31,7 +31,6 @@
    TB3O.localTimeOffset = 0;   // offset in milliseconds between serverTime and local time
    TB3O.desiredTimeOffset = 0; // milliseconds added to serverTime to take local time (or 0 if all times need to be like server)
 
-   TB3O.localGP = "";          // path to local graph packet
    TB3O.nLayoutType = 2;       // layout: 0 - standard, 1 - extended, 2 - T4
    TB3O.iLayoutMinWidth = 980; // min width for layout by design, detected automatically later
 
@@ -171,7 +170,7 @@
        "http://travian.kirilloid.ru/warsim.php"];
 
    var jsVoid = 'javaScript:void(0)';
-   var xGIF = "a/x.gif";
+   var xGIF = "img/x.gif";
 
    // most important div's in layout (4.0)
    var ID_SIDE_INFO = 'side_info';
