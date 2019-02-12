@@ -107,73 +107,112 @@ function uiCreateUpDownControl(buddy, delta)
 //////////////////////////////////////////////////////////////////////
 function uiAddBuiltinUpDownControl(buddy, delta)
 {
+   //-----------------------------------------------------------------
+   function positionControl(ctrl, buddy, bstyles)
+   {
+      __DUMP_NODE__(ctrl)
+      var buddy = buddy || ctrl.parentNode.previousSibling;
+      if ( buddy )
+      {
+         __DUMP_NODE__(buddy)
+         var h = buddy.clientHeight;
+
+         if ( h === 0 )
+         {
+            // it's happen when buddy not added to DOM and not displayed yet
+            return false;
+         }
+
+         var bstyles = bstyles || window.getComputedStyle(buddy, null);
+         var bposition = bstyles.position;
+         var offsetV = 0, offsetH = 0;
+         var ctrlUp = ctrl.querySelector(".tbiUp");
+         var ctrlDown = ctrl.querySelector(".tbiDown");
+
+         var cstyles = window.getComputedStyle(ctrl, null);
+
+         var cborderSize  = parseFloat(cstyles['border' + DOMdocDir[0] + 'Width']);
+         var bpaddingSize = parseFloat(bstyles['padding' + DOMdocDir[1]]);
+         var bborderSize  = parseFloat(bstyles['border' + DOMdocDir[1] + 'Width']);
+         var bmarginSize  = parseFloat(bstyles['margin' + DOMdocDir[1]]);
+         var bborderTopWidth = parseFloat(bstyles.borderTopWidth);
+         var bmarginTop = parseFloat(bstyles.marginTop);
+         var borderColor = bstyles['border' + DOMdocDir[1] + 'Color'];
+
+         if ( bposition === "relative" )
+         {
+            offsetV = parseFloat(bstyles.top);
+            if ( isNaN(offsetV) )
+            {
+               offsetV = -parseFloat(bstyles.bottom);
+               if ( isNaN(offsetV) )
+               {
+                  offsetV = 0;
+               }
+            }
+
+            offsetH = parseFloat(bstyles[docDir[0]]);
+            if ( isNaN(offsetH) )
+            {
+               offsetH = -parseFloat(bstyles[docDir[1]]);
+               if ( isNaN(offsetH) )
+               {
+                  offsetH = 0;
+               }
+            }
+            console.log(offsetV,offsetH)
+         }
+
+         var h = buddy.clientHeight;
+         var seph = cborderSize; // button separator height
+         var buth = Math.floor((h - seph) / 2);  // button client height
+         var butw = ( buth < 10 ) ? 10 : buth; // button client width (min 10 px)
+         
+         buddy.style['padding' + DOMdocDir[1]] = (bpaddingSize + butw + cborderSize) + 'px';
+
+         ctrl.style.top = (offsetV + bmarginTop + bborderTopWidth) + 'px';
+         ctrl.style[docDir[0]] = offsetH - (butw + bborderSize + bmarginSize) + 'px';
+
+         ctrl.style.color = borderColor;
+         ctrl.style['border' + DOMdocDir[0] + 'Color'] = borderColor;
+
+         ctrl.style.height = h + 'px';
+         ctrl.style.width = butw + 'px';
+
+         ctrlDown.style.height = ctrlUp.style.height = buth + 'px';
+         ctrlDown.style.borderTopColor = borderColor;
+
+         return true;
+      }
+      return false;
+   }
+
+   //-----------------------------------------------------------------
+   function repositionControl(ctrl)
+   {
+      if ( positionControl(ctrl) )
+      {
+         show(ctrl);
+      }
+   }
+
+   //-----------------------------------------------------------------
    var container = null;
    var bstyles = window.getComputedStyle(buddy, null);
    var bposition = bstyles.position;
 
    if ( bposition === "static" || bposition === "relative" )
    {
-      var offsetV = 0, offsetH = 0;
-      
       container = uiCreateUpDownControl(buddy, delta);
       insertAfter(buddy, container);
 
       var ctrl = container.querySelector(".tbUpDown");
-      var ctrlUp = ctrl.querySelector(".tbiUp");
-      var ctrlDown = ctrl.querySelector(".tbiDown");
-
-      var cstyles = window.getComputedStyle(ctrl, null);
-
-      var cborderSize  = parseFloat(cstyles['border' + DOMdocDir[0] + 'Width']);
-      var bpaddingSize = parseFloat(bstyles['padding' + DOMdocDir[1]]);
-      var bborderSize  = parseFloat(bstyles['border' + DOMdocDir[1] + 'Width']);
-      var bmarginSize  = parseFloat(bstyles['margin' + DOMdocDir[1]]);
-      var bborderTopWidth = parseFloat(bstyles.borderTopWidth);
-      var bmarginTop = parseFloat(bstyles.marginTop);
-      var borderColor = bstyles['border' + DOMdocDir[1] + 'Color'];
-
-      if ( bposition === "relative" )
+      if ( !positionControl(ctrl, buddy, bstyles) )
       {
-         offsetV = parseFloat(bstyles.top);
-         if ( isNaN(offsetV) )
-         {
-            offsetV = -parseFloat(bstyles.bottom);
-            if ( isNaN(offsetV) )
-            {
-               offsetV = 0;
-            }
-         }
-
-         offsetH = parseFloat(bstyles[docDir[0]]);
-         if ( isNaN(offsetH) )
-         {
-            offsetH = -parseFloat(bstyles[docDir[1]]);
-            if ( isNaN(offsetH) )
-            {
-               offsetH = 0;
-            }
-         }
-         console.log(offsetV,offsetH)
+         // delay reposition to next cycle
+         hide(ctrl);
+         setTimeout(bind(repositionControl,[ctrl]), 0);
       }
-
-      var h = buddy.clientHeight;
-      var seph = cborderSize; // button separator height
-      var buth = Math.floor((h - seph) / 2);  // button client height
-      var butw = ( buth < 10 ) ? 10 : buth; // button client width (min 10 px)
-      
-      buddy.style['padding' + DOMdocDir[1]] = (bpaddingSize + butw + cborderSize) + 'px';
-
-      ctrl.style.top = (offsetV + bmarginTop + bborderTopWidth) + 'px';
-      ctrl.style[docDir[0]] = offsetH - (butw + bborderSize + bmarginSize) + 'px';
-
-      ctrl.style.color = borderColor;
-      ctrl.style['border' + DOMdocDir[0] + 'Color'] = borderColor;
-
-      ctrl.style.height = h + 'px';
-      ctrl.style.width = butw + 'px';
-
-      ctrlDown.style.height = ctrlUp.style.height = buth + 'px';
-      ctrlDown.style.borderTopColor = borderColor;
    }
    return container;
 }
