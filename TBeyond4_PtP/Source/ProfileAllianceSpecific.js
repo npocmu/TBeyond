@@ -20,8 +20,11 @@ function searchAllianceMembersTable()
 function uiModifyAllianceProfileName(aProfile)
 {
    var allyName = aProfile.rows[0].cells[1].textContent;
-
-   aProfile.rows[0].cells[1].innerHTML = " <a href='" + crtPage + "'>" + allyName + "</a>";
+   var aid = crtUrl.queryKey.aid;
+   if ( aid !== undefined )
+   {
+      aProfile.rows[0].cells[1].innerHTML = " <a href='" + crtUrl.path +  "?aid=" + aid + "'>" + allyName + "</a>";
+   }
 }
 
 /////////////////////////////////////////////////////////////////////
