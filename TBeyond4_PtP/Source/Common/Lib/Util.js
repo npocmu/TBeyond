@@ -51,6 +51,13 @@ function getTimeSpan(date1, date2)
 } 
 
 /////////////////////////////////////////////////////////////////////
+//convert a number to local string
+function $ls(aX) 
+{
+   return aX.toLocaleString();
+}
+
+/////////////////////////////////////////////////////////////////////
 //convert to a 2 digit string (time representation)
 function to2Str(n)
 {

@@ -361,6 +361,13 @@ function getEventTimeStamp(ttServer, str)
 }
 
 //////////////////////////////////////////////////////////////////////
+function getNewdidFromLink(aLink) 
+{
+   aLink.search(/\?newdid=(\d+)/);
+   return RegExp.$1;
+}
+
+//////////////////////////////////////////////////////////////////////
 function getNewdidFromChild(aParent) 
 {
    var vNewdid = 0;
