@@ -40,8 +40,9 @@ function getTroopsDetails(qDist, xRace, evTS)
 //    merchant_repeat    - (number) - if given then set number of routes for merchants
 //    show_merchant_return-(bool)  - if given then show the additional row when the merchant comes home
 //    show_troops          (bool)  - show info about troops
-//    show_all_races       (bool)  - show info about all available races
-//    race                 (string) - show info about troops and merchant for this race (by default - for player race)
+//    show_all_races       (bool)  - show info about all available races ( with 'race' in first order)
+//    race                 (string) - show info about troops and merchant for this race 
+//                                   (by default - race for srcMapId or player race)
 // }
 function uiCreateTroopsMerchantsDistTable(tableId, srcMapId, destMapId, options)
 {
@@ -133,6 +134,7 @@ function uiCreateTroopsMerchantsDistTable(tableId, srcMapId, destMapId, options)
    else
    {
       srcXY = [TB3O.ActiveVillageInfo.x,TB3O.ActiveVillageInfo.y];
+      race = getVillageRace(TB3O.ActiveVillageInfo);
    }
 
    //__DUMP__(srcXY, destXY, options, race, races)

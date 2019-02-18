@@ -53,10 +53,12 @@ function parsePlayerProfileVillagesTable(uTb)
 {
    __ENTER__
    var totP = 0, villagesTable = [];
-   var i, vPop, vLnk, mapId, aRow, vName, popCell, col;
+   var i, vPop, vLnk, mapId, aRow, vName, popCell, col, racex, raceCell;
    for (i = 1; i < uTb.rows.length; i++)
    {
       aRow = uTb.rows[i];
+      racex = mapId = vName = vPop = null;
+
       vLnk = __TEST__($qf("td.name a",'f',aRow));
       if ( vLnk )
       {
@@ -64,7 +66,6 @@ function parsePlayerProfileVillagesTable(uTb)
          vName = vLnk.textContent;
       }
 
-      vPop = undefined;
       popCell = __TEST__($qf("td.inhabitants",'f',aRow));
       if ( popCell )
       {
@@ -77,9 +78,31 @@ function parsePlayerProfileVillagesTable(uTb)
          }
       }
 
-      if ( isIntValid(mapId) )
+      raceCell = $qf(".tribeIcon ",'f',aRow);
+      if ( raceCell )
       {
-         villagesTable.push([mapId, vPop, vName]);
+         if ( hasClass(raceCell,/tribe(\d+)/) )
+         { 
+            racex = parseInt10(RegExp.$1) - 1; 
+            if ( !TB3O.KnownRaces[racex] )
+            {
+               racex = null;
+            }
+         }
+      }
+
+      if ( !isIntValid(racex) )
+      {
+         if ( TB3O.ServerInfo.features.path_to_pandora )
+         {
+            __ERROR__("Can't get race for village '" + vName + "'")
+         }
+         racex = TB3O.KnownRaces.indexOf(TBU_RACE);
+      }
+
+      if ( isIntValid(mapId) && isIntValid(vPop) && isStrValid(vName) )
+      {
+         villagesTable.push({map_id: mapId, pop: vPop, name: vName, rx:racex} );
       }
    }
 
@@ -132,7 +155,7 @@ function uiModifyPlayerProfileVillagesTable(uTb, villages)
    var i;
    for ( i = 0; i < villagesTable.length; i++ )
    {
-      var mapId = villagesTable[i][0];
+      var mapId = villagesTable[i].map_id;
       if ( activeMapId == mapId )
       {
          addClass(uTb.rows[i+1],"hl");

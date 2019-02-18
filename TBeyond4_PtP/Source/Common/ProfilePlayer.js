@@ -32,7 +32,7 @@ function getCommonPlayerProfileInfo(aDoc)
             if ( villagesTable.length === 1 ) // single village account?
             {
                // assume single village as capital
-               saveCapitalInfo(villagesTable[0][0], villagesTable[0][2]);
+               saveCapitalInfo(villagesTable[0].map_id, villagesTable[0].name);
             }
          }
       }
@@ -45,7 +45,7 @@ function getCommonPlayerProfileInfo(aDoc)
 
 
 /////////////////////////////////////////////////////////////////////
-function getVillagesPopulation(aDoc)
+function getVillagesInfoFromProfile(aDoc)
 {
    var uTb = searchPlayerProfileVillagesTable(aDoc);
    if ( uTb )
@@ -58,8 +58,11 @@ function getVillagesPopulation(aDoc)
 
          for ( i = 0; i < villagesTable.length; ++i )
          {
-            var mapId = villagesTable[i][0];
-            TB3O.VillagesInfo[mapIdDict[mapId]].pop = villagesTable[i][1];
+            var mapId = villagesTable[i].map_id;
+            var villageId = mapIdDict[mapId];
+            var villageInfo = TB3O.VillagesInfo[villageId];
+            villageInfo.pop = villagesTable[i].pop;
+            villageInfo.rx = villagesTable[i].rx;
          }
       }
    }
@@ -107,7 +110,7 @@ function processMyProfile()
    __ENTER__
 
    getCapitalId();
-   getVillagesPopulation(document);
+   getVillagesInfoFromProfile(document);
 
    __EXIT__
 }

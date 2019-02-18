@@ -32,6 +32,14 @@ function VillageInfo()
    this.r.Res = [750,750,750,750]; // resources available
    this.r.Cap = [800,800,800,800]; // resource storage capacity
 
+   // race index for village. It always same for classic version of Travian
+   // but may be vary for `Path to Pandora`  version
+   // Race of vallage can be gathered from:
+   //   - player profile
+   //   - troop training buildings
+   //   - dorf2 page
+   this.rx = TB3O.KnownRaces.indexOf(TBU_RACE);
+
    return this;
 }
 
@@ -344,5 +352,18 @@ function getTotalPopulation()
    }
 
    return pop;
+}
+
+
+//////////////////////////////////////////////////////////////////////
+function getVillageRace(villageInfo)
+{
+   var race = TB3O.KnownRaces[villageInfo.rx];
+   if ( !isStrValid(race) )
+   {
+      race = TBU_RACE;
+   }
+
+   return race;
 }
 

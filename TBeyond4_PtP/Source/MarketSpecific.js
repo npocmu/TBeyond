@@ -48,7 +48,8 @@ function detectMarketPage()
       // ensure valid value for merchants capacity (need for all market pages)
       if ( !isIntValid(TB3O.ActiveVillageInfo.mCap) )
       {
-         TB3O.ActiveVillageInfo.mCap = TB3O.DefaultMerchantsCapacity[TBU_RACE] * TB3O.nMerchantCapacityFactor[TB3O.nServerType];
+         TB3O.ActiveVillageInfo.mCap = TB3O.DefaultMerchantsCapacity[getVillageRace(TB3O.ActiveVillageInfo)] 
+                                       * TB3O.nMerchantCapacityFactor[TB3O.nServerType];
       }
    }
 
