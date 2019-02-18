@@ -363,19 +363,20 @@ function getEventTimeStamp(ttServer, str)
 //////////////////////////////////////////////////////////////////////
 function getNewdidFromLink(aLink) 
 {
-   aLink.search(/\?newdid=(\d+)/);
-   return RegExp.$1;
+   return ( aLink.search(/[&?]newdid=(\d+)/) === -1) ? null : RegExp.$1;
 }
 
 //////////////////////////////////////////////////////////////////////
+// return newdid from first anchor in aParent
+// null if anchor not found or newdid not present
 function getNewdidFromChild(aParent) 
 {
-   var vNewdid = 0;
-   var vLinkNodes = aParent.getElementsByTagName("a");
+   var vNewdid = null;
+   var vLinkNode = $nth_tag(aParent,"a");
 
-   if ( vLinkNodes.length )
+   if ( vLinkNode )
    {
-      vNewdid = getNewdidFromLink(vLinkNodes[0].getAttribute("href"));
+      vNewdid = getNewdidFromLink(vLinkNode.getAttribute("href"));
    }
    return vNewdid;
 }
