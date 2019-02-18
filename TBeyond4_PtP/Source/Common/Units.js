@@ -124,13 +124,13 @@ function getTroopImage(tix)
 }
 
 //////////////////////////////////////////////////////////////////////
-function getUnitImage(uix)
+function getUnitImage(race, uix)
 {
    var img = null;
 
-   if ( TBU_RACE !== '' )
+   if ( TB3O.BaseTroopIndex[race] !== undefined )
    {
-      img = getTroopImage(uix + TBU_RACE_DELTA);
+      img = getTroopImage(uix + TB3O.BaseTroopIndex[race]);
    }
    return img;
 }

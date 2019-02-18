@@ -224,7 +224,7 @@ function getRallyPointInfo(villageId, aDoc, ttServer, bReadOnly)
 
    __ENTER__
    var rallyPointInfo = new RallyPointInfo();
-   scanRallyPointInfo(rallyPointInfo,  getActiveFilter(), villageId, aDoc, ttServer, bReadOnly);
+   scanRallyPointInfo(rallyPointInfo, getActiveFilter(), villageId, aDoc, ttServer, bReadOnly);
 
    if ( rallyPointInfo.t.length )
    {

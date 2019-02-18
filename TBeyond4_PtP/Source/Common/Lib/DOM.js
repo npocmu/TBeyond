@@ -359,7 +359,7 @@ function $qf(selector, mode/*opt*/, nth/*opt*/, startnode/*opt*/, aDoc/*opt*/)
 
 //////////////////////////////////////////////////////////////////////
 // Search nodes using xQuery
-// TODO: same modes as for $qf
+// OBSOLETE, use $xf1 instead
 function $xf(xpath, xpt/*opt*/, startnode/*opt*/, aDoc/*opt*/)
 {
    if ( !aDoc ) 
@@ -385,6 +385,72 @@ function $xf(xpath, xpt/*opt*/, startnode/*opt*/, aDoc/*opt*/)
    }
 
    return ret;
+}
+
+//////////////////////////////////////////////////////////////////////
+// Search nodes using xQuery
+// Description - see $qf
+function $xf1(xpath, mode/*opt*/, nth/*opt*/, startnode/*opt*/, aDoc/*opt*/)
+{
+   var result;
+
+   if ( mode === undefined ) { mode = 'f'; }
+
+   __ASSERT__( isSomeOf(mode, 'f','l','a','n'), "Unknown mode: " + mode )
+
+   if ( mode !== 'n' )
+   {
+      aDoc = startnode;
+      startnode = nth;
+      if ( mode === 'l' )
+      {
+         mode = 'n';
+         nth = -1;
+      }
+   }
+   else
+   {
+      nth = nth|0;
+      if ( nth === 0 )
+      {
+         mode = 'f';
+      }
+   } 
+
+   if ( !aDoc ) 
+   { 
+      aDoc = getDocument(startnode);
+      if ( !aDoc ) { aDoc = document; }
+   }
+   if ( !startnode ) { startnode = aDoc; }
+
+   if ( mode === 'f' )
+   {
+      result = aDoc.evaluate(xpath, startnode, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null);
+      return result.singleNodeValue;
+   }
+   else
+   {
+      result = aDoc.evaluate(xpath, startnode, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
+      if ( mode === 'a' )
+      {
+         return convertToArray(result);
+      }
+
+      // mode 'n'
+      var node = null;
+      if ( nth < 0 )
+      {
+         nth = result.snapshotLength + nth;
+      }
+
+      if ( nth >= 0 && nth < result.snapshotLength )
+      {
+         node = result.snapshotItem(nth);
+      }
+
+      return node;
+   }
 }
 
 //////////////////////////////////////////////////////////////////////

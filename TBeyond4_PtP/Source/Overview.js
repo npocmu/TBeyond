@@ -1,7 +1,7 @@
 //////////////////////////////////////////////////////////////////////
 function Overview(aDoc)
 {
-   this.origT = __TEST__({{$xf("//div[@id='" + ID_CONTENT + "']//table[@id='overview' or @id='ressources' or @id='warehouse' or @id='culture_points' or @id='troops' or @class='vil_troops']",'f',aDoc,aDoc)}});
+   this.origT = __TEST__({{$xf1("//div[@id='" + ID_CONTENT + "']//table[@id='overview' or @id='ressources' or @id='warehouse' or @id='culture_points' or @id='troops' or @class='vil_troops']",'a',aDoc,aDoc)}});
    this.secRowText = [];
    this.plAc = false;
 
@@ -11,9 +11,9 @@ function Overview(aDoc)
       this.plAc = ( this.menu.countLockedItems() === 0 && this.menu.countLinks() > 1 );
    }
 
-   if ( this.origT )
+   if ( this.origT.length > 0 )
    {
-      this.secRowText = getHeaders(this.origT);
+      this.secRowText = getHeaders(this.origT[0]);
       if ( this.secRowText.length === 0 ) { this.origT = null; } //disable following processing
 
       __ASSERT__(this.secRowText.length > 0, "Can't parse dorf3 table header!")
@@ -47,9 +47,9 @@ Overview.prototype.getMerchantCol = function(tabNo)
 {
    var mi = 0;
 
-   if ( this.origT )
+   if ( this.origT && this.origT.length > 0 )
    {
-      switch ( this.origT.id )
+      switch ( this.origT[0].id )
       {
          case "overview":   mi = 4; break;
          case "ressources": mi = 5; break;

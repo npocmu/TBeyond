@@ -178,10 +178,7 @@ function refreshVillageV2(villageId, tabNo)
    {
       if ( isBuildingPresent(villageId,GID_RALLY_POINT) ) 
       { 
-         IIF_TB4(
-         ajaxLoadDocument(URL_RP_OVERVIEW(villageId), bind2(onLoadRallyPoint,[villageId]), fOnFailure),
-         ajaxLoadDocument(URL_RP_OVERVIEW(villageId) + "&j&k", gfOnSuccess(refreshD3Tb_Tab5), fOnFailure)
-         );
+         ajaxLoadDocument(URL_RP_OVERVIEW(villageId), bind2(onLoadRallyPoint,[villageId]), fOnFailure);
       }
    }
    __EXIT__

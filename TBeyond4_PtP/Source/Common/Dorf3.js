@@ -6,13 +6,13 @@ Overview.prototype.getMerchantsInfo  = function(tabNo)
 
    var merchantsInfo = {};
 
-   if ( this.origT )
+   if ( this.origT && this.origT.length > 0 )
    {
       var mi = this.getMerchantCol(tabNo);
       if ( mi )
       {
          //get the merchant array
-         vRows = this.origT.tBodies[0].rows;
+         vRows = this.origT[0].tBodies[0].rows;
          vCount = vRows.length;
          for ( i = 0; i < vCount; ++i )
          {
@@ -269,7 +269,7 @@ __DUMP__(TB3O.Overview)
    TBO_DORF3_DEFAULT_TAB = tabNo;
    saveTBOptions();
 
-   if ( TB3O.Overview.origT )
+   if ( TB3O.Overview.origT && TB3O.Overview.origT.length > 0 )
    {
       if ( tabNo <= 2 )
       {
@@ -278,7 +278,7 @@ __DUMP__(TB3O.Overview)
 
       if ( TB3O.Overview.plAc && tabNo <= 5 )
       {
-         [processDorf3_Tab1,processDorf3_Tab2,processDorf3_Tab3,processDorf3_Tab4,processDorf3_Tab5][tabNo-1](TB3O.Overview.origT);
+         [processDorf3_Tab1,processDorf3_Tab2,processDorf3_Tab3,processDorf3_Tab4,processDorf3_Tab5][tabNo-1](TB3O.Overview.origT[0]);
       }
       else if ( tabNo > 2 )  // without Plus merchant info present on all tabs
       {
@@ -300,14 +300,16 @@ function uiModifyDorf3()
 
    uiModifyDorf3_TabsHeader(tabNo);
 
-   if ( origT )
+   if ( origT && origT.length > 0 )
    {
+      var firstTbl = origT[0];
+
       prefferTB = !TB3O.Overview.plAc || tabNo === 2 || tabNo === 3 || tabNo === 5;
 
       M4_IIF_DEBUG(
       {{
          // show both tables in debug mode
-         uiCreateDorf3Tab(origT.parentNode,origT,tabNo);
+         uiCreateDorf3Tab(firstTbl.parentNode, firstTbl, tabNo);
 
          if ( TB3O.Overview.plAc )
          {
@@ -317,8 +319,8 @@ function uiModifyDorf3()
       {{
          if ( prefferTB )
          {
-            origT.style.display = "none";
-            uiCreateDorf3Tab(origT.parentNode,origT,tabNo);
+            firstTbl.style.display = "none";
+            uiCreateDorf3Tab(firstTbl.parentNode, firstTbl, tabNo);
          }
          else
          {
@@ -330,7 +332,7 @@ function uiModifyDorf3()
 }
 
 //////////////////////////////////////////////////////////////////////
-function uiCreateDorf3Tab(parent,nextSibling,tabNo) 
+function uiCreateDorf3Tab(parent, nextSibling, tabNo) 
 {
    var createFunc = [createD3Tb_Tab1, createD3Tb_Tab2,createD3Tb_Tab3,createD3Tb_Tab4,createD3Tb_Tab5];
    var fillFunc =   [  fillD3Tb_Tab1,   fillD3Tb_Tab2,  fillD3Tb_Tab3,  fillD3Tb_Tab4,  fillD3Tb_Tab5];
@@ -341,7 +343,7 @@ function uiCreateDorf3Tab(parent,nextSibling,tabNo)
       aNewTb = createFunc[tabNo-1]();
       if ( aNewTb )
       {
-         parent.insertBefore(aNewTb,nextSibling);
+         parent.insertBefore(aNewTb, nextSibling);
          fillFunc[tabNo-1]();
       }
    }
@@ -532,28 +534,30 @@ function uiCreateTotalMerchantsTooltip()
 }
 
 //////////////////////////////////////////////////////////////////////
-function uiCreateUnitInfoTooltip(uix, unitCount)
+function uiCreateUnitInfoTooltip(race, uix, unitCount)
 {
    var tip = null;
    if ( unitCount )
    {
-      tip = uiCreateTroopInfoTooltip(getTroopInfoFromUnitCount(TBU_RACE, uix, unitCount),T("STAT"));
+      tip = uiCreateTroopInfoTooltip(getTroopInfoFromUnitCount(race, uix, unitCount),T("STAT"));
    }
 
    return tip;
 }
 
 //////////////////////////////////////////////////////////////////////
-function uiCreateUnitsTooltip(villageId,uix)
+function uiCreateUnitsTooltip(villageId, uix)
 {
    __ENTER__
 
    var tip = null;
-   var unitsCountInfo = TB3O.VillagesInfo[villageId].uci;
+
+   var villageInfo = TB3O.VillagesInfo[villageId];
+   var unitsCountInfo = villageInfo.uci;
    var unitCount = unitsCountInfo.ut[uix];
    if ( unitsCountInfo.ttUpd && unitCount )
    {
-      tip = uiCreateUnitInfoTooltip(uix, unitCount);
+      tip = uiCreateUnitInfoTooltip(getVillageRace(villageInfo), uix, unitCount);
    }
    __EXIT__
 
@@ -567,7 +571,7 @@ function uiCreateTotalUnitsTooltip(uix)
 
    //Available troops
    var sumTT = getUnitsCountInfoTotals();
-   var tip = uiCreateUnitInfoTooltip(uix, sumTT[uix]);
+   var tip = uiCreateUnitInfoTooltip(TBU_RACE, uix, sumTT[uix]);
    __EXIT__
 
    return tip;
@@ -604,7 +608,7 @@ function uiCreateDorf3Tooltip(tabNo,villageId,col)
       }
       else if ( tabNo === 5 && ( col >= 1 && col < TG_UNITS_COUNT) )
       {
-         content = uiCreateUnitsTooltip(villageId,col-1);
+         content = uiCreateUnitsTooltip(villageId, col-1);
       }
    }
    else
@@ -980,7 +984,7 @@ function createD3Tb_Tab5()
 
    for ( xi = 0; xi < TG_UNITS_COUNT-1; xi++ )
    {
-      img = getUnitImage(xi);
+      img = getUnitImage(TBU_RACE, xi);
       if ( img )
       {
          tdTop2 = $td(img);
@@ -1372,7 +1376,9 @@ function fillD3TbRow_Tab4_Col4(villageId)
 {
    var xi, img;
    var aCell = $g("aldea" + villageId + "_4_4");
-   var unitsCountInfo = TB3O.VillagesInfo[villageId].uci;
+   var villageInfo = TB3O.VillagesInfo[villageId];
+   var unitsCountInfo = villageInfo.uci;
+   var race = TB3O.KnownRaces[villageInfo.rx];
    var arrUT = unitsCountInfo.ut;
 
    if ( !unitsCountInfo.ttUpd )
@@ -1383,7 +1389,7 @@ function fillD3TbRow_Tab4_Col4(villageId)
    {
       var bSep = false;
       removeChildren(aCell)
-      img = getUnitImage(TG_UIDX_SENATORS);
+      img = getUnitImage(race, TG_UIDX_SENATORS);
       if ( img )
       {
          // senators, chiefs, chieftains
@@ -1395,7 +1401,7 @@ function fillD3TbRow_Tab4_Col4(villageId)
          }
       }
 
-      img = getUnitImage(TG_UIDX_SETTLERS);
+      img = getUnitImage(race, TG_UIDX_SETTLERS);
       if ( img )
       {
          // senators, chiefs, chieftains
@@ -1445,14 +1451,14 @@ function fillD3TbTotals_Tab4_Col4()
    removeChildren(aCell);
    if ( sumUT[TG_UIDX_SENATORS] )
    {
-      addChildren(aCell,[getUnitImage(TG_UIDX_SENATORS)," " + sumUT[TG_UIDX_SENATORS] ]);
+      addChildren(aCell,[getUnitImage(TBU_RACE, TG_UIDX_SENATORS)," " + sumUT[TG_UIDX_SENATORS] ]);
       bSep = true;
    }
 
    if ( sumUT[TG_UIDX_SETTLERS] )
    {
       if ( bSep ) { aCell.appendChild($txt(" / ")); }
-      addChildren(aCell,[getUnitImage(TG_UIDX_SETTLERS)," " + sumUT[TG_UIDX_SETTLERS] ]);
+      addChildren(aCell,[getUnitImage(TBU_RACE, TG_UIDX_SETTLERS)," " + sumUT[TG_UIDX_SETTLERS] ]);
       bSep = true;
    }
    if ( !bSep ) { aCell.textContent = '-'; }
