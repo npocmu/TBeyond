@@ -21,12 +21,26 @@ function parseSeparatedInt10(str,defv)
 }
 
 /////////////////////////////////////////////////////////////////////
-// Compute the seconds for a given human time
+// Compute the seconds for a given human time.
+// hTime may have following formats:
+//    hh:mm:ss
+//    hh:mm
 // Return NaN if can't parse hTime
 function toSeconds(hTime)
 {
    var p = hTime.split(":");
-   return (p.length === 3) ? (p[0] * 3600) + (p[1] * 60) + (p[2] * 1) : Number.NaN;
+   var sec = Number.NaN;
+
+   if ( p.length === 2 || p.length === 3 )
+   {
+      sec = (p[0] * 3600) + (p[1] * 60);
+      if ( p.length === 3 )
+      {
+         sec += (p[2] * 1);
+      }
+   }
+
+   return sec;
 } 
 
 /////////////////////////////////////////////////////////////////////

@@ -18,10 +18,70 @@ function getMerchantsState()
 }
 
 //////////////////////////////////////////////////////////////////////
+function scanMarketRoutesInfo(aDoc, ttServer)
+{
+   var marketRoutesInfo = new MarketRoutesInfo();
+   marketRoutesInfo.ttUpd = ttServer;
+
+   var aTable = $g("trading_routes");
+
+   if ( aTable && aTable.tBodies.length >= 1 )
+   {
+      var aRows = aTable.tBodies[0].rows;
+      var routesCount = aRows.length;
+
+      for ( var i = 0; i < routesCount; ++i )
+      {
+         var aRow = aRows[i];
+         var descNode = __TEST__($qf(".desc",'f',aRow));
+         var startNode = __TEST__($qf(".start",'f',aRow));
+         var tradNode = __TEST__($qf(".trad",'f',aRow));
+         var resNodes = $qf(".res span", 'a', aRow);
+
+         if ( descNode && startNode && tradNode )
+         {
+            var tradParts = trimWhitespaces(tradNode.textContent).split(/[^\d]+/);
+            var merchantsCount = scanIntAny(tradParts[1]);
+            var repCount = scanIntAny(tradParts[0]);
+            var tsStart = toSeconds(startNode.textContent);
+            var Res = getResourcesFromNodes(resNodes);
+            var villageId = parseInt10(getNewdidFromChild(descNode));
+
+            if ( isIntValid(villageId) && isIntValid(tsStart) && isIntValid(repCount) && Res )
+            {
+               var marketRouteInfo = new MarketRouteInfo(villageId, tsStart, Res, repCount);
+               marketRoutesInfo.routes.push(marketRouteInfo);
+            }
+            else
+            {
+               __ERROR__("Can't parse trade route")
+               __DUMP__(villageId, tsStart, merchantsCount, repCount, Res)
+            }
+         }
+      }
+   }
+   return ( marketRoutesInfo.routes.length > 0 ) ? marketRoutesInfo : null;
+}
+
+//////////////////////////////////////////////////////////////////////
+function getMarketRoutesInfo()
+{
+   var marketRoutesInfo = scanMarketRoutesInfo(document, toTimeStamp(TB3O.serverTime));
+
+   if ( marketRoutesInfo )
+   {
+      __DUMP__(marketRoutesInfo)
+   }
+
+   return marketRoutesInfo;
+}
+
+//////////////////////////////////////////////////////////////////////
 function processMarketRoutes()
 {
    __ENTER__
    getMerchantsState();
+   getMarketRoutesInfo();
    __EXIT__
 }
 
