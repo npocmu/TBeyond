@@ -10,14 +10,18 @@ MarketRouteInfo
    xn:        number    - number of sheduled routes
 }
 */
-function MarketRouteInfo(villageId, tsStart, res, xn)
+function MarketRouteInfo(trid, villageId, tsStart, res, xn, enabled)
 {
+   this.trid = trid; 
+
    this.d_vid = villageId; 
 
    this.Res  = res; 
    this.tsStart = tsStart;
 
    this.xn = xn;       
+
+   this.enabled = enabled;       
 
    return this;
 }

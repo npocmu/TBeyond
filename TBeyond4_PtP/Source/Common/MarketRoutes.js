@@ -37,19 +37,30 @@ function scanMarketRoutesInfo(aDoc, ttServer)
          var startNode = __TEST__($qf(".start",'f',aRow));
          var tradNode = __TEST__($qf(".trad",'f',aRow));
          var resNodes = $qf(".res span", 'a', aRow);
+         var editNode = __TEST__($qf("a.arrow",'f',aRow));
+//         var checkNode = __TEST__($qf("input", 'f', aRow));
+         var checkNode = __TEST__($qf('input[type="checkbox"]', 'f', aRow));
 
-         if ( descNode && startNode && tradNode )
+         if ( descNode && startNode && tradNode && editNode )
          {
             var tradParts = trimWhitespaces(tradNode.textContent).split(/[^\d]+/);
             var merchantsCount = scanIntAny(tradParts[1]);
             var repCount = scanIntAny(tradParts[0]);
-            var tsStart = toSeconds(startNode.textContent);
+            var tsStart;
+            if ( startNode.textContent.search(/(\d\d:\d\d)/) !== -1 )
+            {
+               tsStart = toSeconds(RegExp.$1);
+            }
             var Res = getResourcesFromNodes(resNodes);
             var villageId = parseInt10(getNewdidFromChild(descNode));
 
-            if ( isIntValid(villageId) && isIntValid(tsStart) && isIntValid(repCount) && Res )
+            var trid = parseUri(editNode.getAttribute("href")).queryKey.trid;
+
+            var enabled = ( checkNode ) ? checkNode.checked : true;
+
+            if ( trid !== undefined && isIntValid(villageId) && isIntValid(tsStart) && isIntValid(repCount) && Res )
             {
-               var marketRouteInfo = new MarketRouteInfo(villageId, tsStart, Res, repCount);
+               var marketRouteInfo = new MarketRouteInfo(trid, villageId, tsStart, Res, repCount, enabled);
                marketRoutesInfo.routes.push(marketRouteInfo);
             }
             else
@@ -71,6 +82,12 @@ function getMarketRoutesInfo()
    if ( marketRoutesInfo )
    {
       __DUMP__(marketRoutesInfo)
+      TB3O.VillagesMRInfo.set(marketRoutesInfo);
+      TB3O.VillagesMRInfo.flush();
+   }
+   else
+   {
+      TB3O.VillagesMRInfo.drop();
    }
 
    return marketRoutesInfo;
@@ -206,7 +223,7 @@ function uiEnableMarketRoutesInterface()
    }
 
    //-----------------------------------------------------------------
-   var editTbl = __TEST__($g("trading_edit"));
+   var editTbl = __TEST__($g("tradeRouteEdit"));
    if ( editTbl )
    {
       try
@@ -267,10 +284,7 @@ function uiEnableMarketRoutesInterface()
 
          uiRefresh();
       }
-      catch(e)
-      {
-         __DUMP__(e)
-      } 
+      __CATCH__
    }
 
    __EXIT__

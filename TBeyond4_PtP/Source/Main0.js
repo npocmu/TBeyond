@@ -47,6 +47,7 @@
 
    TB3O.VillagesTrInfo = new PersistentVillageCache("TrI"); // cache for training info
    TB3O.VillagesMUInfo = new PersistentVillageCache("MUI"); // cache for merchants underway
+   TB3O.VillagesMRInfo = new PersistentVillageCache("MRI"); // cache for market trade routes
    //TB3O.VillagesRPInfo = new PersistentVillageCache("RPI"); // cache for rally point info
 
    TB3O.UserID = '0';

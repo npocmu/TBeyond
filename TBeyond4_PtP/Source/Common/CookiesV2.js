@@ -122,6 +122,22 @@ PersistentVillageCache.prototype.flush = function (villageId /*opt*/)
    }
 }
 
+/////////////////////////////////////////////////////////////////////
+// Remove information about village @villageId (or about current village if @villageId is absent)
+// from cache and from persistent storage.
+PersistentVillageCache.prototype.drop = function (villageId /*opt*/)
+{
+   var info;
+
+   if ( villageId === undefined ) 
+   {
+      villageId = TB3O.ActiveVillageId;
+   }
+
+   delete this.o[villageId]; 
+   persistence.drop(persistence.getVillageSpecificNS(villageId), this.n);
+}
+
 
 //////////////////////////////////////////////////////////////////////
 // OBSOLETE
