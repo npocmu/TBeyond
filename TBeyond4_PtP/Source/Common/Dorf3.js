@@ -51,7 +51,7 @@ function processDorf3_Tab2(origT)
    var i, j, villageId, resourcesInfo;
    var v;
 
-   vRows = origT.tBodies[0].rows;
+   vRows = origT[0].tBodies[0].rows;
    vCount = vRows.length;
    for ( i = 0; i < vCount; ++i )
    {
@@ -88,7 +88,7 @@ function processDorf3_Tab3(origT)
    var v, r;
    var ttFillG,ttFillGest,EPpH;
 
-   vRows = origT.tBodies[0].rows;
+   vRows = origT[0].tBodies[0].rows;
    vCount = vRows.length;
    for ( i = 0; i < vCount; ++i )
    {
@@ -159,7 +159,7 @@ function processDorf3_Tab4(origT)
    var cp;
    var ttServer = toTimeStamp(TB3O.serverTime);
 
-   vRows = origT.tBodies[0].rows;
+   vRows = origT[0].tBodies[0].rows;
    vCount = vRows.length;
    for ( i = 0; i < vCount; ++i )
    {
@@ -185,28 +185,31 @@ function processDorf3_Tab5(origT)
    __ENTER__
 
    var vRows,vCells,vCount;
-   var i, j, villageId, unitCountInfo, unitsTotal;
+   var i, j, k, villageId, unitCountInfo, unitsTotal;
    var ttServer = toTimeStamp(TB3O.serverTime);
 
-   vRows = origT.tBodies[0].rows;
-   vCount = vRows.length;
-   for ( i = 0; i < vCount; ++i )
+   for ( k = 0; k < origT.length; ++k )
    {
-      vCells = vRows[i].cells;
-      villageId = getNewdidFromChild(vCells[0]);
-      if ( villageId )
+      vRows = origT[k].tBodies[0].rows;
+      vCount = vRows.length;
+      for ( i = 0; i < vCount; ++i )
       {
-         unitsTotal = fillArray(new Array(TG_UNITS_COUNT),0);
-         unitCountInfo = TB3O.VillagesInfo[villageId].uci;
-
-         for ( j = 1; j < vCells.length; ++j )
+         vCells = vRows[i].cells;
+         villageId = getNewdidFromChild(vCells[0]);
+         if ( villageId )
          {
-            v = parseInt10(vCells[j].textContent);
-            if ( isIntValid(v) ) { unitsTotal[j-1] = v; }
-         }
+            unitsTotal = fillArray(new Array(TG_UNITS_COUNT),0);
+            unitCountInfo = TB3O.VillagesInfo[villageId].uci;
 
-         unitCountInfo.ut = unitsTotal;
-         unitCountInfo.ttUpd = ttServer;
+            for ( j = 1; j < vCells.length; ++j )
+            {
+               v = parseInt10(vCells[j].textContent);
+               if ( isIntValid(v) ) { unitsTotal[j-1] = v; }
+            }
+
+            unitCountInfo.ut = unitsTotal;
+            unitCountInfo.ttUpd = ttServer;
+         }
       }
    }
    __EXIT__
@@ -278,7 +281,7 @@ __DUMP__(TB3O.Overview)
 
       if ( TB3O.Overview.plAc && tabNo <= 5 )
       {
-         [processDorf3_Tab1,processDorf3_Tab2,processDorf3_Tab3,processDorf3_Tab4,processDorf3_Tab5][tabNo-1](TB3O.Overview.origT[0]);
+         [processDorf3_Tab1,processDorf3_Tab2,processDorf3_Tab3,processDorf3_Tab4,processDorf3_Tab5][tabNo-1](TB3O.Overview.origT);
       }
       else if ( tabNo > 2 )  // without Plus merchant info present on all tabs
       {
