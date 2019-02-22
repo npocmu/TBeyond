@@ -9,6 +9,11 @@ ResourcesEvent
                           true: resources added to storage
                           false: resources substracted from storage
 
+   bExact: boolean      - accuracy of event
+                          true: event occured in any case
+                          false: this event sheduled but may have
+                          other number of resources (less than sheduled)
+
    ttEnd:     number    - server timestamp when event will occurs
 
    details:   object    - optional info about event details
@@ -17,10 +22,11 @@ ResourcesEvent
 }
 */
 
-function ResourcesEvent(Res, bIncoming, ttEnd, details)
+function ResourcesEvent(Res, bIncoming, bExact, ttEnd, details)
 {
    this.Res = Res;              
    this.bIncoming = !!bIncoming;
+   this.bExact = !!bExact;
    this.ttEnd = ttEnd;
 
    if ( details )
@@ -53,6 +59,7 @@ function getResourcesEventView(resourcesEvent, ri)
    var str = "\n";
 
    str += "Event [" + toDate(resourcesEvent.ttEnd) + "]: ";
+   str +=  ( resourcesEvent.bExact ) ? "" : "possible ";
    str +=  ( resourcesEvent.bIncoming ) ? "income +" : "outcome -";
    str += resourcesEvent.Res[ri];
 

@@ -320,11 +320,7 @@ function processMarketSend()
    var mu = getMerchantsUnderway(TB3O.ActiveVillageId, document, toTimeStamp(TB3O.serverTime), false);
    __ASSERT__(mu,"Can't parse merchants underway info")
 
-   if ( mu )
-   {
-      TB3O.VillagesMUInfo.set(mu);
-      TB3O.VillagesMUInfo.flush();
-   }
+   TB3O.VillagesMUInfo.store(mu);
 
    __EXIT__
 }
@@ -483,6 +479,7 @@ function uiModifyMarketSend()
       initMerchantsStat();
       fireChangeEvent($g("tb_usetraders")); // force recalculation for max transport
       mu = getMerchantsUnderway(TB3O.ActiveVillageId, document, ttServer, false);
+      TB3O.VillagesMUInfo.store(mu);
       getResourcesResCap(TB3O.ActiveVillageInfo.r, document, ttServer);
       saveVillagesInfo(TB3O.VillagesInfo);
       TB3O.ResInfoTotals = getResInfoTotals();
@@ -516,43 +513,40 @@ function uiModifyMarketSend()
       removeElement($g("tb_arrm_progress"));
       removeElement($g("tb_arrm"));
 
-      if ( mu )
+      var resourcesEventsQueue = getVillageResourcesEventsQueue(TB3O.ActiveVillageId);
+      sortEventsQueueByTime(resourcesEventsQueue);
+      //__DUMP__(resourcesEventsQueue);
+
+      if ( mu && TBO_SHOW_ADDINFO_INCOMING_MERC === '1' )
       {
-         var resourcesEventsQueue = getMerchantsUnderwayResourcesEventsQueue(mu);
-         sortEventsQueueByTime(resourcesEventsQueue);
-         //__DUMP__(resourcesEventsQueue);
+         uiModifyUnderwayTables(mu.i, false);
+         uiModifyUnderwayTables(mu.o, false);
+         uiModifyUnderwayTables(mu.r, true);
 
-         if ( TBO_SHOW_ADDINFO_INCOMING_MERC === '1' )
+         uiModifyArrivalsTables(resourcesEventsQueue);
+      }
+
+      if ( TBO_SHOW_ARR_TOTALS_TABLE_MP === '1' && resourcesEventsQueue.length > 0 )
+      {
+         var aTb = uiCreateCumulativeArrivalsTable(resourcesEventsQueue);
+         if ( aTb ) 
          {
-            uiModifyUnderwayTables(mu.i, false);
-            uiModifyUnderwayTables(mu.o, false);
-            uiModifyUnderwayTables(mu.r, true);
-
-            uiModifyArrivalsTables(resourcesEventsQueue);
-         }
-
-         if ( TBO_SHOW_ARR_TOTALS_TABLE_MP === '1' && resourcesEventsQueue.length > 0 )
-         {
-            var aTb = uiCreateCumulativeArrivalsTable(resourcesEventsQueue);
-            if ( aTb ) 
+            insertBefore(formular, aTb);
+            for ( i = 0, ri = -1; i < 4; ++i )
             {
-               insertBefore(formular, aTb);
-               for ( i = 0, ri = -1; i < 4; ++i )
+               if ( uiOptions._.showprogress[i] )
                {
-                  if ( uiOptions._.showprogress[i] )
-                  {
-                     ri = i;
-                     break;
-                  }
+                  ri = i;
+                  break;
                }
+            }
 
-               if ( ri >= 0 )
+            if ( ri >= 0 )
+            {
+               if ( rxProgress[ri] ) 
                {
-                  if ( rxProgress[ri] ) 
-                  {
-                     uiOptions._.showprogress = [false,false,false,false];
-                     rxProgress[ri].click();
-                  }
+                  uiOptions._.showprogress = [false,false,false,false];
+                  rxProgress[ri].click();
                }
             }
          }
@@ -840,18 +834,21 @@ function uiModifyMarketSend()
                resourcesEvent = resourcesEventsQueue[i];
                state = getCumulativeResourcesInfoAfterEvent(resourcesInfo, resourcesEvent);
 
-               //__DUMP__(getResourcesEventView(resourcesEvent, ri))
+               __DUMP__(getResourcesEventView(resourcesEvent, ri))
                //__DUMP__(getCumulativeResourcesStateView(resourcesInfo, state, ri))
                
                addChildren(aBody,uiCreateUnderOverrunProgressRow(resourcesInfo, ri, state.BA));
-               var eventCell = $td(['class', 'tbEvent ' + (( resourcesEvent.bIncoming ) ? 'tbIncoming':'tbOutcoming')]);
+               var eventCell = $td(['class', 'tbEvent' + (( resourcesEvent.bIncoming ) ? ' tbIncoming' : ' tbOutcoming') +
+                                                         (( resourcesEvent.bExact ) ? '' : ' tbPossible') ]);
+               var strRes = $ls(resourcesEvent.Res[ri]) + (( resourcesEvent.bExact ) ? "" : "?");
+               __DUMP__(strRes)
                if ( resourcesEvent.bIncoming )
                {
-                  addChildren(eventCell,[imgMerchant.cloneNode(true),imgIncoming.cloneNode(true),$span($ls(resourcesEvent.Res[ri]))]);
+                  addChildren(eventCell,[imgMerchant.cloneNode(true),imgIncoming.cloneNode(true),$span(strRes)]);
                }
                else
                {
-                  addChildren(eventCell,[$span($ls(resourcesEvent.Res[ri])),imgOutcoming.cloneNode(true),imgMerchant.cloneNode(true)]);
+                  addChildren(eventCell,[$span(strRes),imgOutcoming.cloneNode(true),imgMerchant.cloneNode(true)]);
                }
 
                aBody.appendChild(uiCreateProgressRow(resourcesInfo, ri, eventCell, state.A));

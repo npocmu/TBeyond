@@ -324,6 +324,7 @@ IF_TB3({{
    'table#tb_arrm_progress td.tbEvent.tbOver, table#tb_arrm_progress td.tbEvent.tbUnder {text-align:center; background-color:' + TB3O.DFc[1] + ';}' +
    'table#tb_arrm_progress td.tbEvent.tbIncoming {text-align:' + docDir[0] +';}' +
    'table#tb_arrm_progress td.tbEvent.tbOutcoming {text-align:' + docDir[1] +';}' +
+   'table#tb_arrm_progress td.tbEvent.tbPossible {background-color:#f7f1b4;}' +
 
    'table#tb_arrm_progress td.tbFillPerc {max-width:30px; padding:2px;}' +
    'table#tb_arrm_progress td.tbCapReached {color:red;' + blink_style + '}' +

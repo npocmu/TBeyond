@@ -38,7 +38,6 @@ function scanMarketRoutesInfo(aDoc, ttServer)
          var tradNode = __TEST__($qf(".trad",'f',aRow));
          var resNodes = $qf(".res span", 'a', aRow);
          var editNode = __TEST__($qf("a.arrow",'f',aRow));
-//         var checkNode = __TEST__($qf("input", 'f', aRow));
          var checkNode = __TEST__($qf('input[type="checkbox"]', 'f', aRow));
 
          if ( descNode && startNode && tradNode && editNode )
@@ -66,7 +65,7 @@ function scanMarketRoutesInfo(aDoc, ttServer)
             else
             {
                __ERROR__("Can't parse trade route")
-               __DUMP__(villageId, tsStart, merchantsCount, repCount, Res)
+               __DUMP__(trid, villageId, tsStart, merchantsCount, repCount, Res)
             }
          }
       }
@@ -78,17 +77,7 @@ function scanMarketRoutesInfo(aDoc, ttServer)
 function getMarketRoutesInfo()
 {
    var marketRoutesInfo = scanMarketRoutesInfo(document, toTimeStamp(TB3O.serverTime));
-
-   if ( marketRoutesInfo )
-   {
-      __DUMP__(marketRoutesInfo)
-      TB3O.VillagesMRInfo.set(marketRoutesInfo);
-      TB3O.VillagesMRInfo.flush();
-   }
-   else
-   {
-      TB3O.VillagesMRInfo.drop();
-   }
+   TB3O.VillagesMRInfo.store(marketRoutesInfo);
 
    return marketRoutesInfo;
 }

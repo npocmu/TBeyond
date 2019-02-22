@@ -138,6 +138,20 @@ PersistentVillageCache.prototype.drop = function (villageId /*opt*/)
    persistence.drop(persistence.getVillageSpecificNS(villageId), this.n);
 }
 
+/////////////////////////////////////////////////////////////////////
+PersistentVillageCache.prototype.store = function (info, villageId /*opt*/)
+{
+   if ( info )
+   {
+      this.set(info, villageId);
+      this.flush(villageId);
+   }
+   else
+   {
+      this.drop(villageId);
+   }
+}
+
 
 //////////////////////////////////////////////////////////////////////
 // OBSOLETE

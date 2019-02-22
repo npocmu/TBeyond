@@ -358,10 +358,15 @@ function getTotalPopulation()
 //////////////////////////////////////////////////////////////////////
 function getVillageRace(villageInfo)
 {
-   var race = TB3O.KnownRaces[villageInfo.rx];
-   if ( !isStrValid(race) )
+   var race = TBU_RACE;
+
+   if ( villageInfo )
    {
-      race = TBU_RACE;
+      race = TB3O.KnownRaces[villageInfo.rx];
+      if ( !isStrValid(race) )
+      {
+         race = TBU_RACE;
+      }
    }
 
    return race;

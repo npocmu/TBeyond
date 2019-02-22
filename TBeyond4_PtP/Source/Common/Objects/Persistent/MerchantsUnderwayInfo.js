@@ -59,16 +59,20 @@ function MerchantsUnderwayInfo()
 /////////////////////////////////////////////////////////////////////
 // Convert merchantsUnderwayInfo to ResourcesEventsQueue
 // Return: ResourcesEventsQueue (UNSORTED!)
-function getMerchantsUnderwayResourcesEventsQueue(merchantsUnderwayInfo)
+//function getMerchantsUnderwayResourcesEventsQueue(villageIdmerchantsUnderwayInfo)
+function getVillageResourcesEventsQueue(villageId)
 {
    var resourcesEventsQueue = [];
    var ttServer = toTimeStamp(TB3O.serverTime);
+   var merchantsUnderwayInfo = TB3O.VillagesMUInfo.load(villageId);
+   var mapIdDict = getVillagesMapIdDict(TB3O.VillagesInfo);
 
    function resolveRoutes(merchantUnderwayInfo, bIncoming, halfRoutesDone)
    {
       if ( merchantUnderwayInfo.xn > 1 )
       {
-         var race = TBU_RACE; // INACCURATE!
+         var villageInfo = TB3O.VillagesInfo[mapIdDict[merchantUnderwayInfo.s_id]];
+         var race = getVillageRace(villageInfo);
          var srcXY = id2xy(merchantUnderwayInfo.s_id);
          var destXY = id2xy(merchantUnderwayInfo.d_id);
          var qDist = getDistance(destXY[0], destXY[1], srcXY[0], srcXY[1]);
@@ -79,7 +83,7 @@ function getMerchantsUnderwayResourcesEventsQueue(merchantsUnderwayInfo)
             var ttEnd = merchantUnderwayInfo.ttArrival + getMerchantTime(xDist, race) * 1000;
             if ( ttEnd > ttServer )
             {
-               var resourcesEvent = new ResourcesEvent(merchantUnderwayInfo.Res, bIncoming, ttEnd, merchantUnderwayInfo);
+               var resourcesEvent = new ResourcesEvent(merchantUnderwayInfo.Res, bIncoming, false, ttEnd, merchantUnderwayInfo);
                resourcesEventsQueue.push(resourcesEvent);
             }
          }
@@ -96,7 +100,7 @@ function getMerchantsUnderwayResourcesEventsQueue(merchantsUnderwayInfo)
 
       if ( merchantUnderwayInfo.ttArrival > ttServer )
       {
-         resourcesEvent = new ResourcesEvent(merchantUnderwayInfo.Res, true, merchantUnderwayInfo.ttArrival, merchantUnderwayInfo);
+         resourcesEvent = new ResourcesEvent(merchantUnderwayInfo.Res, true, true, merchantUnderwayInfo.ttArrival, merchantUnderwayInfo);
          resourcesEventsQueue.push(resourcesEvent);
       }
 
