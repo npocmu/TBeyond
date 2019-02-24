@@ -94,6 +94,13 @@ function processMarketRoutes()
 //////////////////////////////////////////////////////////////////////
 function uiModifyMarketRoutes()
 {
+   __ENTER__
+   var checkNodes = $qf('#trading_routes input[type="checkbox"]', 'a');
+   for ( var i = 0; i < checkNodes.length; ++i )
+   {
+      checkNodes[i].addEventListener("change", getMarketRoutesInfo);
+   }
+   __EXIT__
 }
 
 
