@@ -56,41 +56,80 @@ function MerchantsUnderwayInfo()
    return this;
 }
 
+var RESOLVE_ROUTES_HOURS = 24;
 /////////////////////////////////////////////////////////////////////
 // Convert scheduled trade routes to events
 function _getTradeRoutesEventsQueue(villageId, resourcesEventsQueue)
 {
-   var srcVillageId;
-   var marketRoutesInfo;
+   var routeVillageId, routeVillageInfo;
+   var villageInfo = TB3O.VillagesInfo[villageId];
    var ttServer = toTimeStamp(TB3O.serverTime);
-   var dtMidnight = new Date(TB3O.serverTime.getYear(),TB3O.serverTime.getMonth(),TB3O.serverTime.getDay());
+   var dtMidnight = new Date(TB3O.serverTime.getFullYear(),TB3O.serverTime.getMonth(),TB3O.serverTime.getDate());
    var ttMidnight = toTimeStamp(dtMidnight);
 
-   //var destXY = id2xy(merchantUnderwayInfo.d_id);
-
-   for ( srcVillageId in TB3O.VillagesInfo )
+   for ( routeVillageId in TB3O.VillagesInfo )
    {
-      if ( srcVillageId != villageId )
+      // bIncoming == true when routes from routeVillageId
+      //              false when routes from villageId
+      var bIncoming = ( routeVillageId != villageId );
+      var marketRoutesInfo = TB3O.VillagesMRInfo.load(routeVillageId);
+
+      if ( marketRoutesInfo.routes && marketRoutesInfo.ttUpd !== undefined )
       {
-         marketRoutesInfo = TB3O.VillagesMRInfo.load(srcVillageId);
-         if ( marketRoutesInfo.routes && marketRoutesInfo.ttUpd !== undefined )
+         if ( bIncoming )
          {
-            for ( var i = 0; i < marketRoutesInfo.routes.length; ++i )
+            // routeVillageInfo is info about the source village
+            routeVillageInfo = TB3O.VillagesInfo[routeVillageId];
+         }
+
+         for ( var i = 0; i < marketRoutesInfo.routes.length; ++i )
+         {
+            var marketRouteInfo = marketRoutesInfo.routes[i];
+            if ( !bIncoming )
             {
-               var marketRouteInfo = marketRoutesInfo.routes[i];
-               if ( marketRouteInfo.d_vid == villageId && marketRouteInfo.enabled )
+               // routeVillageInfo is info about the target village
+               routeVillageInfo = TB3O.VillagesInfo[marketRouteInfo.d_vid];
+            }
+            
+            // route enabled and it destination or source is villageId?
+            if ( marketRouteInfo.enabled && 
+                ( ( bIncoming && marketRouteInfo.d_vid == villageId ) || !bIncoming ) )
+            {
+               var ttStart = ttMidnight + marketRouteInfo.tsStart*1000;
+
+               if ( ttStart <= ttServer )
                {
-                  var ttStart = ttMidnight + marketRouteInfo.tsStart*1000;
-                  if ( ttStart > ttServer )
+                  ttStart += TPL_MSECPERDAY;
+               }
+
+               var race = getVillageRace(( bIncoming ) ? routeVillageInfo : villageInfo);
+               var qDist = getDistance(villageInfo.x, villageInfo.y, routeVillageInfo.x, routeVillageInfo.y);
+               var ttTravel = getMerchantTime(qDist, race) * 1000;
+
+               __LOG__(8, {{routeVillageInfo.name + ((bIncoming) ? " ==> ":" <== ") + villageInfo.name + ", distance: " + qDist + ", time: " + formatTimeSpan(ttTravel/1000)}})
+
+               for ( ; ttStart > ttServer && ttStart <= ttServer + RESOLVE_ROUTES_HOURS*TPL_MSECPERHOUR; ttStart += TPL_MSECPERDAY )
+               {
+                  var ttEnd = ttStart;
+                  if ( bIncoming )
                   {
-                      
-                     __DUMP__(marketRouteInfo)
-                     /*
-                     var qDist = getDistance(destXY[0], destXY[1], srcXY[0], srcXY[1]);
-                     var ttEnd = ttStart + getMerchantTime(xDist, race) * 1000;
-                     var resourcesEvent = new ResourcesEvent(marketRouteInfo.Res, bIncoming, false, ttEnd, marketRouteInfo);
+                     ttEnd += ttTravel;
+                  } 
+
+                  for (var xn = 1; xn <= marketRouteInfo.xn; ++xn )
+                  {
+                     var resourcesEvent = new ResourcesEvent(marketRouteInfo.Res, bIncoming, false, false, ttEnd, {"marketRouteInfo" : marketRouteInfo});
                      resourcesEventsQueue.push(resourcesEvent);
-                     *
+
+                     __DUMP__(xn, getResourcesEventView(resourcesEvent))
+
+                     // if target for route is a foreign village then create only one resourcesEvent
+                     if ( !isIntValid(ttTravel) )
+                     {
+                        break;
+                     }
+
+                     ttEnd += ttTravel*2;
                   }
                }
             }
@@ -104,6 +143,7 @@ function _getTradeRoutesEventsQueue(villageId, resourcesEventsQueue)
 // Return: ResourcesEventsQueue (UNSORTED!)
 function getVillageResourcesEventsQueue(villageId)
 {
+   __ENTER__
    var resourcesEventsQueue = [];
    var ttServer = toTimeStamp(TB3O.serverTime);
    var merchantsUnderwayInfo = TB3O.VillagesMUInfo.load(villageId);
@@ -125,7 +165,7 @@ function getVillageResourcesEventsQueue(villageId)
             var ttEnd = merchantUnderwayInfo.ttArrival + getMerchantTime(xDist, race) * 1000;
             if ( ttEnd > ttServer )
             {
-               var resourcesEvent = new ResourcesEvent(merchantUnderwayInfo.Res, bIncoming, false, ttEnd, merchantUnderwayInfo);
+               var resourcesEvent = new ResourcesEvent(merchantUnderwayInfo.Res, bIncoming, true, false, ttEnd, { "merchantUnderwayInfo" : merchantUnderwayInfo} );
                resourcesEventsQueue.push(resourcesEvent);
             }
          }
@@ -144,7 +184,7 @@ function getVillageResourcesEventsQueue(villageId)
 
          if ( merchantUnderwayInfo.ttArrival > ttServer )
          {
-            resourcesEvent = new ResourcesEvent(merchantUnderwayInfo.Res, true, true, merchantUnderwayInfo.ttArrival, merchantUnderwayInfo);
+            resourcesEvent = new ResourcesEvent(merchantUnderwayInfo.Res, true, true, true, merchantUnderwayInfo.ttArrival, { "merchantUnderwayInfo" : merchantUnderwayInfo});
             resourcesEventsQueue.push(resourcesEvent);
          }
 
@@ -170,6 +210,8 @@ function getVillageResourcesEventsQueue(villageId)
    }
 
    _getTradeRoutesEventsQueue(villageId, resourcesEventsQueue);
+
+   __EXIT__
 
    return resourcesEventsQueue;
 }

@@ -736,7 +736,7 @@ function uiModifyMarketSend()
       }
 
       //--------------------------------------------------------------
-      function uiCreateProgressRow(resourcesInfo, ri, eventCell, st)
+      function uiCreateProgressRow(resourcesEvent, resourcesInfo, ri, eventCell, st)
       {
          var ttEvent = resourcesInfo.ttUpd;
          var ruoType = st.ev[ri];
@@ -768,10 +768,11 @@ function uiModifyMarketSend()
          }
 
          var dtDesired = getDesiredTime(ttEvent);
+         var clsPossible = (( resourcesEvent.bQueued ) ? '' : ' tbPossible');
          var aRow =
             $r(null,[
-               $td(['class', 'tbArrivalT'],formatDateTime(dtNow, dtDesired, 1)),
-               uiSetTimeSpanByDate($td(['class', 'tbTravelT']), dtNow, dtDesired),
+               $td(['class', 'tbArrivalT' + clsPossible], formatDateTime(dtNow, dtDesired, 1)),
+               uiSetTimeSpanByDate($td(['class', 'tbTravelT' + clsPossible]), dtNow, dtDesired),
                eventCell,
                $td(['class', 'tbTotal' + totalClass], strTotal),
                uiSetFillPercent($td(),resourcesInfo,ri),
@@ -781,7 +782,7 @@ function uiModifyMarketSend()
       }
 
       //--------------------------------------------------------------
-      function uiCreateUnderOverrunProgressRow(resourcesInfo, ri, st)
+      function uiCreateUnderOverrunProgressRow(resourcesEvent, resourcesInfo, ri, st)
       {
          var aRow = null;
          var ruoType = st.ev[ri];
@@ -796,7 +797,7 @@ function uiModifyMarketSend()
             resourcesInfoEv.Res[ri] = ( ruoType ) ? resourcesInfoEv.Cap[ri] : 0;
 
             var eventCell = $td(['class', 'tbEvent ' + eventClass], eventImg);
-            aRow = uiCreateProgressRow(resourcesInfoEv, ri, eventCell, st);
+            aRow = uiCreateProgressRow(resourcesEvent, resourcesInfoEv, ri, eventCell, st);
          }
          return aRow;
       }
@@ -834,14 +835,13 @@ function uiModifyMarketSend()
                resourcesEvent = resourcesEventsQueue[i];
                state = getCumulativeResourcesInfoAfterEvent(resourcesInfo, resourcesEvent);
 
-               __DUMP__(getResourcesEventView(resourcesEvent, ri))
+               //__DUMP__(getResourcesEventView(resourcesEvent, ri))
                //__DUMP__(getCumulativeResourcesStateView(resourcesInfo, state, ri))
                
-               addChildren(aBody,uiCreateUnderOverrunProgressRow(resourcesInfo, ri, state.BA));
+               addChildren(aBody,uiCreateUnderOverrunProgressRow(resourcesEvent, resourcesInfo, ri, state.BA));
                var eventCell = $td(['class', 'tbEvent' + (( resourcesEvent.bIncoming ) ? ' tbIncoming' : ' tbOutcoming') +
                                                          (( resourcesEvent.bExact ) ? '' : ' tbPossible') ]);
                var strRes = $ls(resourcesEvent.Res[ri]) + (( resourcesEvent.bExact ) ? "" : "?");
-               __DUMP__(strRes)
                if ( resourcesEvent.bIncoming )
                {
                   addChildren(eventCell,[imgMerchant.cloneNode(true),imgIncoming.cloneNode(true),$span(strRes)]);
@@ -851,14 +851,14 @@ function uiModifyMarketSend()
                   addChildren(eventCell,[$span(strRes),imgOutcoming.cloneNode(true),imgMerchant.cloneNode(true)]);
                }
 
-               aBody.appendChild(uiCreateProgressRow(resourcesInfo, ri, eventCell, state.A));
+               aBody.appendChild(uiCreateProgressRow(resourcesEvent, resourcesInfo, ri, eventCell, state.A));
             }
          }
 
          // if there is an event for selected type of resource then we get its state after accumulation 
          if ( state )
          {
-            aBody.appendChild(uiCreateUnderOverrunProgressRow(resourcesInfo, ri, state.AA));
+            aBody.appendChild(uiCreateUnderOverrunProgressRow(resourcesEvent, resourcesInfo, ri, state.AA));
          }
 
          insertAfter(armTable, prT);
@@ -1076,7 +1076,7 @@ function uiModifyMarketSend()
          for ( i = 0; i < resourcesEventsQueue.length; ++i )
          {
             var resourcesEvent = resourcesEventsQueue[i];
-            var merchantUnderwayInfo = resourcesEvent.details;
+            var merchantUnderwayInfo = resourcesEvent.details.merchantUnderwayInfo;
             getCumulativeResourcesInfoAfterEvent(resourcesInfo, resourcesEvent, cumState);
 
             var aTb = $g(MerchantsUnderwayDOMInfo.getId(merchantUnderwayInfo));

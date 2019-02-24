@@ -9,27 +9,34 @@ ResourcesEvent
                           true: resources added to storage
                           false: resources substracted from storage
 
-   bExact: boolean      - accuracy of event
-                          true: event occured in any case
+   bQueued:   boolean   - true: event occured in any case
+                          false: possible event
+
+   bExact:    boolean   - accuracy of event resources
+                          true: Res show exact number of resources
                           false: this event sheduled but may have
                           other number of resources (less than sheduled)
+                          When bQueued false then bExact ia also false
 
    ttEnd:     number    - server timestamp when event will occurs
 
    details:   object    - optional info about event details
-                          If present it can be one of following:
-                             MerchantUnderwayInfo
+                          If present it may have be one of following tags:
+                           - merchantUnderwayInfo,
+                           - marketRouteInfo
 }
 */
 
-function ResourcesEvent(Res, bIncoming, bExact, ttEnd, details)
+function ResourcesEvent(Res, bIncoming, bQueued, bExact, ttEnd, details)
 {
    this.Res = Res;              
    this.bIncoming = !!bIncoming;
-   this.bExact = !!bExact;
+   this.bQueued = !!bQueued;
+   this.bExact = ( this.bQueued ) ? !!bExact : false;
    this.ttEnd = ttEnd;
+   this.details = {};
 
-   if ( details )
+   if ( isObjValid(details) )
    {
       this.details = details;
    }
@@ -54,14 +61,14 @@ function sortEventsQueueByTime(evQueue)
 M4_DEBUG({{
 /////////////////////////////////////////////////////////////////////
 // Debug!!!
-function getResourcesEventView(resourcesEvent, ri) 
+function getResourcesEventView(resourcesEvent, ri/*opt*/) 
 {
    var str = "\n";
 
-   str += "Event [" + toDate(resourcesEvent.ttEnd) + "]: ";
+   str +=  ( ( resourcesEvent.bQueued ) ? "Possible event" : "Event" ) + " [" + toDate(resourcesEvent.ttEnd) + "]: ";
    str +=  ( resourcesEvent.bExact ) ? "" : "possible ";
    str +=  ( resourcesEvent.bIncoming ) ? "income +" : "outcome -";
-   str += resourcesEvent.Res[ri];
+   str +=  ( ri === undefined ) ? JSON.stringify(resourcesEvent.Res) : resourcesEvent.Res[ri];
 
    return str;
 }

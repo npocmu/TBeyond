@@ -82,7 +82,7 @@ PersistentVillageCache.prototype.load = function (villageId /*opt*/)
    }
    else
    {
-      __LOG__(8,"Cache miss an object tagged '" + this.n + "' for village " + villageId + " ('" + TB3O.VillagesInfo[villageId].name + "')")
+      __LOG__(10,"Cache miss an object tagged '" + this.n + "' for village " + villageId + " ('" + TB3O.VillagesInfo[villageId].name + "')")
       info = loadPersistentVillageObject(this.n, {}, villageId);
       this.o[villageId] = info;
    }

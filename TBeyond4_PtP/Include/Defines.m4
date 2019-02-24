@@ -14,6 +14,9 @@ m4_dnl  PURPOSE:
 m4_dnl ***************************************************************
 M4_ECHO_OFF
 
+m4_define({{TPL_MSECPERHOUR}},		{{3600*1000}})
+m4_define({{TPL_MSECPERDAY}},		{{24*TPL_MSECPERHOUR}})
+
 m4_define({{TPL_USERINFO}},		{{TB3O.U[{{$1}}]}})
 m4_define({{TBU_NAME}},			{{TPL_USERINFO(0)}})
 m4_define({{TBU_RACE}},			{{TPL_USERINFO(1)}})
