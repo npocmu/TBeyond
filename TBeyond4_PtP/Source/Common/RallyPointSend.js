@@ -69,7 +69,7 @@ function uiModifyRallyPointSend()
 {
    __ENTER__
 
-   var availableTroops, sendTroops;
+   var availableTroops, sendTroops, scoutTI;
    var statSendTable;
 
    //-------------------------------------------------------------
@@ -86,13 +86,20 @@ function uiModifyRallyPointSend()
       for ( i = 1; i < 12; ++i )
       {
          var aInput = $xf(".//input[@name='t" + i + "']",sendTable);
-         if (aInput)
+         if ( aInput )
          {
             aInput.id = 'tb_i' + i;
             var aParent = aInput.parentNode;
             var unitImg = $nth_tag(aParent,"img",0);
             var index =  ( unitImg ) ? getTroopIndexTitleFromImg(unitImg)[0] : null;
-            if ( index && TBU_RACE === '' ) { setRaceFromTroopIndex(index); }
+            if ( index ) 
+            { 
+               if ( TBU_RACE === '' && !TB3O.ServerInfo.features.path_to_pandora )
+               {
+                  setRaceFromTroopIndex(index);
+               }
+               TB3O.ActiveVillageInfo.rx = getRaceIndexFromTroopIndex(index);
+            }
 
             var aLabel = $nth_tag(aParent,"a",0);
             var count = 0;
@@ -216,7 +223,7 @@ function uiModifyRallyPointSend()
    //-------------------------------------------------------------
    function uiSetScout()
    {
-      var troopNo = getTroopNoByIndex(availableTroops, getScoutTroopIndex(TBU_RACE));
+      var troopNo = getTroopNoByIndex(availableTroops, scoutTI);
       var scoutsAvailable = availableTroops[troopNo][1];
       var iNoOfScouts = $g('tb_selectscoutnumber');
       var wNoOfScouts = (iNoOfScouts) ? parseInt10(iNoOfScouts.value) : 3;
@@ -257,7 +264,6 @@ function uiModifyRallyPointSend()
          //no troops for fake selected  => use default (most slow unit available)
          var minSpeed = Infinity;
          var slowTroopNo; 
-         var scoutTI = getScoutTroopIndex(TBU_RACE);
          for( troopNo = 0; troopNo < 8; ++troopNo )
          {
             if ( availableTroops[troopNo][1] > 0 && availableTroops[troopNo][0] !== scoutTI )
@@ -309,7 +315,6 @@ function uiModifyRallyPointSend()
       function uiAddSelectScoutLink(aTb)
       {
          var aCell, bCell, aInput;
-         var scoutTI = getScoutTroopIndex(TBU_RACE);
          var troopNo = getTroopNoByIndex(availableTroops, scoutTI);
          var scoutsAvailable = ( troopNo === undefined ) ? 0 : availableTroops[troopNo][1];
          var scouts = parseInt10(TBO_NO_OF_SCOUTS);
@@ -333,7 +338,6 @@ function uiModifyRallyPointSend()
       {
          var aCell;
          var bCell = $td();
-         var scoutTI = getScoutTroopIndex(TBU_RACE);
          var bHasTroops = false;
          var troopNo;
          for( troopNo = 0; troopNo < 8; ++troopNo )
@@ -569,6 +573,8 @@ function uiModifyRallyPointSend()
       var sendTable = elems[1];
       
       availableTroops = getAvailableTroopsInfo(sendTable);
+      scoutTI = getScoutTroopIndex(getRaceFromTroopIndex(availableTroops[0][0]));
+
       sendTroops = getSendTroopsInfo(availableTroops);
 
       uiAddTopMenu(sendContainer);
