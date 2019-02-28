@@ -140,7 +140,7 @@ function getRaceIndexFromTroopIndex(tix)
 {
    __ASSERT__(isIntValid(tix), "Invalid troop index")
 
-   return Math.floor(tix/10);
+   return Math.floor((tix-1)/10);
 }
 
 /////////////////////////////////////////////////////////////////////

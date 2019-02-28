@@ -259,6 +259,7 @@ function doPage()
 
       TB3O.bIsNPCInVillage = getNPCAvailability(TB3O.ActiveVillageId);
 
+      __DUMP__(TB3O.ActiveVillageInfo.rx)
 
       //===============================================================================
       //    Page modification section
@@ -368,6 +369,7 @@ function doPage()
          case "rally_point_dismiss":      uiModifyRallyPointDismiss();     break;
       }
 
+      __DUMP__(TB3O.ActiveVillageInfo.rx)
       saveVillagesInfo(TB3O.VillagesInfo);
 
       // General actions continued

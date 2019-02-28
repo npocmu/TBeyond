@@ -92,7 +92,7 @@ function uiModifyRallyPointSend()
             var aParent = aInput.parentNode;
             var unitImg = $nth_tag(aParent,"img",0);
             var index =  ( unitImg ) ? getTroopIndexTitleFromImg(unitImg)[0] : null;
-            if ( index ) 
+            if ( i == 1 && index ) 
             { 
                if ( TBU_RACE === '' && !TB3O.ServerInfo.features.path_to_pandora )
                {
