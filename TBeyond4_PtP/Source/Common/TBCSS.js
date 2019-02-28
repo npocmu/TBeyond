@@ -266,7 +266,7 @@ IF_TB3({{
    '.tbSendRes td.tbInject, .tbSendRes td.tbInject * {vertical-align:middle !important;}' +
 //   '.tbSendRes td.tbUseThem {padding:0px !important;}' +
    '.tbSendRes td.val input.text {width: 68px !important;  box-sizing: content-box;}' +
-   '.tbSendRes td.tbUseThem input {padding:initial !important; margin: initial !important; width: initial !important;}' +
+   '.tbSendRes td.tbUseThem input {padding:initial !important; margin: initial !important; }' +
    '.tbSendRes td.tbTool    {padding-top:0px !important; padding-bottom:0px !important;}' +
    '.tbSendRes td.tbInject a.tbQCarry {IF_TB3(font-size:8pt;)white-space:nowrap;}' +
    '.tbSendRes td.tbInject a.tbMCap   {border-bottom:1px dotted;}' +
