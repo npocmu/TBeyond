@@ -36,7 +36,7 @@ function getServerTime(aDoc)
          if ( p !== null && p.length === 4 )
          {
             dServerTime = new Date(dNow.getFullYear(), dNow.getMonth(), dNow.getDate(), p[1], p[2], p[3]);
-            var ttServer = dServerTime.getTime();
+            ttServer = dServerTime.getTime();
             if ( ttServer - ttNow > 43200000/*12h*/ ) { ttServer -= 86400000;/*24h*/ }
             else if ( ttNow - ttServer > 43200000/*12h*/ ) { ttServer += 86400000;/*24h*/ }
          }

@@ -56,7 +56,7 @@ function uiFillVillagesListCells(vRow, nStartColumn, villageInfo, layout_options
    // show res prod/h
    if ( layout_options.show_pph )
    {
-      for ( xi = 1; xi < 4; xi++ )
+      for (var xi = 1; xi < 4; xi++ )
       {
          if ( refresh_options.show_pph )
          {

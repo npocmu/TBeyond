@@ -149,14 +149,12 @@ function uiModifyPlayerProfileDescription(uProfile)
 function uiModifyPlayerProfileVillagesTable(uTb, villages)
 {
    __ENTER__
-   activeMapId = xy2id(TB3O.ActiveVillageInfo.x, TB3O.ActiveVillageInfo.y);
-
    var villagesTable = villages.table;
    var i;
    for ( i = 0; i < villagesTable.length; i++ )
    {
       var mapId = villagesTable[i].map_id;
-      if ( activeMapId == mapId )
+      if ( TB3O.ActiveVillageMapId == mapId )
       {
          addClass(uTb.rows[i+1],"hl");
       }

@@ -50,9 +50,9 @@ function uiCreateSendAttDefTool(mapId, action /*opt*/)
    if ( mapId !== TB3O.ActiveVillageMapId )
    {
       if ( action === undefined ) { action = parseInt10(TBO_RP_DEFAULT_ACTION); }
-      var aLink = $lnk([['class', 'tbInject tbAttDef'], 
-                        ['href', (TB3O.ServerInfo.features.new_link_style ? 'build.php?id=39&tt=2&z=' : 'a2b.php?z=') + mapId]], 
-                       [" ", I(getRPActionImageName(action))]);
+      aLink = $lnk([['class', 'tbInject tbAttDef'], 
+                    ['href', (TB3O.ServerInfo.features.new_link_style ? 'build.php?id=39&tt=2&z=' : 'a2b.php?z=') + mapId]], 
+                    [" ", I(getRPActionImageName(action))]);
    }
    return aLink;
 }

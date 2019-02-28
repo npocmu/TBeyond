@@ -132,10 +132,8 @@ function uiModifyMap()
             }
          }
       }
-      catch (e)
-      {
-         __DUMP__(e)
-      }
+      __CATCH__
+
       return details;
    }
 

@@ -34,7 +34,7 @@ function showUserBookmarks()
 
       if ( strBM !== "" )
       {
-         var i, records = strBM.split("$$");
+         var records = strBM.split("$$");
          for (var i = 0; i < records.length; i++)
          { 
             this._[i] = records[i].split("$");
@@ -79,7 +79,7 @@ function showUserBookmarks()
        }
        else }})
        {
-          var ubXY = TBO_BOOKMARKS_XY.split("|");
+          ubXY = TBO_BOOKMARKS_XY.split("|");
           $df(215, ubXY[0], ubXY[1], T('MARCADORES'), 'userbookmarks', "userbookmarksTT", true, aTb);
           if ( TBO_BOOKMARKS_STATE !== "1" ) { aTb.style.display = 'none'; }
        }

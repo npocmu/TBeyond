@@ -25,10 +25,10 @@ var oasisTypes =
 // Returns type (index in oasisTypes) or 0 (unknown type)
 function getOasisType(percents)
 {
-   for ( oasisType = 1; oasisType < oasisTypes.length; oasisType++ )
+   for (var oasisType = 1; oasisType < oasisTypes.length; oasisType++ )
    {
       var bMatch = true;
-      for ( ri = 0; ri < 4; ri++ )
+      for (var ri = 0; ri < 4; ri++ )
       {
          if ( oasisTypes[oasisType][ri] !== percents[ri] )
          {

@@ -531,8 +531,11 @@ function uiModifyMarketSend()
          var aTb = uiCreateCumulativeArrivalsTable(resourcesEventsQueue);
          if ( aTb ) 
          {
+            var ri = -1;
+
             insertBefore(formular, aTb);
-            for ( i = 0, ri = -1; i < 4; ++i )
+
+            for (var i = 0; i < 4; ++i )
             {
                if ( uiOptions._.showprogress[i] )
                {

@@ -11,7 +11,7 @@ function getVillageUnitsCount(villageInfo, rallyPointInfo)
 
       for ( ti = 0; ti < rallyPointInfo.t.length; ++ti )
       {
-         troopDetailsInfo = rallyPointInfo.t[ti];
+         var troopDetailsInfo = rallyPointInfo.t[ti];
          if ( troopDetailsInfo.h_id === mapId && troopDetailsInfo.o_id === undefined ) 
          {
             accumulateArray(unitsTotal, troopDetailsInfo.u);

@@ -29,7 +29,10 @@ Persistence.prototype.loadValue = function (NS, aName, defValue)
       {
          val = this.serializer.deserialize(item);
       }
-      catch(e) { __DUMP__(key,item) }
+      catch(e) 
+      { 
+         __DUMP__(key,item) 
+      }
    }
    return val;
 };

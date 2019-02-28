@@ -106,7 +106,7 @@ m4 -P -E -IInclude -D__DEBUG__=0 TB.m4  "%$WF%" > "%$WF2%" 2> %$M4ERR%
 IF EXIST ..\Tools\Jazmin.exe (
    cat "%$WF2%" | ..\Tools\Jazmin.exe | cat "%$WF1%" - > "Install\Release\%$TF%.user.js"
 ) ELSE (
-   COPY "%$WF2%" + "%$WF1%" "Install\Release\%$TF%.user.js" /B >NUL
+   COPY "%$WF1%" + "%$WF2%" "Install\Release\%$TF%.user.js" /B >NUL
 )
 
 

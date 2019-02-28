@@ -107,7 +107,7 @@ function scanTrainingContracts(aDoc)
       }
       catch(e)
       {
-         __DUMP__(e)
+         __DUMP_EXCEPTION__(e)
          contract = null;
       }
       return contract;

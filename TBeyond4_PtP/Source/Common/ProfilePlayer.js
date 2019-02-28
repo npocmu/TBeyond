@@ -56,7 +56,7 @@ function getVillagesInfoFromProfile(aDoc)
          var villagesTable = profileVillagesTableInfo.table;
          var mapIdDict = getVillagesMapIdDict(TB3O.VillagesInfo);
 
-         for ( i = 0; i < villagesTable.length; ++i )
+         for (var i = 0; i < villagesTable.length; ++i )
          {
             var mapId = villagesTable[i].map_id;
             var villageId = mapIdDict[mapId];

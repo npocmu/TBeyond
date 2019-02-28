@@ -203,7 +203,7 @@ function processDorf3_Tab5(origT)
 
             for ( j = 1; j < vCells.length; ++j )
             {
-               v = parseInt10(vCells[j].textContent);
+               var v = parseInt10(vCells[j].textContent);
                if ( isIntValid(v) ) { unitsTotal[j-1] = v; }
             }
 
@@ -307,7 +307,7 @@ function uiModifyDorf3()
    {
       var firstTbl = origT[0];
 
-      prefferTB = !TB3O.Overview.plAc || tabNo === 2 || tabNo === 3 || tabNo === 5;
+      var prefferTB = !TB3O.Overview.plAc || tabNo === 2 || tabNo === 3 || tabNo === 5;
 
       M4_IIF_DEBUG(
       {{
@@ -643,7 +643,7 @@ function uiAddD3TbToolbar(parent, tabNo, bSepBefore)
 //////////////////////////////////////////////////////////////////////
 function uiCreateD3TbVillageHeader(tabNo) 
 {
-   aCell = $td();
+   var aCell = $td();
    if ( !TB3O.Overview.getTableTitle(tabNo) )
    {
       uiAddD3TbToolbar(aCell, tabNo, false);
@@ -1187,7 +1187,7 @@ function fillD3TbTotals_Tab2()
 {
    var i, val, aCell, resTotal = [0,0,0,0,0];
 
-   for ( villageId in TB3O.Tab2 )
+   for (var villageId in TB3O.Tab2 )
    {
       for ( i = 0; i < 5; i++ )
       {

@@ -186,7 +186,7 @@ function getMerchantsUnderway(villageId, aDoc, ttServer, bReadOnly)
    }
    catch(e)
    {
-      __DUMP__(e)
+      __DUMP_EXCEPTION__(e)
       merchantsUnderwayInfo = null;
    }
    __EXIT__

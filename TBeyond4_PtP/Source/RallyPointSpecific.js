@@ -143,7 +143,7 @@ function parseTroopDetails(troopDetailsTb, aDoc, ttServer, oasisMapId, bKeepId)
    }
    catch(e)
    {
-      __DUMP__(e)
+      __DUMP_EXCEPTION__(e)
       info = null;
    } 
    return info;

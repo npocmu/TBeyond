@@ -180,7 +180,7 @@ function scanCommonContractInfo(costNode)
 
    if ( Res )
    {
-      aSpan = $xf("ancestor::*[@id='contract']/following-sibling::*//span[" + $xClass("clocks") + "]", 'f', costNode);
+      var aSpan = $xf("ancestor::*[@id='contract']/following-sibling::*//span[" + $xClass("clocks") + "]", 'f', costNode);
       if ( aSpan )
       {
          ts = toSeconds(aSpan.textContent);

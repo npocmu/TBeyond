@@ -73,7 +73,7 @@ function uiAddKeyboardNavigation()
 //////////////////////////////////////////////////////////////////////
 function navigateNextRptPage()
 {
-   nextLink = $xf("//div[@id='" + ID_CONTENT + "']//a[contains(@href, 'page=') and contains(@class, 'next')]");
+   var nextLink = $xf("//div[@id='" + ID_CONTENT + "']//a[contains(@href, 'page=') and contains(@class, 'next')]");
    if ( nextLink )
    {
       location.href = nextLink;

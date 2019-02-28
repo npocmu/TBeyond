@@ -125,9 +125,7 @@ function uiAddTroopInfoTooltips(parent)
                      tCell = xR.cells[2];
                      if (tCell) { tInfo[1] = tCell.textContent; }
                   }
-                  catch (e)
-                  {
-                  }
+                  __CATCH__
                }
             }
          }

@@ -111,7 +111,7 @@ function uiAddBuiltinUpDownControl(buddy, delta)
    function positionControl(ctrl, buddy, bstyles)
    {
       __DUMP_NODE__(ctrl)
-      var buddy = buddy || ctrl.parentNode.previousSibling;
+      buddy = buddy || ctrl.parentNode.previousSibling;
       if ( buddy )
       {
          __DUMP_NODE__(buddy)
@@ -123,7 +123,7 @@ function uiAddBuiltinUpDownControl(buddy, delta)
             return false;
          }
 
-         var bstyles = bstyles || window.getComputedStyle(buddy, null);
+         bstyles = bstyles || window.getComputedStyle(buddy, null);
          var bposition = bstyles.position;
          var offsetV = 0, offsetH = 0;
          var ctrlUp = ctrl.querySelector(".tbiUp");
@@ -163,7 +163,6 @@ function uiAddBuiltinUpDownControl(buddy, delta)
             console.log(offsetV,offsetH)
          }
 
-         var h = buddy.clientHeight;
          var seph = cborderSize; // button separator height
          var buth = Math.floor((h - seph) / 2);  // button client height
          var butw = ( buth < 10 ) ? 10 : buth; // button client width (min 10 px)
