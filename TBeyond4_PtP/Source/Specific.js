@@ -142,8 +142,8 @@ function getRaceFromBarracks()
 //   - trade route descriptions (in table#trading_routes)
 function searchBuildingContractsNodes(aDoc /*opt*/)
 {
-   var contracts = $xf("//div[@id='" + ID_CONTENT + "']//*[not(self::div and " + $xClass("details") + ")]/div[" + $xClass("showCosts") + "][not(ancestor::table[@id='trading_routes'])]", 'l', aDoc, aDoc);
-   __ASSERT__(contracts.snapshotLength, "Can't find any contracts")
+   var contracts = $xf1("//div[@id='" + ID_CONTENT + "']//*[not(self::div and " + $xClass("details") + ")]/div[" + $xClass("showCosts") + "][not(ancestor::table[@id='trading_routes'])]", 'a', aDoc, aDoc);
+   __ASSERT__(contracts.length, "Can't find any contracts")
    return contracts;
 }
 
@@ -152,8 +152,8 @@ function searchBuildingContractsNodes(aDoc /*opt*/)
 // { 
 //    costNode,   - DOM node
 //    cost,       - Array(4) - resources needed
-//    cc,         - crop consumption
-//    ts,         - seconds to build
+//    cc,         - (optional) crop consumption
+//    ts,         - (optional) seconds to build
 //    gid         - (optional) building gid
 // }
 // or null if can't parse contract
@@ -162,7 +162,7 @@ function scanCommonContractInfo(costNode)
 {
    var v, cc, ts, gid;
 
-   var resNodes = $qf(".value", 'a', costNode);
+   var resNodes = $qf(".resourceWrapper .value", 'a', costNode);
    var Res = getResourcesFromNodes(resNodes);
 
    var ccNode = resNodes[4];
@@ -176,16 +176,26 @@ function scanCommonContractInfo(costNode)
    }
 
    __ASSERT__(Res,"Can't parse resources needed for contract")
-   __ASSERT__(cc,"Can't parse crop consumption for contract")
 
    if ( Res )
    {
-      var aSpan = $xf("ancestor::*[@id='contract']/following-sibling::*//span[" + $xClass("clocks") + "]", 'f', costNode);
+      var aSpan = $xf("ancestor::*[@id='contract']/following::*//*[" + $xClass("clocks") + "]//span[" + $xClass("value") + "]", 'f', costNode);
       if ( aSpan )
       {
-         ts = toSeconds(aSpan.textContent);
+         ts = parseTimeSpan(aSpan.textContent);
       }
-      __ASSERT__(ts,"Can't parse time span for contract")
+
+      if ( ts === undefined )
+      {
+         aSpan = $qf(".clocks .value", 'f', costNode);
+         ts = parseTimeSpan(aSpan.textContent);
+      }
+
+      if ( !isIntValid(ts) )
+      {
+         ts = undefined;
+         __ERROR__("Can't parse time span for contract")
+      }
 
       // try to find building gid ( on build new building pages )
       var container = $xf("ancestor::*[contains(@id,'contract_building')]", 'f', costNode);
@@ -351,3 +361,8 @@ function searchQueueTable(aDoc)
    return $xf("//div[@id='" + ID_CONTENT + "']//table[" + $xClass('under_progress') + "]", 'f', aDoc, aDoc);
 }
 
+//////////////////////////////////////////////////////////////////////
+function searchTroopImgNode(aParent)
+{
+   return $qf("img.unit, i.unit", 'f', aParent);
+}

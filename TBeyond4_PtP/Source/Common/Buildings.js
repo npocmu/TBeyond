@@ -201,9 +201,9 @@ function getBuildingContracts()
    var contractsNodes = searchBuildingContractsNodes();
    var contracts = [];
 
-   for ( i = 0; i < contractsNodes.snapshotLength; i++ )
+   for ( i = 0; i < contractsNodes.length; i++ )
    {
-      var costNode = contractsNodes.snapshotItem(i);
+      var costNode = contractsNodes[i];
       var contractInfo = scanCommonContractInfo(costNode);
       
       if ( contractInfo ) 
@@ -237,6 +237,7 @@ function processBuilding(gid)
    }
 
    var contracts = getBuildingContracts();
+   __DUMP__(contracts)
    TB3O.BuildingContracts = contracts;
 
    __EXIT__

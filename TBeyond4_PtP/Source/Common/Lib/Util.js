@@ -22,7 +22,7 @@ function parseSeparatedInt10(str,defv)
 
 /////////////////////////////////////////////////////////////////////
 // Compute the seconds for a given human time.
-// hTime may have following formats:
+// hTime may have one of following formats:
 //    hh:mm:ss
 //    hh:mm
 // Return NaN if can't parse hTime
@@ -42,6 +42,16 @@ function toSeconds(hTime)
 
    return sec;
 } 
+
+//////////////////////////////////////////////////////////////////////
+// Search first time in string @str and parse it using toSeconds
+// Return:
+//   number of seconds in time span
+//   NaN if can't search or parse time span
+function parseTimeSpan(str)
+{
+   return (str.search(/(\d+:\d\d(:\d\d)?)/) !== -1 ) ? toSeconds(RegExp.$1) : Number.NaN;
+}
 
 /////////////////////////////////////////////////////////////////////
 // convert Date to timestamp
