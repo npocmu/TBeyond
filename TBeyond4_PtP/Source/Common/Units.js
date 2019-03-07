@@ -136,6 +136,12 @@ function getUnitImage(race, uix)
 }
 
 /////////////////////////////////////////////////////////////////////
+function getUnitIndexFromTroopIndex(tix)
+{
+   return tix - Math.floor((tix-1)/10)*10;
+}
+
+/////////////////////////////////////////////////////////////////////
 function getRaceIndexFromTroopIndex(tix)
 {
    __ASSERT__(isIntValid(tix), "Invalid troop index")

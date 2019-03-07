@@ -1,21 +1,34 @@
 //////////////////////////////////////////////////////////////////////
 function scanUpgradeInfo(aDoc, ttServer)
 {
-   var upgradeInfo =  new UpgradeInfo(); upgradeInfo.ttUpd = ttServer;
+   var upgradeInfo = new UpgradeInfo(); upgradeInfo.ttUpd = ttServer;
+
+   var upgradesList = {};
 
    //-----------------------------------------------------------------
    function parseTroopLevel(elem)
    {
-      var aImg = __TEST__($nth_tag(elem,"img"));
+      var aImg = __TEST__(searchTroopImgNode(elem));
       if ( aImg )
       {
          var tInfo = getTroopIndexTitleFromImg(aImg);
          var aSpan = __TEST__($nth_tag(elem,"span"));
-         if ( aSpan )
+         if ( isIntValid(tInfo[0]) && aSpan )
          {
-            var txtLvl = trimBlanks(aSpan.textContent);
-            tInfo.push(txtLvl);
-            return tInfo;
+            var txtLvl = trimWhitespaces(aSpan.textContent);
+            var lvl = scanIntAny(txtLvl);
+
+            if ( isIntValid(lvl) )
+            {
+               var troopUpgInfo = {
+                  "tix":    tInfo[0],
+                  "label":  tInfo[1],
+                  "txtLvl": txtLvl,
+                  "lvl":    lvl
+               };
+
+               return troopUpgInfo;
+            }
          }
       }
       return null;
@@ -35,15 +48,11 @@ function scanUpgradeInfo(aDoc, ttServer)
             var cells = rows[xi].cells;
             if ( cells.length === 3 )
             {
-               var tInfo = parseTroopLevel(cells[0]);
-               if ( tInfo )
+               var troopUpgInfo = parseTroopLevel(cells[0]);
+               if ( troopUpgInfo )
                {
-                  var lvl = scanIntAny(tInfo[2]);
-                  if ( isIntValid(lvl) )
-                  {
-                     var ttEnd = getEventTimeStamp(ttServer, cells[1].textContent);
-                     upgradeInfo.evA.push(new UpgradingEvent(tInfo[1], ttEnd, tInfo[0], tInfo[2], lvl));
-                  }
+                  var ttEnd = getEventTimeStamp(ttServer, cells[1].textContent);
+                  upgradeInfo.evA.push(new UpgradingEvent(troopUpgInfo.label, ttEnd, troopUpgInfo.tix, troopUpgInfo.txtLvl, troopUpgInfo.lvl));
                }
             }
          }
@@ -53,32 +62,36 @@ function scanUpgradeInfo(aDoc, ttServer)
    }
 
    //-----------------------------------------------------------------
-   function scanUpgradeLevels()
+   function scanUpgrades()
    {
       var unitsData = [];
-      var unitsList = $xf("//div[@id='" + ID_CONTENT + "']//div[" + $xClass('information') + "]/div["+ $xClass('title') + "]", 'l', aDoc, aDoc);
-      var i, count = 0;
-      for ( i = 0; i < unitsList.snapshotLength; ++i )
-      {
-         var tInfo = parseTroopLevel(unitsList.snapshotItem(i));
+      var upgradeNodes = $xf1("//div[@id='" + ID_CONTENT + "']//div[" + $xClass('information') + "]", 'a', aDoc, aDoc);
 
-         if ( tInfo )
+      var i, count = 0;
+      for ( i = 0; i < upgradeNodes.length; ++i )
+      {
+         var containerNode = upgradeNodes[i];
+         var labelNode = $qf(".title", 'f', containerNode);
+
+         var troopUpgInfo = parseTroopLevel(labelNode);
+
+         if ( troopUpgInfo )
          {
-            var lvl = scanIntAny(tInfo[2]);
-            if ( isIntValid(lvl) )
-            {
-               var uix = tInfo[0] - TBU_RACE_DELTA;
-               upgradeInfo.uul[uix] = lvl;
-               ++count;
-            }
+            var uix = getUnitIndexFromTroopIndex(troopUpgInfo.tix);
+            upgradeInfo.uul[uix] = troopUpgInfo.lvl;
+            ++count;
+
+            troopUpgInfo.container = containerNode;
+            upgradesList[troopUpgInfo.tix] = troopUpgInfo;
          }
       }
-      return (count === unitsList.snapshotLength);
+      return (count === upgradeNodes.length);
    }
 
-   var result = scanUpgradingQueue() && scanUpgradeLevels();
+   var result = scanUpgradingQueue() && scanUpgrades();
 
    __DUMP__(upgradeInfo);
+   __DUMP__(upgradesList);
 
    return result ? upgradeInfo : null;
 }
