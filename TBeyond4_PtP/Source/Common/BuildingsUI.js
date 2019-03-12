@@ -14,7 +14,7 @@ function uiCreateResourceBuildingAdviceTable(cost, cc, prod_profit)
       var secToProduce = Math.ceil(resTot/(profit-cc) * 3600);
       var strTimeSpan = formatTimeSpan(secToProduce, 1);
 
-      aAdviceTable = $t([attrInject$, ["class","tbBuildHint"], ["cellspacing","1"]], 
+      aAdviceTable = $t([attrInject$, ["class","+tbBuildHint"], ["cellspacing","1"]], 
                    [
                       $e("thead", null, [
                          $r(null,[
