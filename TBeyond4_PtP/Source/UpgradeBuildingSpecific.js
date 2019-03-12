@@ -1,8 +1,7 @@
 //////////////////////////////////////////////////////////////////////
-function scanUpgradeInfo(aDoc, ttServer)
+function scanUpgradeData(aDoc, ttServer)
 {
    var upgradeInfo = new UpgradeInfo(); upgradeInfo.ttUpd = ttServer;
-
    var upgradesList = {};
 
    //-----------------------------------------------------------------
@@ -81,17 +80,39 @@ function scanUpgradeInfo(aDoc, ttServer)
             upgradeInfo.uul[uix] = troopUpgInfo.lvl;
             ++count;
 
+            var costNode = $qf(".showCosts", 'f', containerNode);
+            troopUpgInfo.contract = ( costNode ) ? scanCommonContractInfo(costNode) : null;
             troopUpgInfo.container = containerNode;
+
+            troopUpgInfo.linkNode = $qf(".contractLink", 'f', containerNode);
+
             upgradesList[troopUpgInfo.tix] = troopUpgInfo;
          }
       }
       return (count === upgradeNodes.length);
    }
 
+   //-----------------------------------------------------------------
    var result = scanUpgradingQueue() && scanUpgrades();
 
-   __DUMP__(upgradeInfo);
-   __DUMP__(upgradesList);
+   if ( result )
+   {
+      for ( var i = 0; i < upgradeInfo.evA.length; ++i )
+      {
+         var upgradingEvent = upgradeInfo.evA[i];
+         var troopUpgInfo = upgradesList[upgradingEvent.tix];
+         if ( troopUpgInfo )
+         {
+            troopUpgInfo.lvlNext = upgradingEvent.lvl;
+         }
+      }
 
-   return result ? upgradeInfo : null;
+      //__DUMP__(upgradeInfo);
+      //__DUMP__(upgradesList);
+
+      return { "info" : upgradeInfo, "list": upgradesList };
+   }
+
+
+   return null;
 }

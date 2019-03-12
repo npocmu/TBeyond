@@ -229,6 +229,7 @@ function doPage()
                }
                else if ( buildingGID === GID_SMITHY )
                {
+                  TB3O.pageSelector = "upgrades"
                   processUpgradeBuilding(buildingGID);
                }
                else if ( buildingGID === GID_WATERWORKS )
@@ -311,20 +312,20 @@ function doPage()
          case "dorf2":  uiModifyDorf2();  break;
          case "dorf3":  uiModifyDorf3();  break;
 
-         case "position_details":
-            uiModifyPositionDetails(); 
-            break;
+         case "position_details":    uiModifyPositionDetails(); break;
 
-         case "market_routes": uiModifyMarketRoutes(); break;
-         case "market_routes_edit": uiModifyMarketRoutesEdit(); break;
-         case "market_send":   uiModifyMarketSend(); break;
-         case "market_offer":  uiModifyMarketOffer(); break;
+         case "market_routes":       uiModifyMarketRoutes(); break;
+         case "market_routes_edit":  uiModifyMarketRoutesEdit(); break;
+         case "market_send":         uiModifyMarketSend(); break;
+         case "market_offer":        uiModifyMarketOffer(); break;
 
          case "market_buy": 
                //addAllyColumnForMarketOffers();
                //marketBuy();
             break;
 
+         case "upgrades":            uiModifyUpgradeBuilding(buildingGID); break;
+                            
          case "report_list": 
          case "message_list": 
             uiModifyMsgRptList();

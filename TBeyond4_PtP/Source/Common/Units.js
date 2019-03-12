@@ -101,6 +101,24 @@ uc[50] = [0,0,0,0,0,30,40,40,0,0];//Settler
 uc[98] = [20,30,10,20,0,0,0,0,0,0];//trap
 uc[99] = [20,30,10,20,0,0,0,0,0,0];//trap
 
+//////////////////////////////////////////////////////////////////////
+function getUpgradedUnitStat(baseValue, cc, lvl)
+{
+   return baseValue + (baseValue + 300 * cc / 7) * (Math.pow(1.007,lvl) - 1);
+}
+
+//////////////////////////////////////////////////////////////////////
+function getUpgradedUnitStats(unitStats, lvl)
+{
+   var cc = unitStats[UCI_CC];
+   var off = getUpgradedUnitStat(unitStats[UCI_ATTACK], cc, lvl);
+   var def_i = getUpgradedUnitStat(unitStats[UCI_DEFENCE_I], cc, lvl);
+   var def_c = getUpgradedUnitStat(unitStats[UCI_DEFENCE_C], cc, lvl);
+
+   return {"lvl": lvl, "off" : off, "def_i" : def_i, "def_c" : def_c};
+}
+
+
 /////////////////////////////////////////////////////////////////////
 // return [index of troop, title] from valid image
 // index of troop is NaN if can't be determined
@@ -138,7 +156,7 @@ function getUnitImage(race, uix)
 /////////////////////////////////////////////////////////////////////
 function getUnitIndexFromTroopIndex(tix)
 {
-   return tix - Math.floor((tix-1)/10)*10;
+   return tix - (Math.floor((tix-1)/10)*10 + 1);
 }
 
 /////////////////////////////////////////////////////////////////////
