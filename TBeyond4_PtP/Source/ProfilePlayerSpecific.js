@@ -78,7 +78,7 @@ function parsePlayerProfileVillagesTable(uTb)
          }
       }
 
-      raceCell = $qf(".tribeIcon ",'f',aRow);
+      raceCell = $qf('i[class^="tribe"]','f',aRow);
       if ( raceCell )
       {
          if ( hasClass(raceCell,/tribe(\d+)/) )
