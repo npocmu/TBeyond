@@ -79,7 +79,7 @@ function uiCreateUpgradeBuildingAdviceTable(tix, unitsCount, upgradeCost, lvl)
    function uiCreateCountCells(profitCount)
    {
       var aCellMore;
-      var aCellTotal = $td(['class', 'tbCount'], [getTroopImage(tix), $ls(profitCount)]);
+      var aCellTotal = $td(['class', 'tbTotal'], [uiCreateTroopInfoCounter([tix, profitCount])]);
 
       if ( unitsCount >= profitCount )
       {
@@ -87,7 +87,7 @@ function uiCreateUpgradeBuildingAdviceTable(tix, unitsCount, upgradeCost, lvl)
       }
       else
       {
-         aCellMore = $td(['class', 'tbCount'], [getTroopImage(tix), $ls(profitCount-unitsCount)]);
+         aCellMore = $td(['class', 'tbMore'], [uiCreateTroopInfoCounter([tix, profitCount-unitsCount])]);
       }
       return [aCellMore,aCellTotal]
    }
@@ -116,11 +116,12 @@ function uiCreateUpgradeBuildingAdviceTable(tix, unitsCount, upgradeCost, lvl)
       var profitDefIUnitsCount = Math.ceil((insteadUnitsCount * curStats.def_i)/(upgradeStats.def_i - curStats.def_i));
       var profitDefCUnitsCount = Math.ceil((insteadUnitsCount * curStats.def_c)/(upgradeStats.def_c - curStats.def_c));
  
-      aAdvice = $div([attrInject$, ["class","+tbUpgradeHint"]], 
-                     [
-                        $span(null,["Has: ", getTroopImage(tix), $span(['class','tbVal'], $ls(unitsCount))]),
-                        $span(null,[", instead of upgrade it possible to build: ", 
-                           getTroopImage(tix), $span(['class','tbVal'],$ls(insteadUnitsCount))])
+      aAdvice = $div([attrInject$, ["class","+tbUpgradeHint"]], [
+                        $span(null, [
+                           "Has: ", uiCreateTroopInfoCounter([tix, unitsCount]),
+                           ", instead of upgrade it possible to build: ", 
+                           uiCreateTroopInfoCounter([tix, insteadUnitsCount])
+                        ])
                      ]);
       
       aAdviceTable = $t(["cellspacing","1"], 
@@ -128,8 +129,8 @@ function uiCreateUpgradeBuildingAdviceTable(tix, unitsCount, upgradeCost, lvl)
                         $e("thead", null, [
                            $r(null,[
                               $th(["class","tbTotal tbCost"]),
-                              $th(null,     [getTroopImage(tix), $span(['class','tbVal'], $ls(extraUnitsCount)),,$e("br"), $span(['class','level'], "level " + lvl) ]),
-                              $th(null,     [getTroopImage(tix), $span(['class','tbVal'], $ls(unitsCount)),,$e("br"), $span(['class','level'], "level " + (lvl + 1)) ]),
+                              $th(null,     [uiCreateTroopInfoCounter([tix, extraUnitsCount]), $e("br"), $span(['class','level'], "level " + lvl) ]),
+                              $th(null,     [uiCreateTroopInfoCounter([tix, unitsCount]), $e("br"), $span(['class','level'], "level " + (lvl + 1)) ]),
                               $th(null, "Need to build"),
                               $th(null, "Total"),
                            ])

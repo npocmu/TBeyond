@@ -36,7 +36,7 @@ function uiFillTriPTable(aTb, villageInfo, trainingInfoColl)
          {
             var troopInfo = TriPInfo[2][k][0];
             if ( col2content.length ) { col2content.push(", "); };
-            col2content.push(troopInfo[1] + "\u00A0\u00D7\u00A0",getTroopImage(troopInfo[0]));
+            col2content.push(uiCreateTroopInfoCounter(troopInfo, {show_tip:false}));
          }
          aTb.appendChild(uiCreateVillageInfoTipRow([getBuildingIcon(TriPInfo[1])," " + T("BN_GID"+TriPInfo[1])], col2content, dtNow, ttEnd)); 
       }

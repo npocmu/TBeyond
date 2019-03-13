@@ -1,7 +1,41 @@
 //////////////////////////////////////////////////////////////////////
+// Generate DOM nodes to represent troopInfo as:
+//  count x icon
+//
+// options{
+//    show_tip          - (bool,true) - tooltip will shown when user hover mouse on generated nodes
+//    show_count_always - (bool,true) - if falsy then count will displayed only if it > 1.
+// }
+function uiCreateTroopInfoCounter(troopInfo, options)
+{
+   var tix = troopInfo[0];
+   var count = troopInfo[1];
+   
+   options = options || {};
+   var bShowTip = ( options.show_tip === undefined ) ? true : !!options.show_tip;
+   var bShowCountAlways = ( options.show_count_always === undefined ) ? true : !!options.show_count_always;
+
+   var aCountNode = $span(['class', 'tbCount']);
+
+   if ( count > 1 || bShowCountAlways ) 
+   {
+      addChildren(aCountNode, [$span(['class', 'tbVal'], $ls(count)), "\u00A0\u00D7\u00A0"]);
+   }
+   addChildren(aCountNode, getTroopImage(tix));
+
+   if ( bShowTip )
+   {
+      var tipTroopInfo = [tix, (count > 0) ? count : 1];
+      uiAddTooltip(aCountNode,bind(uiCreateTroopInfoTooltip,[tipTroopInfo,""]));
+   }
+
+   return aCountNode;
+}
+
+//////////////////////////////////////////////////////////////////////
 // create Troop Info table 
 // troopInfo = [tix,count]
-function uiCreateTroopInfoTooltip(troopInfo, title, villageId/*opt*/)
+function uiCreateTroopInfoTooltip(troopInfo, title/*opt*/, villageId/*opt*/)
 {
    var troopsStats = calcTroopsTotals([troopInfo], villageId);
 
@@ -10,8 +44,8 @@ function uiCreateTroopInfoTooltip(troopInfo, title, villageId/*opt*/)
       $e("thead",
          $r(
             $th(['colspan', '6'],
-                [(troopInfo[1] > 1 ) ? troopInfo[1] + "\u00D7" : null, 
-                 getTroopImage(troopInfo[0]),( title !== "" ) ? " - " + title : null]))),
+                [uiCreateTroopInfoCounter(troopInfo, {show_tip:false, show_count_always:false}), 
+                 ( isStrValid(title) ) ? " - " + title : null]))),
       $e("tbody",null,
       [
          $r(null,
