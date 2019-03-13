@@ -476,7 +476,6 @@ table tbody tr.hover:hover th, table tbody tr.hover:hover td {
 
    // Troop Info tooltip
    'table#tb_TITT th {text-align:center; font-size:8pt; font-weight:bold;}' +
-   'table#tb_TITT th img {vertical-align:middle;}' +
    'table#tb_TITT td {padding: 2px; font-size: 8pt; text-align:' + docDir[1] + '}' +
    'table#tb_TITT td.ico {text-align:' + docDir[0] + ';}' +
    'table#tb_TITT td.tb3r1 {border-bottom:1px silver solid;}' +
@@ -575,7 +574,9 @@ M4_ECHO_ON
 
    '.tbMany  {font-size:TB_MANY_FONT_SIZE !important;}' +
 
+   // troop count
    '.tbCount.tbNew {color:green;}' +
+   '.tbCount img {vertical-align:middle;}' +
 
    'div.tbBullet {display: inline-block; border:1px solid black; -moz-border-radius:2em; border-radius:2em; margin:0 2px; }' +
    'div.tbSmall {width:8px; height:8px; margin:2px;}' +
