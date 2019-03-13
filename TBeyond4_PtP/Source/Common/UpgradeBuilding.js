@@ -128,7 +128,7 @@ function uiCreateUpgradeBuildingAdviceTable(tix, unitsCount, upgradeCost, lvl)
                      [
                         $e("thead", null, [
                            $r(null,[
-                              $th(["class","tbTotal tbCost"]),
+                              $th(["class","tbIco"]),
                               $th(null,     [uiCreateTroopInfoCounter([tix, extraUnitsCount]), $e("br"), $span(['class','level'], "level " + lvl) ]),
                               $th(null,     [uiCreateTroopInfoCounter([tix, unitsCount]), $e("br"), $span(['class','level'], "level " + (lvl + 1)) ]),
                               $th(null, "Need to build"),

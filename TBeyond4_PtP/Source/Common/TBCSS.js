@@ -340,6 +340,14 @@ IF_TB3({{
    'table.tbBuildHint th.tbTimeSpan {width:35%;}' +
    'table.tbBuildHint td {text-align:center;}' +
 
+   // upgrade buildings - hint table
+   '.tbUpgradeHint {margin-bottom: 15px; margin-top:-15px;}' +
+   '.tbUpgradeHint table th,' + 
+   '.tbUpgradeHint table td {font-size:8pt !important; padding: 3px 6px;}' +
+   '.tbUpgradeHint th {background-color:#F3F3F3; color: black; }' +
+   '.tbUpgradeHint th.tbIco {width:16px; padding: 3px;}' +
+   '.tbUpgradeHint td {text-align:right;}' +
+
    // training quick bar
    IF_TB4({{
    'table.tbTrainContract {width:100%; border-collapse:collapse; border:0px none white;}' +
