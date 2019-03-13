@@ -133,9 +133,8 @@ function uiCreateBiPTMTable(villageId)
 
    uiFillBiPTable(aTb, villageInfo.BiP);
    uiFillTMTable(aTb, villageInfo.TM);
-   IF_TB3(uiFillUpaiPTable(aTb, villageInfo.upai);)
    uiFillUpiPTable(aTb, villageInfo.upi);
-   uiFillTriPTable(aTb, TB3O.VillagesTrInfo.load(villageId));
+   uiFillTriPTable(aTb, villageInfo, TB3O.VillagesTrInfo.load(villageId));
 
    return ( aTb.hasChildNodes() ) ? aTb : null;
 }

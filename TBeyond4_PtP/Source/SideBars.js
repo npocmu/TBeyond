@@ -9,7 +9,7 @@ function uiModifySideBars()
          aTb.id = 'tb_BiPTM';
          var trainingInfoColl = {}; 
          trainingInfoColl[gid] = TB3O.VillagesTrInfo.load(TB3O.ActiveVillageId)[gid]; // restrict collection to this building only
-         uiFillTriPTable(aTb, trainingInfoColl);
+         uiFillTriPTable(aTb, TB3O.ActiveVillageInfo, trainingInfoColl);
          return ( aTb.hasChildNodes() ) ? aTb : null;
       }
 

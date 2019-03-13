@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////////////////
 // Fill 'Training in progress' tip table
-function uiFillTriPTable(aTb, trainingInfoColl)
+function uiFillTriPTable(aTb, villageInfo, trainingInfoColl)
 {
    var j,k; 
    var TriPInfo;
@@ -12,7 +12,7 @@ function uiFillTriPTable(aTb, trainingInfoColl)
 
    if ( arrTriP.length > 0 )
    {
-      aTb.appendChild(uiCreateVillageInfoTipHead(getTroopImage(TBU_RACE_DELTA)));
+      aTb.appendChild(uiCreateVillageInfoTipHead(getTroopImage(getBaseTroopIndexForRace(getVillageRace(villageInfo)))));
 
       for ( j = 0; j < arrTriP.length; ++j )
       {
@@ -50,7 +50,7 @@ function uiCreateTriPTable(villageId)
    var aTb = $t();
 
    aTb.id = 'tb_BiPTM';
-   uiFillTriPTable(aTb,TB3O.VillagesTrInfo.load(villageId));
+   uiFillTriPTable(aTb, TB3O.VillagesInfo[villageId], TB3O.VillagesTrInfo.load(villageId));
 
    return ( aTb.hasChildNodes() ) ? aTb : null;
 }
