@@ -259,7 +259,7 @@ function exportRallyPointInfo(villageId, rallyPointInfo)
       if ( buffer ) { buffer += "\n"; }
       buffer += villageId + "|" + info.own_uid + "|" + info.h_id + "|" + info.cc + "|" + info.u[TG_UIDX_HERO];
 
-      var basetix = getTroopIndexFromRace(TB3O.KnownRaces[info.rx]);
+      var basetix = getBaseTroopIndexForRace(TB3O.KnownRaces[info.rx]);
       var tix;
       for ( tix = 1; tix <= 30; ++tix )
       {
@@ -292,7 +292,7 @@ function exportRallyPointInfo2t4log(villageId, rallyPointInfo)
    function get_uls(info)
    {
       var uls = "";
-      var tix = getTroopIndexFromRace(TB3O.KnownRaces[info.rx]);
+      var tix = getBaseTroopIndexForRace(TB3O.KnownRaces[info.rx]);
       var uix;
       for ( uix=0; uix < info.u.length; ++uix )
       {

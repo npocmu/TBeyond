@@ -58,7 +58,7 @@ function setRace(race)
       if ( TB3O.AvailableRaces.indexOf(race) !== -1 )
       {
          TBU_RACE = race;
-         TBU_RACE_DELTA = getTroopIndexFromRace(race) 
+         TBU_RACE_DELTA = getBaseTroopIndexForRace(race) 
          __DUMP__(TBU_RACE,TBU_RACE_DELTA)
          savePlayerInfo();
       }

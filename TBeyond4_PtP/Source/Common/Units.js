@@ -118,6 +118,12 @@ function getUpgradedUnitStats(unitStats, lvl)
    return {"lvl": lvl, "off" : off, "def_i" : def_i, "def_c" : def_c};
 }
 
+//////////////////////////////////////////////////////////////////////
+// return `undefined` for unknown races
+function getBaseTroopIndexForRace(race) 
+{
+   return TB3O.BaseTroopIndex[race];
+}
 
 /////////////////////////////////////////////////////////////////////
 // return [index of troop, title] from valid image
@@ -145,10 +151,11 @@ function getTroopImage(tix)
 function getUnitImage(race, uix)
 {
    var img = null;
+   var tixBase = getBaseTroopIndexForRace(race);
 
-   if ( TB3O.BaseTroopIndex[race] !== undefined )
+   if ( tixBase !== undefined )
    {
-      img = getTroopImage(uix + TB3O.BaseTroopIndex[race]);
+      img = getTroopImage(uix + tixBase);
    }
    return img;
 }
@@ -182,12 +189,6 @@ function getRaceFromTroopIndex(tix)
 function getScoutTroopIndex(race)
 {
    return TB3O.ScoutTroopIndex[race];
-}
-
-//////////////////////////////////////////////////////////////////////
-function getTroopIndexFromRace(race) 
-{
-   return TB3O.BaseTroopIndex[race];
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -295,14 +296,14 @@ function getUnitsCountInfoTotals()
 //////////////////////////////////////////////////////////////////////
 function getTroopInfoFromUnitCount(race, uix, unitCount)
 {
-   return [getTroopIndexFromRace(race) + uix, unitCount];
+   return [getBaseTroopIndexForRace(race) + uix, unitCount];
 }
 
 //////////////////////////////////////////////////////////////////////
 function getTroopsInfoFromUnitsCount(race, arrUnits)
 {
    var troopsInfo = [];
-   var i, tix, tixBase = getTroopIndexFromRace(race);
+   var i, tix, tixBase = getBaseTroopIndexForRace(race);
 
    for ( i = 0; i < TG_UNITS_COUNT; ++i )
    {

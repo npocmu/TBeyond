@@ -2,7 +2,7 @@
 function getTroopsDetails(qDist, xRace, evTS)
 {
    // distance without TS; distance with TS; TS speed factor; troop image ZERO index; multiplier for speed servers
-   var arX = [qDist, 0, 1, getTroopIndexFromRace(xRace), TB3O.nTroopSpeedFactor[TB3O.nServerType]];
+   var arX = [qDist, 0, 1, getBaseTroopIndexForRace(xRace), TB3O.nTroopSpeedFactor[TB3O.nServerType]];
 
 
    if ( evTS ) 
