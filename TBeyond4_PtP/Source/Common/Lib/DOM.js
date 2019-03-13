@@ -26,7 +26,6 @@ function __isLikeToArray(o)
    return ( o instanceof Array || (typeof o === "object" && 'length' in o && !isDOMNode(o)) );
 }
 
-
 //////////////////////////////////////////////////////////////////////
 // Add the children element(s) to the node
 //   call syntax:
@@ -36,7 +35,7 @@ function __isLikeToArray(o)
 //           - add node, node1, node2 and text node to the parent
 function addChildren(node, children)
 {
-   if ( children )
+   if ( children !== null && children !== undefined && children !== "" )
    {
       if ( __isLikeToArray(children) )
       { 
