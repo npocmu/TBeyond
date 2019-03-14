@@ -43,7 +43,6 @@ function getCommonPlayerProfileInfo(aDoc)
    __EXIT__
 }
 
-
 /////////////////////////////////////////////////////////////////////
 function getVillagesInfoFromProfile(aDoc)
 {
@@ -58,11 +57,16 @@ function getVillagesInfoFromProfile(aDoc)
 
          for (var i = 0; i < villagesTable.length; ++i )
          {
-            var mapId = villagesTable[i].map_id;
+            var villageProfileInfo = villagesTable[i];
+            var mapId = villageProfileInfo.map_id;
             var villageId = mapIdDict[mapId];
             var villageInfo = TB3O.VillagesInfo[villageId];
-            villageInfo.pop = villagesTable[i].pop;
-            villageInfo.rx = villagesTable[i].rx;
+            villageInfo.pop = villageProfileInfo.pop;
+            // update village race from profile only if it successfully detected
+            if ( isIntValid(villageProfileInfo.rx) )
+            {
+               villageInfo.rx = villageProfileInfo.rx;
+            }
          }
       }
    }

@@ -97,7 +97,6 @@ function parsePlayerProfileVillagesTable(uTb)
          {
             __ERROR__("Can't get race for village '" + vName + "'")
          }
-         racex = TB3O.KnownRaces.indexOf(TBU_RACE);
       }
 
       if ( isIntValid(mapId) && isIntValid(vPop) && isStrValid(vName) )
