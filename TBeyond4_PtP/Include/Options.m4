@@ -149,6 +149,7 @@ m4_define({{TBO_SHOW_MAP_TOOLTIPS}},            {{TPL_OPTION(118)}})
 m4_define({{TBO_GT_WORLD_ID}},                  {{TPL_OPTION(119)}})
 m4_define({{TBO_SHOW_EDIT_ROUTES_UI}},          {{TPL_OPTION(120)}})
 m4_define({{TBO_SHOW_ARR_TOTALS_TABLE_MP}},	{{TPL_OPTION(121)}})
+m4_define({{TBO_SHOW_RACE_VL2}},		{{TPL_OPTION(122)}})
 
 M4_ECHO_ON
 m4_dnl ************************* END OF FILE *************************

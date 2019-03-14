@@ -17,10 +17,16 @@ function uiFillVillagesListCells(vRow, nStartColumn, villageInfo, layout_options
 
    //-----------------------------------------------------------------
    var cells = vRow.cells;
-   var k = nStartColumn;
+   var k = nStartColumn + 3;
    var aCell, aIco;
    var resourcesInfo = villageInfo.r;
    var villageResKnown = ( resourcesInfo.ttUpd !== undefined );
+
+   // show village race
+   if ( layout_options.show_race )
+   {
+      k += 1;
+   }
 
    // show population
    if ( layout_options.show_pop )
@@ -28,17 +34,6 @@ function uiFillVillagesListCells(vRow, nStartColumn, villageInfo, layout_options
       if ( refresh_options.show_pop )
       {
          replaceChildren(cells[k+1], getActualVillagePopulation(villageInfo));
-         /*
-         aCell = cells[k+1];
-         if ( villageInfo.pop !== undefined )
-         {
-            replaceChildren(aCell, $span(['style', 'color:darkgreen;'],villageInfo.pop));
-         }
-         else
-         {
-            replaceChildren(aCell, $lnk(['href',spLnk],"?"));
-         }
-         */
       }
       k += 2;
    }
@@ -148,7 +143,7 @@ function uiAddVillagesListCells(vRow, villageInfo, bActive, bSep, layout_options
    // show population
    if ( layout_options.show_pop )
    {
-      uiAddCell(vRow, $td(attrIco,I("pop")));
+      uiAddCell(vRow, $td(attrIco,I("tbiPop")));
       uiAddCell(vRow, $td(attrVal));
    }
 
@@ -179,7 +174,7 @@ function uiAddVillagesListCells(vRow, villageInfo, bActive, bSep, layout_options
    {
       for ( xi = 1; xi < 3; xi++ )
       {
-         strImg = (xi === 1) ? "ov" : "iv";
+         strImg = (xi === 1) ? "tbiOV" : "tbiIV";
          aCell = $td(attrTool,
                     $lnk(['href', 'dorf' + xi + '.php?newdid=' + villageId],
                        I(strImg, [['title', villageInfo.name + " (dorf" + xi + ".php)"]])));
@@ -222,6 +217,7 @@ function VillagesList2()
 {
    this.layout_options = 
    {
+      show_race:                  TBO_SHOW_RACE_VL2 === "1",
       show_pop:                   TBO_SHOW_POP_VL2 === "1",
       show_cp:                    TBO_SHOW_CP_VL2 === "1",
       show_pph:                   TBO_SHOW_PPH_VL2 === "1",
@@ -238,12 +234,13 @@ function VillagesList2()
    if ( !isIntValid(this.maxVCols) ) { this.maxVCols = 1; }
 
    this.maxRows = Math.ceil(TB3O.VillagesCount / this.maxVCols);
-   this.fixedCells = 3 + this.layout_options.show_pop*2 + this.layout_options.show_cp*2 + 
+   this.fixedCells = 3 + this.layout_options.show_race*1 + this.layout_options.show_pop*2 + this.layout_options.show_cp*2 + 
                      this.layout_options.show_pph*6 + this.layout_options.show_crop_epph*2 + 
                      this.layout_options.show_in_out_icons*2 + this.layout_options.show_center_map_icon*1 + 
                      this.layout_options.show_bip_att*1 + this.layout_options.show_send_troops_resources*2 + 
                      this.layout_options.show_distance*2;
 
+__DUMP__(this.layout_options,this.maxRows,this.fixedCells)
    // vTable - DOM node for villages list
    this.vTable = $t([['id', 'vl2table']]);
    this.uiCreate();
@@ -294,6 +291,7 @@ VillagesList2.prototype.uiCreate = function()
       this.vTable.appendChild(aRow);
    }
 
+   //-----------------------------------------------------------------
    function uiCreateCells(aRow, nVColIndex, pos)
    {
       var villageId = mapPos2Id[pos];
@@ -312,6 +310,12 @@ VillagesList2.prototype.uiCreate = function()
                       villageInfo.markt === 1 ? I("attacks") : villageInfo.mark);
       uiAddCell(aRow, aCell);
 
+      if ( self.layout_options.show_race )
+      {
+         aCell = $td(['class', 'tbRace'], I("tbiRace" + (villageInfo.rx+1)) );
+         uiAddCell(aRow, aCell);
+      }
+
       aCell = $td(['class', 'tbName'], $lnk(['href', TB3O.VillagesList.getLink(villageId)], villageInfo.name));
       uiAddCell(aRow, aCell);
 
@@ -321,7 +325,7 @@ VillagesList2.prototype.uiCreate = function()
       uiAddCell(aRow, aCell);
 
       uiAddVillagesListCells(aRow, villageInfo, bActive, bSep, self.layout_options);
-      uiFillVillagesListCells(aRow, self.getFirstCellIndex(nVColIndex)+3, villageInfo, self.layout_options, self.layout_options);
+      uiFillVillagesListCells(aRow, self.getFirstCellIndex(nVColIndex), villageInfo, self.layout_options, self.layout_options);
    }
 };
 
@@ -360,7 +364,7 @@ VillagesList2.prototype.uiRefreshList = function(refresh_options /*opt*/)
             pos = i + this.maxRows*j;
             if ( pos < mapPos2Id.length )
             {
-               uiFillVillagesListCells(aRow, this.getFirstCellIndex(j)+3, TB3O.VillagesInfo[mapPos2Id[pos]], this.layout_options, refresh_options);
+               uiFillVillagesListCells(aRow, this.getFirstCellIndex(j), TB3O.VillagesInfo[mapPos2Id[pos]], this.layout_options, refresh_options);
             }
          }
       }
@@ -376,7 +380,7 @@ VillagesList2.prototype.uiRefreshVillage = function(villageId, refresh_options /
    var nRowIndex = pos % this.maxRows;
    var nVColIndex = (pos - nRowIndex) / this.maxRows;
    var aRow = this.vTable.rows[nRowIndex];
-   uiFillVillagesListCells(aRow, this.getFirstCellIndex(nVColIndex)+3, villageInfo, this.layout_options, refresh_options || this.layout_options);
+   uiFillVillagesListCells(aRow, this.getFirstCellIndex(nVColIndex), villageInfo, this.layout_options, refresh_options || this.layout_options);
 };
 
 

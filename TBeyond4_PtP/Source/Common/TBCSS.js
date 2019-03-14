@@ -217,6 +217,7 @@ IF_TB3({{
    'table#vl2table td.tbActive {background-color: #E7F0CA;}' +
    'table#vl2table td.tbMark0  {padding-' + docDir[0] + ': 6px; padding-' + docDir[1] + ': 4px;}' +
    'table#vl2table td.tbMark0.tbActive {color:#FF8000;}' +
+   'table#vl2table td.tbRace  {padding: 1px;}' +
    'table#vl2table td.tbEmpty {width:10px;}' +
    'table#vl2table td.tbCoord {direction:ltr;max-width:60px;}' +
    'table#vl2table td.tbName.tbActive a, table#vl2table td.tbCoord.tbActive a {color:black;}' +
@@ -603,12 +604,18 @@ M4_ECHO_ON
    IF_TB3('img.r0 {width:18px; height:12px; background-image: url(' + image['r0'] + ');}' +)
    'img.r4 {width:20px; height:12px; background-image: url(' + image['r4'] + ');}' +
    'img.r5 {width:20px; height:12px; background-image: url(' + image['r5'] + ');}' +
+   'img.tbiRace1 {width:16px; height:16px; background-image: url(' + image['race1'] + ');}' +
+   'img.tbiRace2 {width:16px; height:16px; background-image: url(' + image['race2'] + ');}' +
+   'img.tbiRace3 {width:16px; height:16px; background-image: url(' + image['race3'] + ');}' +
+   'img.tbiRace6 {width:16px; height:16px; background-image: url(' + image['race6'] + ');}' +
+   'img.tbiRace7 {width:16px; height:16px; background-image: url(' + image['race7'] + ');}' +
    'img.tbiCoords, img.tbiIn  {width:12px; height:12px; background-image: url(' + image['incom' + docDir[0].substr(0, 1)] + ');}' +
    'img.tbiDist,   img.tbiOut {width:12px; height:12px; background-image: url(' + image['dist' + docDir[0].substr(0, 1)] + ');}' +
    'img.tbiCP {width:18px; height:12px; background-image: url(' + image['cp'] + ');}' +
    'img.tbiHourglass {width:18px; height:12px; background-image: url(' + image['hourglass'] + ');}' +
    'img.tbiCentermap {width:16px; height:16px; background-image: url(' + image['centermap'] + ');}' +
    'img.tbiMerc {width:10px; height:12px; background-image: url(' + image['merchant'] + ');}' +
+   'img.tbiPop  {width: 6px; height:14px; background-image: url(' + image['pop'] + ');}' +
    'img.tbiIV   {width:12px; height:12px; background-image: url(' + image['iv'] + ');}' +
    'img.tbiOV   {width:12px; height:12px; background-image: url(' + image['ov'] + ');}' +
    'img.tbiAttacks  {width:10px; height:10px; background-image: url(' + image['attacks'] + ');}' +

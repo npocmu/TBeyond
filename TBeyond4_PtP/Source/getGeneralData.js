@@ -76,8 +76,8 @@ function adaptDataToGameVersion()
    iC["cp"] = [['class','tbiCP'], ['title',T('CPPERDAY')], ['src',xGIF]];
    iC["hourglass"] = [['class','tbiHourglass'], ['src',xGIF]];
    iC["centermap"] = [['class','tbiCentermap'], ['src',xGIF]];
-   iC["iv"] = [['class','tbiIV'], ['src',xGIF]];
-   iC["ov"] = [['class','tbiOV'], ['src',xGIF]];
+//   iC["iv"] = [['class','tbiIV'], ['src',xGIF]];
+//   iC["ov"] = [['class','tbiOV'], ['src',xGIF]];
    iC["dup"]= [['class','tbiDup'], ['src',xGIF]];
 
    iC["ratio"] = [['src',image["ratio"]], ['title',T("MTR")]];
