@@ -67,6 +67,9 @@ function setTravianStyles()
    'div#build div.action div.details input.text {box-sizing: content-box; width: 30px;}' +
    'div#build div.action div.details .tbOrg span.value { font-weight: bold; padding-' + docDir[1] + ':5px;}' + 
 
+   // send troop
+   'div.a2b table#troops input.text {width: 60px;}' +
+
    '#ingameManual {width:85px !important; height:100px !important;}' +
    '#mapContainer .ruler, #mapContainer .toolbar {z-index: 998;}';
    
