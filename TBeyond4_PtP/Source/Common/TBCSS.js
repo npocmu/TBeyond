@@ -413,7 +413,7 @@ IF_TB3({{
    'table.tbSendTroopsMenu td {text-align:' + docDir[0] + '; font-size:8pt;}' +
    'table.tbSendTroopsMenu td * {vertical-align:middle;}' +
    'table.tbSendTroopsMenu span.none {font-weight: bold;}' +
-   'input#tb_selectscoutnumber {width:30px;}' + 
+   'input#tb_selectscoutnumber {width:30px; box-sizing: content-box;}' + 
    'input[id^="tb_faketroop"] {margin-' + docDir[1] + ':10px;}' +
 
    // send troops stat
