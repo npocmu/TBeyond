@@ -203,8 +203,8 @@ function getBuildingContracts()
 
    for ( i = 0; i < contractsNodes.length; i++ )
    {
-      var costNode = contractsNodes[i];
-      var contractInfo = scanCommonContractInfo(costNode);
+      var contractNode = contractsNodes[i];
+      var contractInfo = scanCommonContractInfo(contractNode);
       
       if ( contractInfo ) 
       {

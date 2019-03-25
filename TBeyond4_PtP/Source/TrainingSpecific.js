@@ -82,8 +82,7 @@ function scanTrainingContracts(aDoc)
          var aImg = __TEST__($nth_tag(node,"img"));
          var tInfo = getTroopIndexTitleFromImg(aImg);
 
-         var costNode = __TEST__($xf(".//div[" + $xClass('showCosts') + "]", 'f', node, aDoc));
-         contract = scanCommonContractInfo(costNode);
+         var contract = scanCommonContractInfo(node);
 
          var inputNode = __TEST__($nth_tag(node,"input"));
          var countContract = parseInt10(inputNode.value);

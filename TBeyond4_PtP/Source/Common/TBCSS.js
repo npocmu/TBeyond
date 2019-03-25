@@ -84,6 +84,7 @@ IF_TB3({{
    'table.rNt .tbCapReached {color:red;' + blink_style + '}' +
 
    '.tbInject table.rNt {width:IIF_TB4(40,30)%;}' +
+   '.tbResTimeContainer:empty {display: none;}' +
 
    //Table of neighbors on the map
    'table#mapTable {width:682px; border-collapse:collapse; border:1px solid silver; background-color:' + TB3O.DFc[1] + '; font-size:8pt; margin:0px; padding:0px; text-align:center; empty-cells:show; line-height:16px;}' +
@@ -342,7 +343,7 @@ IF_TB3({{
    'table.tbBuildHint td {text-align:center;}' +
 
    // upgrade buildings - hint table
-   '.tbUpgradeHint {margin-bottom: 15px; margin-top:-15px;}' +
+   '.tbUpgradeHint {margin-bottom:15px; margin-top:15px;}' +
    '.tbUpgradeHint table th,' + 
    '.tbUpgradeHint table td {font-size:8pt !important; padding: 3px 6px;}' +
    '.tbUpgradeHint th {background-color:#F3F3F3; color: black; }' +

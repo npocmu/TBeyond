@@ -158,11 +158,17 @@ function searchBuildingContractsNodes(aDoc /*opt*/)
 // }
 // or null if can't parse contract
 //
-function scanCommonContractInfo(costNode)
+function scanCommonContractInfo(contractNode)
 {
    var v, cc, ts, gid;
 
-   var resNodes = $qf(".resourceWrapper .value", 'a', costNode);
+   var costNode = __TEST__($qf(".resourceWrapper", 'f', contractNode));
+   if ( !costNode )
+   {
+      return null;
+   }
+
+   var resNodes = $qf(".value", 'a', costNode);
    var Res = getResourcesFromNodes(resNodes);
 
    var ccNode = resNodes[4];
@@ -179,7 +185,7 @@ function scanCommonContractInfo(costNode)
 
    if ( Res )
    {
-      var aSpan = $xf("ancestor::*[@id='contract']/following::*//*[" + $xClass("clocks") + "]//span[" + $xClass("value") + "]", 'f', costNode);
+      var aSpan = $xf("ancestor::*[@id='contract']/following::*//*[" + $xClass("duration") + "]//span[" + $xClass("value") + "]", 'f', contractNode);
       if ( aSpan )
       {
          ts = parseTimeSpan(aSpan.textContent);
@@ -187,8 +193,11 @@ function scanCommonContractInfo(costNode)
 
       if ( ts === undefined )
       {
-         aSpan = $qf(".clocks .value", 'f', costNode);
-         ts = parseTimeSpan(aSpan.textContent);
+         aSpan = $qf(".duration .value", 'f', contractNode);
+         if ( aSpan )
+         {
+            ts = parseTimeSpan(aSpan.textContent);
+         }
       }
 
       if ( !isIntValid(ts) )

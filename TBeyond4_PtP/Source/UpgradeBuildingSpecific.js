@@ -80,11 +80,10 @@ function scanUpgradeData(aDoc, ttServer)
             upgradeInfo.uul[uix] = troopUpgInfo.lvl;
             ++count;
 
-            var costNode = $qf(".showCosts", 'f', containerNode);
-            troopUpgInfo.contract = ( costNode ) ? scanCommonContractInfo(costNode) : null;
+            troopUpgInfo.contract = scanCommonContractInfo(containerNode);
             troopUpgInfo.container = containerNode;
 
-            troopUpgInfo.linkNode = $qf(".contractLink", 'f', containerNode);
+            troopUpgInfo.linkNode = $qf(".contracting", 'f', containerNode);
 
             upgradesList[troopUpgInfo.tix] = troopUpgInfo;
          }

@@ -542,7 +542,7 @@ function uiModifyTrainingBuilding(gid)
             )
          );
 
-         insertAfter(trainingContract.costNode,$e("p",[attrInject$,['id','tb_trtt_' + contractNo]]));
+         insertAfter(trainingContract.costNode,$div([attrInject$,['class','+tbResTimeContainer'],['id','tb_trtt_' + contractNo]]));
       }
 
       if ( !setContractsCountsFromUrl() )
