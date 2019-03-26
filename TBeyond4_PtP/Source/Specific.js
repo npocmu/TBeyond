@@ -142,7 +142,7 @@ function getRaceFromBarracks()
 //   - trade route descriptions (in table#trading_routes)
 function searchBuildingContractsNodes(aDoc /*opt*/)
 {
-   var contracts = $xf1("//div[@id='" + ID_CONTENT + "']//*[not(self::div and " + $xClass("details") + ")]/div[" + $xClass("showCosts") + "][not(ancestor::table[@id='trading_routes'])]", 'a', aDoc, aDoc);
+   var contracts = $qf("#contract, .research .information", 'a', aDoc, aDoc);
    __ASSERT__(contracts.length, "Can't find any contracts")
    return contracts;
 }
