@@ -73,12 +73,8 @@ function uiCreateIntMapLink(mapId, content, options /*opt*/)
       cls = "tbInject";
    }
 
-   IIF_TB3({{
-   var aLink = $lnk([['class',cls],['href','karte.php?z=' + mapId]], content);
-   }},{{
    var xy = id2xy(mapId);
    var aLink = $lnk([['class',cls],['href','karte.php?x=' + xy[0] + '&y=' + xy[1]]], content);
-   }})
 
    if ( !options.disable_tip )
    {

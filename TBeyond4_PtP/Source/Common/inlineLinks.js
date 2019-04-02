@@ -254,8 +254,8 @@ function uiModifyLinks(parent, options)
    {
       if ( bAddCenterMapLinks )
       {
-         insertAfter(aNode,$lnk([['href', 'karte.php?z=' + mapId],['class','tbInject tbMap']],
-                               ["\u00A0", I("centermap",[['title', T('CENTERMAP')]])]));
+         insertAfter(aNode,
+            uiCreateIntMapLink(mapId, I("centermap", [['title', T('CENTERMAP')]]), {disable_tip:true, disable_expansion:true}));
       }
    }
 
