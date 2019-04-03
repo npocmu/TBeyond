@@ -80,7 +80,7 @@ function getResourcesInfo2(villageId, aDoc, ttServer)
       {
          for ( xi = 0; xi < nodeList.snapshotLength; ++xi )
          {
-            var pph = 0;
+            var pph;
             aNode = nodeList.snapshotItem(xi);
             if ( reEPpH.exec(decodeHTMLEntities(aNode.title)) )
             {
@@ -88,7 +88,6 @@ function getResourcesInfo2(villageId, aDoc, ttServer)
                if ( !isIntValid(pph) )
                {
                   __ERROR__("Invalid resource (" + xi + ") production")
-                  pph = 0;
                }
             }
             else
@@ -100,18 +99,51 @@ function getResourcesInfo2(villageId, aDoc, ttServer)
 
          for ( ri = 0; ri < 3; ++ri )
          {
-             resourcesInfo.EPpH[ri] = resourcesInfo.PpH[ri] = rawData[ri];
+            if ( isIntValid(rawData[ri]) )
+            {
+               resourcesInfo.EPpH[ri] = resourcesInfo.PpH[ri] = rawData[ri];
+            }
          }
 
-         resourcesInfo.EPpH[3] = rawData[4];
-         resourcesInfo.PpH[3] = rawData[3] + getActualVillagePopulation(TB3O.VillagesInfo[villageId]);
-         resourcesInfo.PpH[3] = Math.max( resourcesInfo.PpH[3], resourcesInfo.EPpH[3] );
+         if ( isIntValid(rawData[3]) && isIntValid(rawData[4]) )
+         {
+            resourcesInfo.EPpH[3] = rawData[4];
+            resourcesInfo.PpH[3] = rawData[3] + getActualVillagePopulation(TB3O.VillagesInfo[villageId]);
+            resourcesInfo.PpH[3] = Math.max( resourcesInfo.PpH[3], resourcesInfo.EPpH[3] );
+         }
       }
    }
 
 
    var resourcesInfo = new ResourcesInfo();
-   getResourcesResCap(resourcesInfo, aDoc, ttServer);
+
+   // for current document it to possible to get info from ingame structures
+   var bSuccess = false;
+   if ( aDoc === document && unsafeWindow.resources )
+   {
+      var info = unsafeWindow.resources;
+      try
+      {
+         for (var ri = 0; ri < 4; ++ri )
+         {
+            var propName = 'l' + (ri+1);
+            resourcesInfo.Res[ri] = info.storage[propName];
+            resourcesInfo.Cap[ri] = info.maxStorage[propName];
+            resourcesInfo.PpH[ri] = info.production[propName];
+            resourcesInfo.EPpH[ri] = info.production[propName];
+         }
+
+         resourcesInfo.ttUpd = ttServer;
+         bSuccess = true;
+      }
+      __CATCH__
+   }
+
+   if ( !bSuccess )
+   {
+      getResourcesResCap(resourcesInfo, aDoc, ttServer);
+   }
+
    getResourcesInfo42(resourcesInfo, aDoc, ttServer);
 
    __DUMP__(resourcesInfo)
