@@ -91,8 +91,7 @@ function getVillagesList()
    __ENTER__
 
    var villagesList = new VillagesList();
-   var pos;
-   var villageId,villageInfo;
+   var villageId, villageInfo;
 
    // cleanup position in list 
    for ( villageId in TB3O.VillagesInfo ) 
@@ -102,12 +101,12 @@ function getVillagesList()
 
    if ( villagesList.vTable ) 
    {
-      var vlist = $xf(".//ul/li", 'l', villagesList.vTable);
+      var vlist = $xf1(".//ul/li", 'a', villagesList.vTable);
 
       // retrieve villages info
-      for ( pos = 0; pos < vlist.snapshotLength; pos++ )
+      for (var pos = 0; pos < vlist.length; pos++ )
       {
-         var vEntryNode = vlist.snapshotItem(pos);
+         var vEntryNode = vlist[pos];
          var vLinkNode = __TEST__($nth_tag(vEntryNode,"a"));
          if ( vLinkNode )
          {
@@ -135,18 +134,20 @@ function getVillagesList()
                TB3O.VillagesInfo[villageId] = villageInfo;
             }
 
-            if ( TB3O.ServerInfo.version > 4.0 )
+            var vNameNode = $qf(".name", 'f', vLinkNode);
+            if ( vNameNode )
             {
-               villageInfo.name = vLinkNode.querySelector("div.name").textContent;
-            }
-            else
-            {
-               villageInfo.name = vLinkNode.textContent;
+               villageInfo.name = vNameNode.textContent;
             }
             villageInfo.id = villageId;
-            var xy = parseCoords(vLinkNode.title ? vLinkNode.title : vEntryNode.title); // 4.0 : 4.2
-            villageInfo.x = xy[0]; 
-            villageInfo.y = xy[1]; 
+
+            var vCoordsNode = $qf(".coordinates ", 'f', vLinkNode);
+            if ( vCoordsNode )
+            {
+               var xy = parseCoords(vCoordsNode.innerHTML);
+               villageInfo.x = xy[0]; 
+               villageInfo.y = xy[1]; 
+            }
 
             villageInfo.posInListOrg = pos;
 
